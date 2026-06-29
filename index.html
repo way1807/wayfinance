@@ -19,7 +19,7 @@
     <!-- CHART.JS LIBRARY (Lightweight CDN) -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-    <link rel="icon" type="image/png" href="image/LOGO WAYFinance.png">
+    <link rel="icon" type="image/png" href="logo-wayfinance.png">
 
     <style>
         /* --- CORE STYLING & COLOR SCHEME (Deep Blue Ocean Slate) --- */
@@ -110,6 +110,9 @@
             font-size: 1.7rem;
             letter-spacing: -0.5px;
             color: #ffffff;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
         .brand-header h2 span {
@@ -955,6 +958,7 @@
                 opacity: 0;
                 transform: translateY(-5px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -1633,7 +1637,7 @@
     <div class="dashboard-wrapper">
         <div id="panel-input" class="kolom-kiri">
             <div class="brand-header">
-                <h2><span>WAY</span>Finance</h2>
+                <h2><img src="logo-wayfinance.png" alt="Logo" style="height: 35px; width: auto; object-fit: contain;"><span>WAY</span>Finance</h2>
                 <button id="btn-lisensi-utama" class="btn-dev-trigger" onclick="window.bukaModalPenjelasanDev()">
                     <i class="fa-solid fa-gem"></i> <span id="auth-btn-text">💎 Aktivasi WAY Premium</span>
                 </button>
@@ -1885,8 +1889,8 @@
                     </div>
 
                     <!-- LINE CHART VISUALISASI TREN SALDO BULANAN -->
-                    <h4 style="margin-top: 25px; align-self: flex-start; width: 100%;"><i
-                            class="fa-solid fa-chart-line" style="color:#2ecc71;"></i> Tren Naik-Turun Kekayaan 2026
+                    <h4 style="margin-top: 25px; align-self: flex-start; width: 100%;"><i class="fa-solid fa-chart-line"
+                            style="color:#2ecc71;"></i> Tren Naik-Turun Kekayaan 2026
                     </h4>
                     <div class="chart-wrapper-canvas-line">
                         <canvas id="canvasChartLineTren"></canvas>
@@ -2100,7 +2104,7 @@
 
             const triggerText = customContainer.querySelector('.custom-select-trigger span');
             const optionsDivs = customContainer.querySelectorAll('.custom-select-option');
-            
+
             let selectedText = "";
             optionsDivs.forEach(div => {
                 if (div.getAttribute('data-value') === selectEl.value) {
@@ -2110,7 +2114,7 @@
                     div.classList.remove('selected');
                 }
             });
-            
+
             if (selectedText) {
                 triggerText.innerHTML = selectedText;
             } else if (selectEl.options[selectEl.selectedIndex]) {
@@ -2391,37 +2395,37 @@
             const dummy = [
                 { id: +new Date() - 1200000, nama: "Gaji Hasil Nguli (Jan)", jenis: "pemasukan", wallet: "bca", kategori: "gaji", nominal: 8500000, tanggalCetak: "10 Januari 2026", bulan: "01", tanggalMentah: "2026-01-10" },
                 { id: +new Date() - 1150000, nama: "Bayar Kost Bulanan (Jan)", jenis: "pengeluaran", wallet: "cash", kategori: "tagihan", nominal: 1500000, tanggalCetak: "12 Januari 2026", bulan: "01", tanggalMentah: "2026-01-12" },
-                
+
                 { id: +new Date() - 1100000, nama: "Bonus Proyek Landing Page (Feb)", jenis: "pemasukan", wallet: "mandiri", kategori: "gaji", nominal: 2500000, tanggalCetak: "05 Februari 2026", bulan: "02", tanggalMentah: "2026-02-05" },
                 { id: +new Date() - 1050000, nama: "Makan Buffet All You Can Eat (Feb)", jenis: "pengeluaran", wallet: "gopay", kategori: "makanan", nominal: 450000, tanggalCetak: "14 Februari 2026", bulan: "02", tanggalMentah: "2026-02-14" },
-                
+
                 { id: +new Date() - 1000000, nama: "Dividen Saham Cair (Mar)", jenis: "pemasukan", wallet: "bca", kategori: "investasi", nominal: 1200000, tanggalCetak: "02 Maret 2026", bulan: "03", tanggalMentah: "2026-03-02" },
                 { id: +new Date() - 950000, nama: "Nonton Konser Populer (Mar)", jenis: "pengeluaran", wallet: "dana", kategori: "hiburan", nominal: 1800000, tanggalCetak: "18 Maret 2026", bulan: "03", tanggalMentah: "2026-03-18" },
-                
+
                 { id: +new Date() - 900000, nama: "THR Cair Asik (Apr)", jenis: "pemasukan", wallet: "bca", kategori: "gaji", nominal: 7500000, tanggalCetak: "05 April 2026", bulan: "04", tanggalMentah: "2026-04-05" },
                 { id: +new Date() - 850000, nama: "Beli Baju Lebaran Keluarga (Apr)", jenis: "pengeluaran", wallet: "cash", kategori: "belanja", nominal: 2000000, tanggalCetak: "12 April 2026", bulan: "04", tanggalMentah: "2026-04-12" },
-                
+
                 { id: +new Date() - 800000, nama: "Gaji Utama Nguli (Mei)", jenis: "pemasukan", wallet: "bca", kategori: "gaji", nominal: 8500000, tanggalCetak: "10 Mei 2026", bulan: "05", tanggalMentah: "2026-05-10" },
                 { id: +new Date() - 750000, nama: "Bayar Tagihan Listrik & Internet (Mei)", jenis: "pengeluaran", wallet: "dana", kategori: "tagihan", nominal: 650000, tanggalCetak: "15 Mei 2026", bulan: "05", tanggalMentah: "2026-05-15" },
-                
+
                 { id: +new Date() - 700000, nama: "Hasil Jual HP Bekas (Jun)", jenis: "pemasukan", wallet: "cash", kategori: "kustom", nominal: 2200000, tanggalCetak: "08 Juni 2026", bulan: "06", tanggalMentah: "2026-06-08" },
                 { id: +new Date() - 650000, nama: "Servis Rutin Motor Kesayangan (Jun)", jenis: "pengeluaran", wallet: "bca", kategori: "transportasi", nominal: 750000, tanggalCetak: "20 Juni 2026", bulan: "06", tanggalMentah: "2026-06-20" },
-                
+
                 { id: +new Date() - 600000, nama: "Gaji Utama Nguli (Jul)", jenis: "pemasukan", wallet: "bca", kategori: "gaji", nominal: 8500000, tanggalCetak: "10 Juli 2026", bulan: "07", tanggalMentah: "2026-07-10" },
                 { id: +new Date() - 550000, nama: "Khilaf Beli Gadget Baru (Jul)", jenis: "pengeluaran", wallet: "mandiri", kategori: "belanja", nominal: 4500000, tanggalCetak: "15 Juli 2026", bulan: "07", tanggalMentah: "2026-07-15" },
-                
+
                 { id: +new Date() - 500000, nama: "Pemasukan Menang Lomba (Agu)", jenis: "pemasukan", wallet: "ovo", kategori: "kustom", nominal: 3500000, tanggalCetak: "17 Agustus 2026", bulan: "08", tanggalMentah: "2026-08-17" },
                 { id: +new Date() - 450000, nama: "Tiket Liburan Singkat (Agu)", jenis: "pengeluaran", wallet: "gopay", kategori: "hiburan", nominal: 1200000, tanggalCetak: "20 Agustus 2026", bulan: "08", tanggalMentah: "2026-08-20" },
-                
+
                 { id: +new Date() - 400000, nama: "Gaji Utama Nguli (Sep)", jenis: "pemasukan", wallet: "bca", kategori: "gaji", nominal: 8500000, tanggalCetak: "10 September 2026", bulan: "09", tanggalMentah: "2026-09-10" },
                 { id: +new Date() - 350000, nama: "Belanja Bulanan Supermarket (Sep)", jenis: "pengeluaran", wallet: "cash", kategori: "belanja", nominal: 1400000, tanggalCetak: "12 September 2026", bulan: "09", tanggalMentah: "2026-09-12" },
-                
+
                 { id: +new Date() - 300000, nama: "Profit Reksadana Cair (Okt)", jenis: "pemasukan", wallet: "bca", kategori: "investasi", nominal: 1800000, tanggalCetak: "05 Oktober 2026", bulan: "10", tanggalMentah: "2026-10-05" },
                 { id: +new Date() - 250000, nama: "Beli Kopi Starbucks & Roti (Okt)", jenis: "pengeluaran", wallet: "dana", kategori: "makanan", nominal: 350000, tanggalCetak: "25 Oktober 2026", bulan: "10", tanggalMentah: "2026-10-25" },
-                
+
                 { id: +new Date() - 200000, nama: "Gaji Utama Nguli (Nov)", jenis: "pemasukan", wallet: "bca", kategori: "gaji", nominal: 8500000, tanggalCetak: "10 November 2026", bulan: "11", tanggalMentah: "2026-11-10" },
                 { id: +new Date() - 150000, nama: "Jalan-jalan Weekend Luar Kota (Nov)", jenis: "pengeluaran", wallet: "cash", kategori: "hiburan", nominal: 2200000, tanggalCetak: "18 November 2026", bulan: "11", tanggalMentah: "2026-11-18" },
-                
+
                 { id: +new Date() - 100000, nama: "Bonus Akhir Tahun Melimpah (Des)", jenis: "pemasukan", wallet: "bca", kategori: "gaji", nominal: 10000000, tanggalCetak: "15 Desember 2026", bulan: "12", tanggalMentah: "2026-12-15" },
                 { id: +new Date() - 50000, nama: "Tiket Pesawat & Hotel Liburan (Des)", jenis: "pengeluaran", wallet: "gopay", kategori: "hiburan", nominal: 5500000, tanggalCetak: "22 Desember 2026", bulan: "12", tanggalMentah: "2026-12-22" }
             ];
