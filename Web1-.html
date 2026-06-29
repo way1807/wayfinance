@@ -1,0 +1,3145 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WAYFinance - Local Premium Tracker</title>
+
+    <!-- PWA READY METADATA -->
+    <meta name="theme-color" content="#161b22">
+    <link rel="manifest"
+        href="data:application/json,{&quot;name&quot;:&quot;WAYFinance&quot;,&quot;short_name&quot;:&quot;WAYFinance&quot;,&quot;start_url&quot;:&quot;.&quot;,&quot;display&quot;:&quot;standalone&quot;,&quot;background_color&quot;:&quot;#161b22&quot;,&quot;theme_color&quot;:&quot;#161b22&quot;}">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- CHART.JS LIBRARY (Lightweight CDN) -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <link rel="icon" type="image/png" href="image/LOGO WAYFinance.png">
+
+    <style>
+        /* --- CORE STYLING & COLOR SCHEME (Deep Blue Ocean Slate) --- */
+        :root {
+            --bg-pemasukan: #2ecc71;
+            --bg-pemasukan-hover: #27ae60;
+            --bg-pengeluaran: #e74c3c;
+            --bg-pengeluaran-hover: #c0392b;
+            --bg-edit: #f39c12;
+            --bg-edit-hover: #d35400;
+            --bg-transfer: #0081b4;
+            --bg-transfer-hover: #006690;
+            --primary-gradient: linear-gradient(135deg, #1f252e, #1a5f7a, #0081b4);
+            --dark-card: #28303d;
+            --dark-body: #161b22;
+            --text-muted: #94a3b8;
+            --accent-blue: #0081b4;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        html,
+        body {
+            width: 100%;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        body {
+            background: radial-gradient(circle at top right, #1f252e, #161b22, #0d1117);
+            color: #f8fafc;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            padding: 30px 20px;
+            transition: background 0.3s ease;
+        }
+
+        /* Tema Background Ganti Warna Kondisional */
+        body.tema-pemasukan {
+            background: radial-gradient(circle at top right, #11261a, #161b22, #0d1117);
+        }
+
+        body.tema-pengeluaran {
+            background: radial-gradient(circle at top right, #2d1715, #161b22, #0d1117);
+        }
+
+        body.tema-transfer {
+            background: radial-gradient(circle at top right, #102030, #161b22, #0d1117);
+        }
+
+        body.tema-edit {
+            background: radial-gradient(circle at top right, #2d2010, #161b22, #0d1117);
+        }
+
+        .dashboard-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 35px;
+            width: 100%;
+            max-width: 1050px;
+            background-color: rgba(40, 48, 61, 0.4);
+            backdrop-filter: blur(20px);
+            padding: 40px;
+            border-radius: 30px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            overflow-x: hidden;
+            margin-bottom: 30px;
+        }
+
+        .brand-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .brand-header h2 {
+            font-weight: 700;
+            font-size: 1.7rem;
+            letter-spacing: -0.5px;
+            color: #ffffff;
+        }
+
+        .brand-header h2 span {
+            background: linear-gradient(135deg, #0081b4, #2ecc71);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .btn-dev-trigger {
+            background: rgba(243, 156, 18, 0.15);
+            border: 1px solid rgba(243, 156, 18, 0.4);
+            color: #f39c12;
+            padding: 8px 16px;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+        }
+
+        .btn-dev-trigger.unlocked {
+            background: rgba(46, 204, 113, 0.15);
+            border: 1px solid rgba(46, 204, 113, 0.4);
+            color: #2ecc71;
+        }
+
+        .btn-dev-trigger:hover {
+            opacity: 0.9;
+            box-shadow: 0 0 15px rgba(243, 156, 18, 0.3);
+        }
+
+        h3 {
+            color: #ffffff;
+        }
+
+        .kolom-kiri {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+        }
+
+        .saldo-box {
+            background: var(--primary-gradient);
+            color: white;
+            padding: 28px;
+            border-radius: 24px;
+            text-align: center;
+            margin-bottom: 20px;
+            box-shadow: 0 15px 30px rgba(26, 95, 122, 0.25);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+        }
+
+        .saldo-box p {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            opacity: 0.75;
+            font-weight: 500;
+        }
+
+        .saldo-box h1 {
+            font-size: 2.2rem;
+            margin-top: 5px;
+            font-weight: 700;
+        }
+
+        .btn-hide-balance {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: rgba(255, 255, 255, 0.6);
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: color 0.2s;
+        }
+
+        .btn-hide-balance:hover {
+            color: #fff;
+        }
+
+        .status-bacot {
+            margin-top: 12px;
+            font-size: 0.8rem;
+            font-style: italic;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 6px 14px;
+            border-radius: 20px;
+            display: inline-block;
+            font-weight: 500;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* --- WARNING BANNER BUDGET LIMIT --- */
+        .budget-warning-banner {
+            background: linear-gradient(90deg, #d35400, #e74c3c);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 14px;
+            margin-bottom: 15px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            display: none;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 4px 15px rgba(231, 76, 60, 0.3);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.02);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .wallet-section {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
+            width: 100%;
+        }
+
+        .wallet-card-mini {
+            background-color: var(--dark-card);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            padding: 12px 14px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            width: 100%;
+        }
+
+        .wallet-card-bank-detail {
+            grid-column: span 2;
+            background-color: rgba(26, 32, 44, 0.5);
+            border: 1px dashed rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 12px 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .bank-sub-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.8rem;
+            border-bottom: 1px dashed rgba(255, 255, 255, 0.04);
+            padding-bottom: 4px;
+        }
+
+        .bank-sub-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .bank-sub-item span {
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .bank-sub-item strong {
+            color: #fff;
+            font-weight: 600;
+        }
+
+        .wallet-icon {
+            width: 35px;
+            height: 35px;
+            border-radius: 10px;
+            background-color: rgba(0, 129, 180, 0.15);
+            color: var(--accent-blue);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+        }
+
+        .wallet-detail-teks p {
+            font-size: 0.65rem;
+            color: var(--text-muted);
+            font-weight: 500;
+            text-transform: uppercase;
+        }
+
+        .wallet-detail-teks h4 {
+            font-size: 0.85rem;
+            color: #ffffff;
+            font-weight: 600;
+        }
+
+        .ringkasan-bulan {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .box-mini {
+            flex: 1;
+            padding: 14px 16px;
+            border-radius: 18px;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .box-masuk {
+            background: linear-gradient(135deg, #10b981, #059669);
+        }
+
+        .box-keluar {
+            background: linear-gradient(135deg, #f43f5e, #e11d48);
+        }
+
+        .box-mini i {
+            font-size: 1.2rem;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 8px;
+            border-radius: 12px;
+        }
+
+        .box-mini p {
+            font-size: 0.7rem;
+            opacity: 0.8;
+        }
+
+        .box-mini h3 {
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+            width: 100%;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 600;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            transition: color 0.3s;
+        }
+
+        .input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+            width: 100%;
+        }
+
+        .input-wrapper i {
+            position: absolute;
+            left: 15px;
+            color: #64748b;
+            font-size: 0.95rem;
+            pointer-events: none;
+        }
+
+        /* FIX: Maksa semua inputan di Kalender/Wishlist tetep pakai Dark Theme */
+        .form-group input,
+        .form-group select,
+        .form-group textarea,
+        .bill-box-creator input,
+        .wishlist-box-creator input {
+            width: 100%;
+            padding: 12px 12px 12px 42px;
+            border: 2px solid rgba(255, 255, 255, 0.08);
+            border-radius: 14px;
+            font-size: 0.9rem;
+            outline: none;
+            color: #ffffff !important;
+            background-color: var(--dark-card) !important;
+            transition: all 0.3s ease;
+        }
+
+        /* Khusus box creator yg gak punya ikon kiri biar teks gak terlalu ke kanan */
+        .bill-box-creator input,
+        .wishlist-box-creator input {
+            padding-left: 16px !important;
+        }
+
+        .form-group textarea {
+            padding: 12px 15px;
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .form-group select option {
+            background-color: var(--dark-body);
+            color: white;
+        }
+
+        /* --- SHORTCUT NOMINAL CEPAT --- */
+        .shortcut-nominal-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 6px;
+            margin-top: 8px;
+            width: 100%;
+        }
+
+        .btn-shortcut-nom {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            color: #f8fafc;
+            padding: 8px 4px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: center;
+        }
+
+        .btn-shortcut-nom:hover {
+            background: var(--accent-blue);
+            border-color: var(--accent-blue);
+        }
+
+        .tema-pemasukan input:focus,
+        .tema-pemasukan select:focus,
+        .tema-pemasukan textarea:focus {
+            border-color: var(--bg-pemasukan);
+            box-shadow: 0 0 0 4px rgba(46, 204, 113, 0.15);
+        }
+
+        .tema-pengeluaran input:focus,
+        .tema-pengeluaran select:focus,
+        .tema-pengeluaran textarea:focus {
+            border-color: var(--bg-pengeluaran);
+            box-shadow: 0 0 0 4px rgba(231, 76, 60, 0.15);
+        }
+
+        .tema-edit input:focus,
+        .tema-edit select:focus,
+        .tema-edit textarea:focus {
+            border-color: var(--bg-edit);
+            box-shadow: 0 0 0 4px rgba(243, 156, 18, 0.15);
+        }
+
+        .tema-transfer input:focus,
+        .tema-transfer select:focus,
+        .tema-transfer textarea:focus {
+            border-color: var(--bg-transfer);
+            box-shadow: 0 0 0 4px rgba(0, 129, 180, 0.15);
+        }
+
+        #kustom-kategori-group {
+            animation: slideIn 0.25s ease;
+        }
+
+        .btn-hitung {
+            width: 100%;
+            color: white;
+            border: none;
+            padding: 14px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            border-radius: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 5px;
+        }
+
+        .btn-pemasukan {
+            background-color: var(--bg-pemasukan);
+            box-shadow: 0 4px 12px rgba(46, 204, 113, 0.2);
+        }
+
+        .btn-pemasukan:hover {
+            background-color: var(--bg-pemasukan-hover);
+            transform: translateY(-1px);
+        }
+
+        .btn-pengeluaran {
+            background-color: var(--bg-pengeluaran);
+            box-shadow: 0 4px 12px rgba(231, 76, 60, 0.2);
+        }
+
+        .btn-pengeluaran:hover {
+            background-color: var(--bg-pengeluaran-hover);
+            transform: translateY(-1px);
+        }
+
+        .btn-edit-mode {
+            background-color: var(--bg-edit);
+            box-shadow: 0 4px 12px rgba(243, 156, 18, 0.2);
+        }
+
+        .btn-edit-mode:hover {
+            background-color: var(--bg-edit-hover);
+            transform: translateY(-1px);
+        }
+
+        .btn-transfer-mode {
+            background-color: var(--bg-transfer);
+            box-shadow: 0 4px 12px rgba(0, 129, 180, 0.2);
+        }
+
+        .btn-transfer-mode:hover {
+            background-color: var(--bg-transfer-hover);
+            transform: translateY(-1px);
+        }
+
+        /* TOMBOL APPLY SMART PASTE NEW STYLE */
+        .btn-apply-paste {
+            width: 100%;
+            background: linear-gradient(135deg, #f39c12, #d35400);
+            border: none;
+            color: white;
+            padding: 10px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            border-radius: 10px;
+            cursor: pointer;
+            margin-top: 6px;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .btn-apply-paste:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+
+        .nominal-pemasukan {
+            color: #2ecc71 !important;
+            font-weight: 600;
+        }
+
+        .nominal-pengeluaran {
+            color: #e74c3c !important;
+            font-weight: 600;
+        }
+
+        .nominal-transfer {
+            color: #0081b4 !important;
+            font-weight: 600;
+        }
+
+        .kolom-kanan {
+            border-left: 2px solid rgba(255, 255, 255, 0.05);
+            padding-left: 30px;
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+        }
+
+        .riwayat-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            gap: 10px;
+        }
+
+        .riwayat-header h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .search-wrapper {
+            position: relative;
+            flex: 1;
+            max-width: 200px;
+        }
+
+        .search-wrapper i {
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            font-size: 0.8rem;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 6px 10px 6px 28px;
+            border-radius: 10px;
+            background: var(--dark-card);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            color: #fff;
+            font-size: 0.8rem;
+            outline: none;
+        }
+
+        .filter-bulan {
+            padding: 6px 10px;
+            border: 2px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: #ffffff;
+            background-color: var(--dark-card);
+            outline: none;
+        }
+
+        .list-transaksi {
+            list-style: none;
+            max-height: 220px;
+            overflow-y: auto;
+            padding-right: 4px;
+            margin-bottom: 20px;
+            width: 100%;
+        }
+
+        .list-transaksi::-webkit-scrollbar,
+        .wishlist-container::-webkit-scrollbar,
+        .bill-container::-webkit-scrollbar {
+            width: 5px;
+        }
+
+        .list-transaksi::-webkit-scrollbar-track,
+        .wishlist-container::-webkit-scrollbar-track,
+        .bill-container::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .list-transaksi::-webkit-scrollbar-thumb,
+        .wishlist-container::-webkit-scrollbar-thumb,
+        .bill-container::-webkit-scrollbar-thumb {
+            background: #3b4758;
+            border-radius: 10px;
+        }
+
+        .item-transaksi {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 14px;
+            background-color: var(--dark-card);
+            border-radius: 14px;
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            animation: slideIn 0.25s ease;
+            width: 100%;
+        }
+
+        .item-kiri {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            max-width: 70%;
+        }
+
+        .icon-bulet {
+            flex-shrink: 0;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+        }
+
+        .item-detail {
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .item-nama {
+            font-weight: 500;
+            color: #ffffff;
+            line-height: 1.2;
+            word-break: break-word;
+        }
+
+        .item-kategori-tag {
+            font-size: 0.65rem;
+            color: var(--text-muted);
+            font-weight: 500;
+            text-transform: uppercase;
+            margin-top: 2px;
+        }
+
+        .item-wallet-tag {
+            font-size: 0.6rem;
+            color: var(--accent-blue);
+            font-weight: 600;
+            margin-top: 1px;
+        }
+
+        .item-tanggal {
+            font-size: 0.65rem;
+            color: #64748b;
+            margin-top: 2px;
+        }
+
+        .item-kanan {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-shrink: 0;
+        }
+
+        .btn-aksi-item {
+            background: none;
+            border: none;
+            color: #64748b;
+            cursor: pointer;
+            font-size: 0.95rem;
+            transition: color 0.2s ease;
+            padding: 4px;
+        }
+
+        .btn-edit-item:hover {
+            color: var(--bg-edit);
+        }
+
+        .btn-hapus-item:hover {
+            color: var(--bg-pengeluaran);
+        }
+
+        .premium-feature-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 15px;
+            width: 100%;
+        }
+
+        .btn-premium-locked {
+            background: rgba(243, 156, 18, 0.1);
+            border: 1px dashed #f39c12;
+            color: #f39c12;
+            padding: 10px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            transition: all 0.3s;
+        }
+
+        .btn-premium-locked.unlocked {
+            background: rgba(46, 204, 113, 0.1);
+            border: 1px solid #2ecc71;
+            color: #2ecc71;
+        }
+
+        .btn-premium-locked:hover {
+            background: #f39c12;
+            color: white;
+            box-shadow: 0 4px 12px rgba(243, 156, 18, 0.2);
+        }
+
+        .btn-premium-locked.unlocked:hover {
+            background: #2ecc71;
+            color: white;
+            box-shadow: 0 4px 12px rgba(46, 204, 113, 0.2);
+        }
+
+        .chart-box-section {
+            background-color: var(--dark-card);
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+        }
+
+        .chart-box-section h4 {
+            font-size: 0.9rem;
+            color: #fff;
+            margin-bottom: 15px;
+            align-self: flex-start;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .chart-wrapper-canvas {
+            position: relative;
+            width: 100%;
+            max-width: 240px;
+            height: 240px;
+        }
+
+        .chart-wrapper-canvas-line {
+            position: relative;
+            width: 100%;
+            height: 160px;
+            margin-top: 10px;
+        }
+
+        /* --- STYLING DROPDOWN KUSTOM --- */
+        .custom-select {
+            position: relative;
+            width: 100%;
+        }
+
+        .custom-select-trigger {
+            width: 100%;
+            padding: 12px 36px 12px 42px;
+            border: 2px solid rgba(255, 255, 255, 0.08);
+            border-radius: 14px;
+            font-size: 0.9rem;
+            outline: none;
+            color: #ffffff;
+            background-color: var(--dark-card);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+            user-select: none;
+        }
+
+        .custom-select-trigger span {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .custom-select.active .custom-select-trigger {
+            border-color: var(--accent-blue);
+            box-shadow: 0 0 0 4px rgba(0, 129, 180, 0.15);
+        }
+
+        .tema-pemasukan .custom-select.active .custom-select-trigger {
+            border-color: var(--bg-pemasukan);
+            box-shadow: 0 0 0 4px rgba(46, 204, 113, 0.15);
+        }
+
+        .tema-pengeluaran .custom-select.active .custom-select-trigger {
+            border-color: var(--bg-pengeluaran);
+            box-shadow: 0 0 0 4px rgba(231, 76, 60, 0.15);
+        }
+
+        .tema-edit .custom-select.active .custom-select-trigger {
+            border-color: var(--bg-edit);
+            box-shadow: 0 0 0 4px rgba(243, 156, 18, 0.15);
+        }
+
+        .tema-transfer .custom-select.active .custom-select-trigger {
+            border-color: var(--bg-transfer);
+            box-shadow: 0 0 0 4px rgba(0, 129, 180, 0.15);
+        }
+
+        .custom-select-dropdown {
+            position: absolute;
+            top: calc(100% + 5px);
+            left: 0;
+            width: 100%;
+            background-color: #1e2530;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 14px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            z-index: 10000;
+            display: none;
+            max-height: 250px;
+            overflow-y: auto;
+            animation: fadeInDropdown 0.2s ease;
+        }
+
+        .custom-select.active .custom-select-dropdown {
+            display: block;
+        }
+
+        .custom-select-option {
+            padding: 10px 16px;
+            font-size: 0.85rem;
+            color: #ffffff;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .custom-select-option:hover {
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+
+        .tema-pemasukan .custom-select-option:hover {
+            background-color: rgba(46, 204, 113, 0.15);
+            color: var(--bg-pemasukan);
+        }
+
+        .tema-pengeluaran .custom-select-option:hover {
+            background-color: rgba(231, 76, 60, 0.15);
+            color: var(--bg-pengeluaran);
+        }
+
+        .tema-edit .custom-select-option:hover {
+            background-color: rgba(243, 156, 18, 0.15);
+            color: var(--bg-edit);
+        }
+
+        .tema-transfer .custom-select-option:hover {
+            background-color: rgba(0, 129, 180, 0.15);
+            color: var(--bg-transfer);
+        }
+
+        .custom-select-option.selected {
+            background-color: rgba(255, 255, 255, 0.1) !important;
+            font-weight: 600;
+        }
+
+        .select-chevron {
+            font-size: 0.8rem;
+            transition: transform 0.2s;
+            color: #64748b;
+        }
+
+        .custom-select.active .select-chevron {
+            transform: rotate(180deg);
+        }
+
+        @keyframes fadeInDropdown {
+            from {
+                opacity: 0;
+                transform: translateY(-5px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* --- OVERLAY POPUP CUSTOM MODAL (SUPER HIGH LAYER) --- */
+        .custom-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(10, 15, 30, 0.8);
+            backdrop-filter: blur(12px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 999999;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.25s ease;
+        }
+
+        .custom-modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .custom-modal-box {
+            background-color: #242c39;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            padding: 28px;
+            border-radius: 24px;
+            width: 90%;
+            max-width: 460px;
+            text-align: center;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6);
+            transform: scale(0.9);
+            transition: transform 0.25s ease;
+        }
+
+        .custom-modal-overlay.active .custom-modal-box {
+            transform: scale(1);
+        }
+
+        .custom-modal-box i {
+            font-size: 2.8rem;
+            color: #e74c3c;
+            margin-bottom: 15px;
+            display: inline-block;
+        }
+
+        .custom-modal-box h4 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: #fff;
+        }
+
+        .custom-modal-box p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+            line-height: 1.6;
+            text-align: left;
+            white-space: pre-line;
+        }
+
+        .custom-modal-buttons {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            width: 100%;
+        }
+
+        .modal-btn {
+            padding: 12px 24px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            border-radius: 12px;
+            cursor: pointer;
+            border: none;
+            transition: opacity 0.2s;
+        }
+
+        .modal-btn:hover {
+            opacity: 0.9;
+        }
+
+        .modal-btn-confirm {
+            background-color: #e74c3c;
+            color: white;
+        }
+
+        .modal-btn-cancel {
+            background-color: #475569;
+            color: white;
+        }
+
+        /* --- STYLING JADWAL TAGIHAN RUTIN (BILL) --- */
+        .section-bill-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            padding-top: 20px;
+            width: 100%;
+        }
+
+        .bill-box-creator {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 18px;
+            width: 100%;
+        }
+
+        .bill-container {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            max-height: 180px;
+            overflow-y: auto;
+            padding-right: 4px;
+            margin-bottom: 15px;
+            width: 100%;
+        }
+
+        .bill-card {
+            background-color: var(--dark-card);
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            padding: 14px;
+            border-radius: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+
+        .bill-info {
+            max-width: 65%;
+        }
+
+        .bill-info h5 {
+            font-size: 0.85rem;
+            color: white;
+            font-weight: 600;
+            word-break: break-all;
+        }
+
+        .bill-info p {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+
+        .bill-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-shrink: 0;
+        }
+
+        .section-wishlist-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            padding-top: 20px;
+            width: 100%;
+        }
+
+        .wishlist-box-creator {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 18px;
+            width: 100%;
+        }
+
+        .btn-add-wishlist {
+            background: var(--primary-gradient);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 14px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 600;
+            width: 100%;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .wishlist-container {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            max-height: 180px;
+            overflow-y: auto;
+            padding-right: 4px;
+            margin-bottom: 10px;
+            width: 100%;
+        }
+
+        .wishlist-card {
+            background-color: var(--dark-card);
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            padding: 16px;
+            border-radius: 18px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            width: 100%;
+        }
+
+        .wishlist-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85rem;
+            font-weight: 600;
+            width: 100%;
+        }
+
+        .wishlist-bar-bg {
+            width: 100%;
+            height: 10px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .wishlist-bar-fill {
+            width: 0%;
+            height: 100%;
+            background: var(--primary-gradient);
+            transition: width 0.4s ease;
+        }
+
+        .wishlist-footer-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+            width: 100%;
+        }
+
+        .wishlist-status-teks {
+            font-size: 0.7rem;
+            font-style: italic;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .wishlist-inline-form {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            width: 100%;
+        }
+
+        .btn-celengan-mini {
+            background: var(--primary-gradient);
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+
+        .btn-hapus-wishlist {
+            background: none;
+            border: none;
+            color: #64748b;
+            cursor: pointer;
+            font-size: 0.85rem;
+            margin-left: 4px;
+            flex-shrink: 0;
+        }
+
+        .btn-hapus-wishlist:hover {
+            color: var(--bg-pengeluaran);
+        }
+
+        .btn-reset {
+            background-color: rgba(231, 76, 60, 0.1);
+            border: 1px solid rgba(231, 76, 60, 0.2);
+            color: #e74c3c;
+            padding: 12px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            border-radius: 14px;
+            cursor: pointer;
+            margin-top: 15px;
+            transition: all 0.3s;
+            width: 100%;
+        }
+
+        .btn-reset:hover {
+            background-color: var(--bg-pengeluaran);
+            color: #fff;
+            box-shadow: 0 4px 12px rgba(231, 76, 60, 0.2);
+        }
+
+        /* --- STYLING UTK ACTION PRINT PDF --- */
+        .btn-print-pdf {
+            background: rgba(0, 129, 180, 0.15);
+            border: 1px solid rgba(0, 129, 180, 0.4);
+            color: #0081b4;
+            padding: 12px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            border-radius: 14px;
+            cursor: pointer;
+            margin-top: 10px;
+            width: 100%;
+            transition: all 0.3s;
+        }
+
+        .btn-print-pdf:hover {
+            background: #0081b4;
+            color: white;
+        }
+
+        .about-wrapper {
+            width: 100%;
+            max-width: 1050px;
+            background-color: rgba(40, 48, 61, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 30px;
+            border-radius: 24px;
+            margin-top: 10px;
+            display: grid;
+            grid-template-columns: 1.5fr 1fr;
+            gap: 25px;
+        }
+
+        .about-info p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        .about-info h3,
+        .about-dev h3 {
+            font-size: 1.1rem;
+            margin-bottom: 12px;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .dev-card {
+            background: #1e2530;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            padding: 15px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .dev-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--primary-gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+            box-shadow: 0 4px 10px rgba(0, 129, 180, 0.3);
+        }
+
+        .dev-detail h5 {
+            font-size: 0.9rem;
+            color: #fff;
+            font-weight: 600;
+        }
+
+        .dev-detail p {
+            font-size: 0.75rem;
+            color: var(--accent-blue);
+            font-weight: 500;
+        }
+
+        .dev-socials {
+            margin-top: 6px;
+            display: flex;
+            gap: 12px;
+        }
+
+        .dev-socials a {
+            color: var(--text-muted);
+            font-size: 1rem;
+            transition: all 0.2s ease;
+        }
+
+        .dev-socials a:hover {
+            color: #fff;
+            transform: translateY(-2px);
+        }
+
+        /* --- FIXED MOBILE FLOATING BAR STYLING (image_3367fc.png) --- */
+        .mobile-floating-bar {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(40, 48, 61, 0.85) !important;
+            backdrop-filter: blur(25px);
+            padding: 12px 28px;
+            border-radius: 40px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            z-index: 9999;
+            gap: 30px;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .float-btn {
+            background: none !important;
+            border: none !important;
+            color: var(--text-muted) !important;
+            font-size: 1.25rem !important;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            transition: all 0.2s;
+            box-shadow: none !important;
+            padding: 0 !important;
+            width: auto !important;
+        }
+
+        .float-btn span {
+            font-size: 0.65rem;
+            font-weight: 500;
+            color: inherit;
+        }
+
+        .float-btn.active {
+            color: #ffffff !important;
+            text-shadow: 0 0 12px rgba(0, 129, 180, 0.8);
+        }
+
+        @media print {
+            body {
+                background: white !important;
+                color: black !important;
+                padding: 0 !important;
+            }
+
+            .dashboard-wrapper {
+                grid-template-columns: 1fr !important;
+                padding: 0 !important;
+                box-shadow: none !important;
+                border: none !important;
+                background: none !important;
+                backdrop-filter: none !important;
+            }
+
+            .kolom-kiri,
+            .premium-feature-grid,
+            .wishlist-box-creator,
+            .bill-box-creator,
+            .shortcut-nominal-container,
+            .btn-reset,
+            .btn-print-pdf,
+            .about-wrapper,
+            .mobile-floating-bar,
+            .btn-aksi-item,
+            .search-wrapper,
+            .filter-bulan,
+            .btn-dev-trigger {
+                display: none !important;
+            }
+
+            .kolom-kanan {
+                border: none !important;
+                padding: 0 !important;
+                width: 100% !important;
+            }
+
+            .list-transaksi {
+                max-height: none !important;
+                overflow: visible !important;
+            }
+
+            .item-transaksi {
+                background: #f0f4f8 !important;
+                border: 1px solid #ccc !important;
+                color: #000 !important;
+                page-break-inside: avoid;
+            }
+
+            .item-nama,
+            h3,
+            h4 {
+                color: #000 !important;
+            }
+        }
+
+        @media (max-width: 820px) {
+
+            html,
+            body {
+                width: 100%;
+                overflow-x: hidden;
+                position: relative;
+                box-sizing: border-box;
+            }
+
+            body {
+                padding: 10px 10px 90px 10px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .dashboard-wrapper,
+            .about-wrapper {
+                grid-template-columns: 1fr;
+                padding: 15px;
+                gap: 25px;
+                background: none;
+                border: none;
+                box-shadow: none;
+                width: 100% !important;
+                max-width: 100% !important;
+                box-sizing: border-box;
+                overflow-x: hidden;
+            }
+
+            .brand-header {
+                flex-direction: column;
+                gap: 10px;
+                text-align: center;
+                margin-bottom: 15px;
+            }
+
+            .wallet-section {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+                width: 100%;
+                box-sizing: border-box;
+            }
+
+            .wallet-card-mini {
+                width: 100% !important;
+                box-sizing: border-box;
+                padding: 12px;
+            }
+
+            .wallet-detail-teks h4 {
+                font-size: 0.85rem;
+                word-break: break-all;
+            }
+
+            .kolom-kanan {
+                border-left: none;
+                padding-left: 0;
+                border-top: 1px solid rgba(255, 255, 255, 0.08);
+                padding-top: 25px;
+                width: 100%;
+                box-sizing: border-box;
+            }
+
+            .kolom-kiri,
+            .riwayat-section-target,
+            .wishlist-section-target {
+                scroll-margin-top: 20px;
+                width: 100%;
+                box-sizing: border-box;
+            }
+
+            .item-transaksi {
+                width: 100% !important;
+                box-sizing: border-box;
+            }
+
+            .item-detail {
+                max-width: 55% !important;
+                white-space: normal;
+                word-break: break-word;
+            }
+
+            .wishlist-card {
+                width: 100% !important;
+                box-sizing: border-box;
+            }
+
+            .wishlist-inline-form {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 6px;
+                width: 100%;
+                box-sizing: border-box;
+            }
+
+            .wishlist-inline-form select,
+            .wishlist-inline-form input {
+                flex: 1;
+                width: 100% !important;
+                min-width: 65px;
+            }
+
+            .mobile-floating-bar {
+                display: flex;
+            }
+
+            .list-transaksi,
+            .wishlist-container,
+            .bill-container {
+                max-height: 380px;
+            }
+
+            .about-wrapper {
+                border-top: 1px solid rgba(255, 255, 255, 0.08);
+                margin-top: 20px;
+                padding-top: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body class="tema-pemasukan">
+
+    <!-- HIDDEN INPUT UNTUK RESTORE FILE JSON -->
+    <input type="file" id="json-restore-file" style="display:none;" onchange="window.eksekusiRestoreJSON(this)">
+
+    <div id="custom-confirm-modal" class="custom-modal-overlay">
+        <div class="custom-modal-box">
+            <i class="fa-solid fa-circle-exclamation"></i>
+            <h4 id="modal-title">Konfirmasi Aksi</h4>
+            <div id="modal-custom-field-area"></div>
+            <p id="modal-message">Apakah kamu yakin, Cuy?</p>
+            <div class="custom-modal-buttons">
+                <button id="modal-confirm-btn" class="modal-btn modal-btn-confirm">Iya, Eksekusi</button>
+                <button id="modal-cancel-btn" class="modal-btn modal-btn-cancel"
+                    onclick="window.tutupCustomModal()">Batal</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="mobile-floating-bar">
+        <button id="f-btn-input" class="float-btn active"
+            onclick="window.lompatSectionHP('panel-input', 'f-btn-input')">
+            <i class="fa-solid fa-square-plus"></i><span>Catat</span>
+        </button>
+        <button id="f-btn-histori" class="float-btn" onclick="window.lompatSectionHP('panel-histori', 'f-btn-histori')">
+            <i class="fa-solid fa-clock-rotate-left"></i><span>Histori</span>
+        </button>
+        <button id="f-btn-goals" class="float-btn" onclick="window.lompatSectionHP('panel-goals', 'f-btn-goals')">
+            <i class="fa-solid fa-bullseye"></i><span>Goals</span>
+        </button>
+    </div>
+
+    <div class="dashboard-wrapper">
+        <div id="panel-input" class="kolom-kiri">
+            <div class="brand-header">
+                <h2><span>WAY</span>Finance</h2>
+                <button id="btn-lisensi-utama" class="btn-dev-trigger" onclick="window.bukaModalPenjelasanDev()">
+                    <i class="fa-solid fa-gem"></i> <span id="auth-btn-text">💎 Aktivasi WAY Premium</span>
+                </button>
+            </div>
+
+            <!-- SYSTEM BUDGET LIMIT WARNING BANNER -->
+            <div id="budget-warning" class="budget-warning-banner">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+                <span id="budget-warning-text">Woy! Pengeluaran lo bulan ini udah melewati batas budget!</span>
+            </div>
+
+            <div class="saldo-box">
+                <!-- sembunyikan saldo button icon -->
+                <button class="btn-hide-balance" onclick="window.toggleSembunyikanSaldo()"><i id="eye-icon"
+                        class="fa-solid fa-eye"></i></button>
+                <p>Total Sisa Uang Hidup (Awas Kritis)</p>
+                <h1 id="total-saldo">Rp 0</h1>
+                <div id="status-bacot" class="status-bacot">Belum ada duit dicatat nih...</div>
+            </div>
+
+            <!-- --- SMART PASTE SMART BOX (Premium Only) --- -->
+            <div class="form-group" id="smart-paste-container">
+                <label style="color: #f39c12;"><i class="fa-solid fa-wand-magic-sparkles"></i> WAY Smart Paste Mutasi
+                    (Premium)</label>
+                <textarea id="smart-paste-box"
+                    placeholder="Paste teks SMS / Notifikasi Mutasi Saku di sini... (Contoh: Transfer m-BCA Rp 150.000 ke...)"></textarea>
+                <!-- NEW: Tombol Pemicu Manual Apply Teks Smart Paste -->
+                <button type="button" class="btn-apply-paste" onclick="window.eksekusiSmartPaste()">
+                    <i class="fa-solid fa-bolt"></i> Proses Teks Mutasi ⚡
+                </button>
+            </div>
+
+            <div class="wallet-section">
+                <div class="wallet-card-mini">
+                    <div class="wallet-icon"><i class="fa-solid fa-money-bill-wave"></i></div>
+                    <div class="wallet-detail-teks">
+                        <p>Cash (Fisik)</p>
+                        <h4 id="w-cash">Rp 0</h4>
+                    </div>
+                </div>
+                <div class="wallet-card-mini">
+                    <div class="wallet-icon"><i class="fa-solid fa-wallet"></i></div>
+                    <div class="wallet-detail-teks">
+                        <p>Dana</p>
+                        <h4 id="w-dana">Rp 0</h4>
+                    </div>
+                </div>
+                <div class="wallet-card-mini">
+                    <div class="wallet-icon"><i class="fa-solid fa-mobile-screen-button"></i></div>
+                    <div class="wallet-detail-teks">
+                        <p>Ovo</p>
+                        <h4 id="w-ovo">Rp 0</h4>
+                    </div>
+                </div>
+                <div class="wallet-card-mini">
+                    <div class="wallet-icon"><i class="fa-solid fa-bolt"></i></div>
+                    <div class="wallet-detail-teks">
+                        <p>GoPay</p>
+                        <h4 id="w-gopay">Rp 0</h4>
+                    </div>
+                </div>
+                <div class="wallet-card-mini" style="grid-column: span 2; margin-bottom: -5px;">
+                    <div class="wallet-icon"><i class="fa-solid fa-building-columns"></i></div>
+                    <div class="wallet-detail-teks">
+                        <p>Total Seluruh Bank</p>
+                        <h4 id="w-bank">Rp 0</h4>
+                    </div>
+                </div>
+                <!-- BREAKDOWN PER LIST BANK DI BAWAH TOTAL BANK -->
+                <div class="wallet-card-bank-detail">
+                    <div class="bank-sub-item"><span>Bank BCA:</span><strong id="wb-bca">Rp 0</strong></div>
+                    <div class="bank-sub-item"><span>Bank Mandiri:</span><strong id="wb-mandiri">Rp 0</strong></div>
+                    <div class="bank-sub-item"><span>Bank BNI:</span><strong id="wb-bni">Rp 0</strong></div>
+                    <div class="bank-sub-item"><span>Bank BRI:</span><strong id="wb-bri">Rp 0</strong></div>
+                    <div class="bank-sub-item"><span>Bank Lainnya:</span><strong id="wb-lain">Rp 0</strong></div>
+                </div>
+            </div>
+
+            <div class="ringkasan-bulan">
+                <div class="box-mini box-masuk">
+                    <i class="fa-solid fa-arrow-up-long"></i>
+                    <div>
+                        <p>Hasil Nguli</p>
+                        <h3 id="bulan-masuk">Rp 0</h3>
+                    </div>
+                </div>
+                <div class="box-mini box-keluar">
+                    <i class="fa-solid fa-arrow-down-long"></i>
+                    <div>
+                        <p>Beban Hidup</p>
+                        <h3 id="bulan-keluar">Rp 0</h3>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="jenis-transaksi">Aliran Dana</label>
+                <div class="input-wrapper">
+                    <i class="fa-solid fa-layer-group"></i>
+                    <select id="jenis-transaksi" onchange="window.ubahTemaWarna()">
+                        <option value="pemasukan">Pemasukan (Asik Cair)</option>
+                        <option value="pengeluaran">Pengeluaran (Yha Boros)</option>
+                        <option value="transfer">Transfer (Pindah Saldo)</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label id="label-nama-transaksi" for="nama-transaksi">Dapet rezeki dari mana lo?</label>
+                <div class="input-wrapper">
+                    <i class="fa-solid fa-pen-to-square"></i>
+                    <input type="text" id="nama-transaksi" placeholder="Contoh: Kopi Mahal / Uang Kaget">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label id="label-wallet-pilihan" for="wallet-pilihan">Masuk Duit Via Apa, Cuy?</label>
+                <div class="input-wrapper">
+                    <i class="fa-solid fa-credit-card"></i>
+                    <select id="wallet-pilihan">
+                        <option value="cash">💵 Uang Cash (Dompet Fisik)</option>
+                        <option value="dana">DANA</option>
+                        <option value="ovo">OVO</option>
+                        <option value="gopay">GoPay</option>
+                        <option value="bca">Bank BCA</option>
+                        <option value="mandiri">Bank Mandiri</option>
+                        <option value="bni">Bank BNI</option>
+                        <option value="bri">Bank BRI</option>
+                        <option value="bank_lain">Bank Lainnya...</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- FIELD TARGET TRANSFER (KONDISIONAL VIA JAVASCRIPT) -->
+            <div class="form-group" id="group-wallet-tujuan" style="display: none;">
+                <label for="wallet-tujuan">Pindah Ke Mana, Cuy?</label>
+                <div class="input-wrapper">
+                    <i class="fa-solid fa-arrow-right-to-bracket"></i>
+                    <select id="wallet-tujuan">
+                        <option value="cash">💵 Uang Cash (Dompet Fisik)</option>
+                        <option value="dana">DANA</option>
+                        <option value="ovo">OVO</option>
+                        <option value="gopay">GoPay</option>
+                        <option value="bca">Bank BCA</option>
+                        <option value="mandiri">Bank Mandiri</option>
+                        <option value="bni">Bank BNI</option>
+                        <option value="bri">Bank BRI</option>
+                        <option value="bank_lain">Bank Lainnya...</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group" id="group-kategori-sekte">
+                <label for="kategori-transaksi">Sekte Alokasi Duit</label>
+                <div class="input-wrapper">
+                    <i class="fa-solid fa-tags"></i>
+                    <select id="kategori-transaksi" onchange="window.cekKategoriKustom()">
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group" id="kustom-kategori-group" style="display: none;">
+                <label for="kategori-kustom-input">Nama Kategori Bebas Lo</label>
+                <div class="input-wrapper">
+                    <i class="fa-solid fa-signature"></i>
+                    <input type="text" id="kategori-kustom-input"
+                        placeholder="Ketik kategori bebas lo, misal: Gacha / Konser">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="nominal">Berapa Nominalnya? (Rp)</label>
+                <div class="input-wrapper">
+                    <i class="fa-solid fa-money-bill-wave"></i>
+                    <input type="text" id="nominal" placeholder="Contoh: 5.000.000"
+                        onkeyup="window.formatInputRupiah(this)">
+                </div>
+                <!-- TOMBOL SHORTCUT NOMINAL CEPAT -->
+                <div class="shortcut-nominal-container">
+                    <button type="button" class="btn-shortcut-nom"
+                        onclick="window.pemicuShortcutNominal('10.000')">+10k</button>
+                    <button type="button" class="btn-shortcut-nom"
+                        onclick="window.pemicuShortcutNominal('50.000')">+50k</button>
+                    <button type="button" class="btn-shortcut-nom"
+                        onclick="window.pemicuShortcutNominal('100.000')">+100k</button>
+                    <button type="button" class="btn-shortcut-nom"
+                        onclick="window.pemicuShortcutNominal('500.000')">+500k</button>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="tanggal-transaksi">Kapan Khilafnya?</label>
+                <div class="input-wrapper">
+                    <i class="fa-solid fa-calendar-days"></i>
+                    <input type="date" id="tanggal-transaksi">
+                </div>
+            </div>
+
+            <button id="btn-aksi" class="btn-hitung btn-pemasukan" onclick="window.tambahTransaksi()">
+                <i class="fa-solid fa-plus-circle"></i> Asik Tambah Kekayaan 🤑
+            </button>
+        </div>
+
+        <div class="kolom-kanan">
+            <div id="panel-histori" class="riwayat-section-target">
+                <div class="riwayat-header">
+                    <h3>Dosa Finansial</h3>
+
+                    <div class="search-wrapper">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <input type="text" id="search-transaksi" class="search-input" placeholder="Cari dosa lo..."
+                            onkeyup="window.tampilkanData()">
+                    </div>
+
+                    <select id="filter-bulan" class="filter-bulan" onchange="window.tampilkanData()">
+                        <option value="ALL">Semua Waktu</option>
+                        <option value="01">Januari</option>
+                        <option value="02">Februari</option>
+                        <option value="03">Maret</option>
+                        <option value="04">April</option>
+                        <option value="05">Mei</option>
+                        <option value="06">Juni</option>
+                        <option value="07">Juli</option>
+                        <option value="08">Agustus</option>
+                        <option value="09">September</option>
+                        <option value="10">Oktober</option>
+                        <option value="11">November</option>
+                        <option value="12">Desember</option>
+                    </select>
+                </div>
+
+                <div class="premium-feature-grid">
+                    <button id="btn-premium-ekspor" class="btn-premium-locked" onclick="window.pemicuBackupPremium()">
+                        <i id="lock-icon-1" class="fa-solid fa-file-arrow-down"></i> Backup JSON
+                    </button>
+                    <button id="btn-premium-grafik" class="btn-premium-locked" onclick="window.pemicuRestorePremium()">
+                        <i id="lock-icon-2" class="fa-solid fa-file-arrow-up"></i> Restore JSON
+                    </button>
+                    <button id="btn-premium-csv" class="btn-premium-locked" onclick="window.pemicuExportCSV()">
+                        <i id="lock-icon-3" class="fa-solid fa-file-excel"></i> Ekspor CSV
+                    </button>
+                </div>
+
+                <div class="chart-box-section">
+                    <h4><i class="fa-solid fa-chart-pie" style="color:var(--accent-blue);"></i> Proporsi Aliran Duit
+                    </h4>
+                    <div class="chart-wrapper-canvas">
+                        <canvas id="canvasChartKeuangan"></canvas>
+                    </div>
+
+                    <!-- LINE CHART VISUALISASI TREN SALDO BULANAN -->
+                    <h4 style="margin-top: 25px; align-self: flex-start; width: 100%;"><i
+                            class="fa-solid fa-chart-line" style="color:#2ecc71;"></i> Tren Naik-Turun Kekayaan 2026
+                    </h4>
+                    <div class="chart-wrapper-canvas-line">
+                        <canvas id="canvasChartLineTren"></canvas>
+                    </div>
+                </div>
+
+                <ul id="list-transaksi" class="list-transaksi">
+                </ul>
+            </div>
+
+            <!-- KALENDER JADWAL TAGIHAN RUTIN (BILL) -->
+            <div id="panel-bill" class="bill-section-target" style="width: 100%;">
+                <div class="section-bill-title">
+                    <i class="fa-solid fa-calendar-check"></i> Kalender Pengingat Tagihan 🗓️
+                </div>
+                <div class="bill-box-creator">
+                    <input type="text" id="bill-nama-input" placeholder="Nama Tagihan Rutin (Contoh: Kost / Netflix)">
+                    <input type="text" id="bill-nominal-input" placeholder="Nominal Tagihan (Rp)..."
+                        onkeyup="window.formatInputRupiah(this)">
+                    <input type="date" id="bill-tanggal-input">
+                    <button class="btn-add-wishlist" onclick="window.tambahTagihanBaru()">
+                        <i class="fa-solid fa-circle-plus"></i> Pasang Jadwal Pengingat
+                    </button>
+                </div>
+                <div id="bill-container" class="bill-container"></div>
+            </div>
+
+            <div id="panel-goals" class="wishlist-section-target" style="width: 100%;">
+                <div class="section-wishlist-title">
+                    <i class="fa-solid fa-bullseye"></i> Financial Goals / Wishlist 🎯
+                </div>
+
+                <div class="wishlist-box-creator">
+                    <input type="text" id="wishlist-nama-input" placeholder="Target barang impian (Contoh: PS5)">
+                    <input type="text" id="wishlist-harga-input" placeholder="Harga Target Barang (Rp)..."
+                        onkeyup="window.formatInputRupiah(this)">
+                    <button class="btn-add-wishlist" onclick="window.tambahWishlistBaru()">
+                        <i class="fa-solid fa-circle-plus"></i> Pasang Target Khilaf Baru
+                    </button>
+                </div>
+
+                <div id="wishlist-container" class="wishlist-container">
+                </div>
+            </div>
+
+            <!-- PRINT LAPORAN RESMI PDF -->
+            <button class="btn-print-pdf" onclick="window.eksekusiCetakPDFLaporan()">
+                <i class="fa-solid fa-file-pdf"></i> Cetak Dokumen / Simpan Laporan Keuangan PDF Resmi
+            </button>
+
+            <button class="btn-reset" onclick="window.eksekusiResetSemuaData()">
+                <i class="fa-solid fa-dumpster-fire"></i> Format Ulang Seluruh Data Aplikasi
+            </button>
+        </div>
+    </div>
+
+    <div class="about-wrapper">
+        <div class="about-info">
+            <h3><i class="fa-solid fa-circle-info" style="color:var(--accent-blue);"></i> Tentang WAYFinance</h3>
+            <p>
+                <strong>WAYFinance</strong> adalah sebuah web aseli bikinan sendiri yang lahir murni karena gua
+                <strong>males dan ribet banget kalau harus ngitung keuangan pakai rumus manual atau kalkulator bawaan
+                    HP</strong>. Kagak ada yang mewah di sini, fungsinya cuma buat wadah tobat biar kita semua sadar
+                diri sama dosa-dosa pengeluaran khilaf harian yang bikin dompet sekarat. Dah, gitu doang, simpel kan?
+            </p>
+        </div>
+        <div class="about-dev">
+            <h3><i class="fa-solid fa-code" style="color:#2ecc71;"></i> Pengembang</h3>
+            <div class="dev-card">
+                <div class="dev-avatar"><i class="fa-solid fa-user-astronaut"></i></div>
+                <div class="dev-detail">
+                    <h5>Wahyu Kurniawan</h5>
+                    <p>Cangkul System Architect</p>
+                    <p style="font-size: 0.7rem; color: var(--text-muted); font-style: italic; margin-top: 2px;">
+                        Seorang manusia biasa yang makan nasi, minum air bening, and suka ngulik baris kode demi
+                        bertahan hidup di bumi.
+                    </p>
+                    <div class="dev-socials">
+                        <a href="https://www.instagram.com/waydocumentary?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
+                            target="_blank" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="https://www.tiktok.com/@uwhayy?is_from_webapp=1&sender_device=pc" target="_blank"
+                            title="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- SISTEM KUNCI LISENSI PREMIUM LOKAL ANTI-RIBET ---
+        const KODE_LISENSI_RAHASIA = "WAY-PREMIUM-2026";
+
+        let statusUserPremium = false;
+        let daftarTransaksi = [];
+        let daftarWishlist = [];
+        let daftarTagihan = [];
+        let sembunyikanSaldoMode = false;
+        let idTransaksiDiedit = null;
+        let fungsiAksiModal = null;
+        let objekChartGlobal = null;
+        let objekChartLineGlobal = null;
+
+        const kamusTeksKategori = {
+            "makanan": "☕ Lambung Sejahtera",
+            "transportasi": "🚗 Jalan-Jalan Mulu",
+            "hiburan": "🎮 Senang-Senang Sesaat",
+            "tagihan": "💸 Beban Rutin",
+            "belanja": "🛍️ Lapar Mata",
+            "gaji": "💰 Gaji Keringat Sendiri",
+            "investasi": "📈 Pos Investasi Seksi",
+            "transfer": "🔄 Mutasi Antar Saku",
+            "kustom": "🔮 Kategori Bebas Lo"
+        };
+
+        const kamusIkon = {
+            "makanan": "fa-solid fa-utensils",
+            "transportasi": "fa-solid fa-car",
+            "hiburan": "fa-solid fa-gamepad",
+            "tagihan": "fa-solid fa-file-invoice-dollar",
+            "belanja": "fa-solid fa-bag-shopping",
+            "gaji": "fa-solid fa-money-check-dollar",
+            "investasi": "fa-solid fa-chart-line",
+            "transfer": "fa-solid fa-arrows-rotate",
+            "kustom": "fa-solid fa-wand-magic-sparkles"
+        };
+
+        // --- LOGIKA DROPDOWN KUSTOM ---
+        function initCustomSelects() {
+            const selects = ['jenis-transaksi', 'wallet-pilihan', 'wallet-tujuan', 'kategori-transaksi'];
+            selects.forEach(id => {
+                const selectEl = document.getElementById(id);
+                if (!selectEl) return;
+
+                selectEl.style.display = 'none';
+
+                let customContainer = document.getElementById('custom-select-container-' + id);
+                if (customContainer) {
+                    updateCustomSelectOptions(id);
+                    return;
+                }
+
+                customContainer = document.createElement('div');
+                customContainer.className = 'custom-select';
+                customContainer.id = 'custom-select-container-' + id;
+
+                const trigger = document.createElement('div');
+                trigger.className = 'custom-select-trigger';
+                trigger.innerHTML = `<span></span><i class="fa-solid fa-chevron-down select-chevron"></i>`;
+                customContainer.appendChild(trigger);
+
+                const dropdown = document.createElement('div');
+                dropdown.className = 'custom-select-dropdown';
+                customContainer.appendChild(dropdown);
+
+                selectEl.parentNode.insertBefore(customContainer, selectEl.nextSibling);
+
+                trigger.onclick = function (e) {
+                    e.stopPropagation();
+                    document.querySelectorAll('.custom-select').forEach(el => {
+                        if (el !== customContainer) el.classList.remove('active');
+                    });
+                    customContainer.classList.toggle('active');
+                };
+
+                updateCustomSelectOptions(id);
+            });
+
+            document.addEventListener('click', function () {
+                document.querySelectorAll('.custom-select').forEach(el => {
+                    el.classList.remove('active');
+                });
+            });
+        }
+
+        function updateCustomSelectOptions(id) {
+            const selectEl = document.getElementById(id);
+            const customContainer = document.getElementById('custom-select-container-' + id);
+            if (!selectEl || !customContainer) return;
+
+            const triggerText = customContainer.querySelector('.custom-select-trigger span');
+            const dropdown = customContainer.querySelector('.custom-select-dropdown');
+            dropdown.innerHTML = '';
+
+            const options = selectEl.options;
+            for (let i = 0; i < options.length; i++) {
+                const opt = options[i];
+                const optDiv = document.createElement('div');
+                optDiv.className = 'custom-select-option';
+                if (opt.value === selectEl.value) {
+                    optDiv.classList.add('selected');
+                    triggerText.innerHTML = opt.text;
+                }
+                optDiv.innerText = opt.text;
+                optDiv.setAttribute('data-value', opt.value);
+
+                optDiv.onclick = function (e) {
+                    e.stopPropagation();
+                    selectEl.value = opt.value;
+                    selectEl.dispatchEvent(new Event('change'));
+                    syncCustomSelect(id);
+                    customContainer.classList.remove('active');
+                };
+                dropdown.appendChild(optDiv);
+            }
+        }
+
+        function syncCustomSelect(id) {
+            const selectEl = document.getElementById(id);
+            const customContainer = document.getElementById('custom-select-container-' + id);
+            if (!selectEl || !customContainer) return;
+
+            const triggerText = customContainer.querySelector('.custom-select-trigger span');
+            const optionsDivs = customContainer.querySelectorAll('.custom-select-option');
+            
+            let selectedText = "";
+            optionsDivs.forEach(div => {
+                if (div.getAttribute('data-value') === selectEl.value) {
+                    div.classList.add('selected');
+                    selectedText = div.innerText;
+                } else {
+                    div.classList.remove('selected');
+                }
+            });
+            
+            if (selectedText) {
+                triggerText.innerHTML = selectedText;
+            } else if (selectEl.options[selectEl.selectedIndex]) {
+                triggerText.innerHTML = selectEl.options[selectEl.selectedIndex].text;
+            }
+        }
+
+        function syncSemuaCustomSelect() {
+            const selects = ['jenis-transaksi', 'wallet-pilihan', 'wallet-tujuan', 'kategori-transaksi'];
+            selects.forEach(id => {
+                syncCustomSelect(id);
+            });
+        }
+
+        window.initCustomSelects = initCustomSelects;
+        window.updateCustomSelectOptions = updateCustomSelectOptions;
+        window.syncCustomSelect = syncCustomSelect;
+        window.syncSemuaCustomSelect = syncSemuaCustomSelect;
+
+        window.ubahTemaWarna = ubahTemaWarna;
+        window.cekKategoriKustom = cekKategoriKustom;
+        window.tambahTransaksi = tambahTransaksi;
+        window.aktifkanModeEdit = aktifkanModeEdit;
+        window.hapusSatuTransaksi = hapusSatuTransaksi;
+        window.eksekusiResetSemuaData = eksekusiResetSemuaData;
+        window.tambahWishlistBaru = tambahWishlistBaru;
+        window.isiCelenganInline = isiCelenganInline;
+        window.hapusWishlist = hapusWishlist;
+        window.tampilkanData = tampilkanData;
+        window.tutupCustomModal = tutupCustomModal;
+        window.lompatSectionHP = lompatSectionHP;
+        window.formatInputRupiah = formatInputRupiah;
+        window.bukaModalPenjelasanDev = bukaModalPenjelasanDev;
+        window.pemicuBackupPremium = pemicuBackupPremium;
+        window.pemicuRestorePremium = pemicuRestorePremium;
+        window.eksekusiRestoreJSON = eksekusiRestoreJSON;
+        window.pemicuExportCSV = pemicuExportCSV;
+
+        window.toggleSembunyikanSaldo = toggleSembunyikanSaldo;
+        window.pemicuShortcutNominal = pemicuShortcutNominal;
+        window.tambahTagihanBaru = tambahTagihanBaru;
+        window.bayarTagihanOtomatis = bayarTagihanOtomatis;
+        window.hapusTagihan = hapusTagihan;
+
+        window.eksekusiSmartPaste = eksekusiSmartPaste;
+        window.eksekusiCetakPDFLaporan = eksekusiCetakPDFLaporan;
+
+        window.addEventListener('DOMContentLoaded', () => {
+            statusUserPremium = localStorage.getItem('way_finance_premium_status') === 'true';
+            sembunyikanSaldoMode = localStorage.getItem('way_finance_hide_balance_status') === 'true';
+
+            muatDataLokalLego();
+
+            const waktuSekarang = new Date();
+            document.getElementById('filter-bulan').value = String(waktuSekarang.getMonth() + 1).padStart(2, '0');
+            document.getElementById('tanggal-transaksi').value = waktuSekarang.toISOString().split('T')[0];
+            document.getElementById('bill-tanggal-input').value = waktuSekarang.toISOString().split('T')[0];
+
+            perbaruiOpsiKategori();
+            initCustomSelects();
+            perbaruiTampilanTombolPremium();
+            tampilkanData();
+
+            if (window.innerWidth <= 820) { window.addEventListener('scroll', deteksiScrollSectionHP); }
+        });
+
+        function perbaruiTampilanTombolPremium() {
+            const btnEkspor = document.getElementById('btn-premium-ekspor');
+            const btnGrafik = document.getElementById('btn-premium-grafik');
+            const btnCsv = document.getElementById('btn-premium-csv');
+            const btnLisensi = document.getElementById('btn-lisensi-utama');
+            const txtLisensi = document.getElementById('auth-btn-text');
+            const icon1 = document.getElementById('lock-icon-1');
+            const icon2 = document.getElementById('lock-icon-2');
+            const icon3 = document.getElementById('lock-icon-3');
+
+            if (statusUserPremium) {
+                btnEkspor.classList.add('unlocked');
+                btnGrafik.classList.add('unlocked');
+                btnCsv.classList.add('unlocked');
+                btnLisensi.classList.add('unlocked');
+                txtLisensi.innerText = "Premium Active (Wahyu)";
+                icon1.className = "fa-solid fa-file-arrow-down";
+                icon2.className = "fa-solid fa-file-arrow-up";
+                icon3.className = "fa-solid fa-file-excel";
+            } else {
+                btnEkspor.classList.remove('unlocked');
+                btnGrafik.classList.remove('unlocked');
+                btnCsv.classList.remove('unlocked');
+                btnLisensi.classList.remove('unlocked');
+                txtLisensi.innerText = "💎 Aktivasi WAY Premium";
+                icon1.className = "fa-solid fa-lock";
+                icon2.className = "fa-solid fa-lock";
+                icon3.className = "fa-solid fa-lock";
+            }
+        }
+
+        function bukaModalPenjelasanDev() {
+            if (statusUserPremium) {
+                panggilCustomModal(
+                    'Kamu Sudah Premium! 😎',
+                    `Kunci lisensi premium kamu sudah aktif di device ini.\n\nSemua fitur ekspor/import file backup JSON, unduh CSV, dan generator data gaib bebas kamu pakai sepuasnya selamanya, Cuy!`,
+                    function () {
+                        triggerCheatDataGaib();
+                    },
+                    "success"
+                );
+                document.getElementById('modal-confirm-btn').innerText = "Simulasi Suntik Data Gaib 🎯";
+                document.getElementById('modal-cancel-btn').style.display = "inline-block";
+                document.getElementById('modal-cancel-btn').innerText = "Tutup";
+            } else {
+                panggilCustomModal(
+                    'Buka Fitur WAY Premium? 💎',
+                    `Keunggulan Fitur WAY Premium yang akan terbuka:\n
+                    1. 💾 Backup & Restore JSON: Amankan data riwayat agar tidak hilang saat ganti HP.
+                    2. 📊 Ekspor CSV: Unduh data transaksi langsung ke format Excel untuk laporan detail.
+                    3. 🛑 Budget Limit Warning: Notifikasi otomatis jika pengeluaran bulanan lo melampaui batas sehat (Rp2.500.000).
+                    4. 🗓️ Kalender Tagihan Rutin: Pengingat jadwal bayar beban rutin (kost, wifi, dll.) beserta tombol autodeduksi saku.
+                    5. 👁️ Sembunyikan Saldo: Amankan privasi dari mata-mata teman nongkrong lo.
+                    6. ⚡ Shortcut Nominal Cepat: Isi formulir secepat kilat sekali tap.
+                    7. 📋 Smart Paste Mutasi: Copy-paste teks SMS/notifikasi M-banking, nominal langsung terisi otomatis secara ajaib!
+                    8. 📈 Line Chart Tren Kekayaan: Analisis pergerakan naik turun kekayaan lo dari waktu ke waktu.\n
+                    Masukkan "Kunci Lisensi" resmi dari Wahyu Kurniawan di bawah ini untuk membuka akses permanen sepuasnya!`,
+                    function () {
+                        const kodeInput = document.getElementById('input-kode-premium-field').value;
+                        if (kodeInput && kodeInput.trim() === KODE_LISENSI_RAHASIA) {
+                            statusUserPremium = true;
+                            localStorage.setItem('way_finance_premium_status', 'true');
+                            perbaruiTampilanTombolPremium();
+                            tampilkanData();
+                            panggilCustomModal('Aktivasi Sukses! 🎉', 'Selamat! Semua fitur gembok premium berhasil dibuka permanen, Bos Wahyu!', null, 'success');
+                        } else {
+                            panggilCustomModal('Aktivasi Gagal ❌', 'Kunci Lisensi yang kamu masukkan salah/tidak valid! Hubungi Wahyu buat beli kodenya, Cuy.', null, 'exclamation');
+                        }
+                    },
+                    "developer_login"
+                );
+            }
+        }
+
+        function pemicuBackupPremium() {
+            if (!statusUserPremium) { bukaPaywallPremium('Backup Data JSON'); return; }
+            eksekusiBackupJSON();
+        }
+
+        function pemicuRestorePremium() {
+            if (!statusUserPremium) { bukaPaywallPremium('Restore Data JSON'); return; }
+            document.getElementById('json-restore-file').click();
+        }
+
+        function pemicuExportCSV() {
+            if (!statusUserPremium) { bukaPaywallPremium('Ekspor Format CSV'); return; }
+            eksekusiExportCSV();
+        }
+
+        function bukaPaywallPremium(namaFitur) {
+            panggilCustomModal(
+                'Eits, Fitur Ini Dikunci Dulu, Cuy! 💎',
+                `Fitur "${namaFitur}" ini cuma terbuka buat pengguna versi Premium.\n\nCukup bayar Rp10.000 (sekali bayar seumur hidup) ke pengembang, lo bisa amankan seluruh riwayat keuangan lo dalam bentuk file biar gak takut hilang pas ganti HP!\n\nKlik tombol di bawah buat chat Wahyu via WA sekarang, otomatis dapet Kunci Aktivasi Lisensinya!`,
+                function () {
+                    window.open("https://wa.me/6283832883308?text=Halo%20Bang%20Wahyu,%20gua%20mau%20beli%20Kunci%20Lisensi%20Premium%20WAYFinance%20Rp10k%20dong!", "_blank");
+                },
+                "premium"
+            );
+        }
+
+        function toggleSembunyikanSaldo() {
+            if (!statusUserPremium) { bukaPaywallPremium('Sembunyikan Saldo (Hide Mode)'); return; }
+            sembunyikanSaldoMode = !sembunyikanSaldoMode;
+            localStorage.setItem('way_finance_hide_balance_status', sembunyikanSaldoMode ? 'true' : 'false');
+            tampilkanData();
+        }
+
+        function pemicuShortcutNominal(nilaiString) {
+            if (!statusUserPremium) { bukaPaywallPremium('Shortcut Nominal Cepat'); return; }
+            const inputNom = document.getElementById('nominal');
+            let nilaiSekarang = parseFloat(inputNom.value.replace(/\./g, '')) || 0;
+            let nilaiTambah = parseFloat(nilaiString.replace(/\./g, '')) || 0;
+            inputNom.value = nilaiSekarang + nilaiTambah;
+            formatInputRupiah(inputNom);
+        }
+
+        // --- SMART PASTE MANUAL MODE LOGIC (DENGAN BUTTON TRIGGER) ---
+        function eksekusiSmartPaste() {
+            if (!statusUserPremium) {
+                bukaPaywallPremium('Smart Paste Mutasi');
+                document.getElementById('smart-paste-box').value = "";
+                return;
+            }
+            const stringTeks = document.getElementById('smart-paste-box').value;
+            if (!stringTeks || !stringTeks.trim()) {
+                panggilCustomModal('Kotak Kosong ❌', 'Ketik atau paste dulu teks mutasi lo di dalam box, Cuy!', null, 'exclamation');
+                return;
+            }
+
+            const deteksiAngka = stringTeks.replace(/[^,\d]/g, '').match(/\d+/);
+            const nominalParsed = deteksiAngka ? parseFloat(deteksiAngka[0]) : null;
+
+            if (nominalParsed) {
+                const inputFormNominal = document.getElementById('nominal');
+                inputFormNominal.value = nominalParsed;
+                formatInputRupiah(inputFormNominal);
+
+                const lowerTeks = stringTeks.toLowerCase();
+                const sakuSelect = document.getElementById('wallet-pilihan');
+                if (lowerTeks.includes('bca')) sakuSelect.value = 'bca';
+                else if (lowerTeks.includes('mandiri')) sakuSelect.value = 'mandiri';
+                else if (lowerTeks.includes('dana')) sakuSelect.value = 'dana';
+                else if (lowerTeks.includes('gopay')) sakuSelect.value = 'gopay';
+                else if (lowerTeks.includes('ovo')) sakuSelect.value = 'ovo';
+
+                const aliranSelect = document.getElementById('jenis-transaksi');
+                if (lowerTeks.includes('transfer') || lowerTeks.includes('keluar') || lowerTeks.includes('debit') || lowerTeks.includes('payment')) {
+                    aliranSelect.value = 'pengeluaran';
+                } else if (lowerTeks.includes('masuk') || lowerTeks.includes('credit') || lowerTeks.includes('cair')) {
+                    aliranSelect.value = 'pemasukan';
+                }
+                ubahTemaWarna();
+
+                panggilCustomModal('Analisis Sukses! ⚡', `Berhasil mendeteksi nominal Rp ${nominalParsed.toLocaleString('id-ID')}!\nSilakan lengkapi nama transaksi lalu klik Simpan.`, null, 'success');
+            } else {
+                panggilCustomModal('Gagal Ekstrak ❌', 'Sistem gak nemu angka nominal transaksi di teks lo. Coba cek lagi, Cuy!', null, 'exclamation');
+            }
+        }
+
+        function eksekusiCetakPDFLaporan() {
+            if (!statusUserPremium) { bukaPaywallPremium('Cetak Laporan PDF Resmi'); return; }
+            window.print();
+        }
+
+        function tambahTagihanBaru() {
+            if (!statusUserPremium) { bukaPaywallPremium('Kalender Jadwal Tagihan'); return; }
+            const nama = document.getElementById('bill-nama-input').value;
+            const nominal = document.getElementById('bill-nominal-input').value;
+            const tanggal = document.getElementById('bill-tanggal-input').value;
+
+            if (!nama || nama.trim() === "" || !nominal || !tanggal) return;
+            const nominalMurni = parseFloat(nominal.replace(/\./g, ''));
+            if (isNaN(nominalMurni) || nominalMurni <= 0) return;
+
+            daftarTagihan.push({ id: +new Date(), nama: nama.trim(), nominal: nominalMurni, tanggal: tanggal });
+            document.getElementById('bill-nama-input').value = "";
+            document.getElementById('bill-nominal-input').value = "";
+
+            simpanDataKeLokal();
+            tampilkanData();
+        }
+
+        function bayarTagihanOtomatis(idBill, walletValue) {
+            const target = daftarTagihan.find(t => t.id === idBill);
+            if (!target) return;
+
+            daftarTransaksi.unshift({
+                id: +new Date(),
+                nama: `Bayar: ${target.nama}`,
+                jenis: "pengeluaran",
+                wallet: walletValue,
+                kategori: "tagihan",
+                nominal: target.nominal,
+                tanggalCetak: new Date(target.tanggal).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' }),
+                bulan: String(new Date(target.tanggal).getMonth() + 1).padStart(2, '0'),
+                tanggalMentah: target.tanggal
+            });
+
+            daftarTagihan = daftarTagihan.filter(t => t.id !== idBill);
+            simpanDataKeLokal();
+            tampilkanData();
+            panggilCustomModal('Tagihan Lunas! 💸', `Sukses mendebet saldo ${walletValue.toUpperCase()} untuk ${target.nama}.`, null, 'success');
+        }
+
+        function hapusTagihan(idBill) {
+            daftarTagihan = daftarTagihan.filter(t => t.id !== idBill);
+            simpanDataKeLokal();
+            tampilkanData();
+        }
+
+        function triggerCheatDataGaib() {
+            const dummy = [
+                { id: +new Date() - 1200000, nama: "Gaji Hasil Nguli (Jan)", jenis: "pemasukan", wallet: "bca", kategori: "gaji", nominal: 8500000, tanggalCetak: "10 Januari 2026", bulan: "01", tanggalMentah: "2026-01-10" },
+                { id: +new Date() - 1150000, nama: "Bayar Kost Bulanan (Jan)", jenis: "pengeluaran", wallet: "cash", kategori: "tagihan", nominal: 1500000, tanggalCetak: "12 Januari 2026", bulan: "01", tanggalMentah: "2026-01-12" },
+                
+                { id: +new Date() - 1100000, nama: "Bonus Proyek Landing Page (Feb)", jenis: "pemasukan", wallet: "mandiri", kategori: "gaji", nominal: 2500000, tanggalCetak: "05 Februari 2026", bulan: "02", tanggalMentah: "2026-02-05" },
+                { id: +new Date() - 1050000, nama: "Makan Buffet All You Can Eat (Feb)", jenis: "pengeluaran", wallet: "gopay", kategori: "makanan", nominal: 450000, tanggalCetak: "14 Februari 2026", bulan: "02", tanggalMentah: "2026-02-14" },
+                
+                { id: +new Date() - 1000000, nama: "Dividen Saham Cair (Mar)", jenis: "pemasukan", wallet: "bca", kategori: "investasi", nominal: 1200000, tanggalCetak: "02 Maret 2026", bulan: "03", tanggalMentah: "2026-03-02" },
+                { id: +new Date() - 950000, nama: "Nonton Konser Populer (Mar)", jenis: "pengeluaran", wallet: "dana", kategori: "hiburan", nominal: 1800000, tanggalCetak: "18 Maret 2026", bulan: "03", tanggalMentah: "2026-03-18" },
+                
+                { id: +new Date() - 900000, nama: "THR Cair Asik (Apr)", jenis: "pemasukan", wallet: "bca", kategori: "gaji", nominal: 7500000, tanggalCetak: "05 April 2026", bulan: "04", tanggalMentah: "2026-04-05" },
+                { id: +new Date() - 850000, nama: "Beli Baju Lebaran Keluarga (Apr)", jenis: "pengeluaran", wallet: "cash", kategori: "belanja", nominal: 2000000, tanggalCetak: "12 April 2026", bulan: "04", tanggalMentah: "2026-04-12" },
+                
+                { id: +new Date() - 800000, nama: "Gaji Utama Nguli (Mei)", jenis: "pemasukan", wallet: "bca", kategori: "gaji", nominal: 8500000, tanggalCetak: "10 Mei 2026", bulan: "05", tanggalMentah: "2026-05-10" },
+                { id: +new Date() - 750000, nama: "Bayar Tagihan Listrik & Internet (Mei)", jenis: "pengeluaran", wallet: "dana", kategori: "tagihan", nominal: 650000, tanggalCetak: "15 Mei 2026", bulan: "05", tanggalMentah: "2026-05-15" },
+                
+                { id: +new Date() - 700000, nama: "Hasil Jual HP Bekas (Jun)", jenis: "pemasukan", wallet: "cash", kategori: "kustom", nominal: 2200000, tanggalCetak: "08 Juni 2026", bulan: "06", tanggalMentah: "2026-06-08" },
+                { id: +new Date() - 650000, nama: "Servis Rutin Motor Kesayangan (Jun)", jenis: "pengeluaran", wallet: "bca", kategori: "transportasi", nominal: 750000, tanggalCetak: "20 Juni 2026", bulan: "06", tanggalMentah: "2026-06-20" },
+                
+                { id: +new Date() - 600000, nama: "Gaji Utama Nguli (Jul)", jenis: "pemasukan", wallet: "bca", kategori: "gaji", nominal: 8500000, tanggalCetak: "10 Juli 2026", bulan: "07", tanggalMentah: "2026-07-10" },
+                { id: +new Date() - 550000, nama: "Khilaf Beli Gadget Baru (Jul)", jenis: "pengeluaran", wallet: "mandiri", kategori: "belanja", nominal: 4500000, tanggalCetak: "15 Juli 2026", bulan: "07", tanggalMentah: "2026-07-15" },
+                
+                { id: +new Date() - 500000, nama: "Pemasukan Menang Lomba (Agu)", jenis: "pemasukan", wallet: "ovo", kategori: "kustom", nominal: 3500000, tanggalCetak: "17 Agustus 2026", bulan: "08", tanggalMentah: "2026-08-17" },
+                { id: +new Date() - 450000, nama: "Tiket Liburan Singkat (Agu)", jenis: "pengeluaran", wallet: "gopay", kategori: "hiburan", nominal: 1200000, tanggalCetak: "20 Agustus 2026", bulan: "08", tanggalMentah: "2026-08-20" },
+                
+                { id: +new Date() - 400000, nama: "Gaji Utama Nguli (Sep)", jenis: "pemasukan", wallet: "bca", kategori: "gaji", nominal: 8500000, tanggalCetak: "10 September 2026", bulan: "09", tanggalMentah: "2026-09-10" },
+                { id: +new Date() - 350000, nama: "Belanja Bulanan Supermarket (Sep)", jenis: "pengeluaran", wallet: "cash", kategori: "belanja", nominal: 1400000, tanggalCetak: "12 September 2026", bulan: "09", tanggalMentah: "2026-09-12" },
+                
+                { id: +new Date() - 300000, nama: "Profit Reksadana Cair (Okt)", jenis: "pemasukan", wallet: "bca", kategori: "investasi", nominal: 1800000, tanggalCetak: "05 Oktober 2026", bulan: "10", tanggalMentah: "2026-10-05" },
+                { id: +new Date() - 250000, nama: "Beli Kopi Starbucks & Roti (Okt)", jenis: "pengeluaran", wallet: "dana", kategori: "makanan", nominal: 350000, tanggalCetak: "25 Oktober 2026", bulan: "10", tanggalMentah: "2026-10-25" },
+                
+                { id: +new Date() - 200000, nama: "Gaji Utama Nguli (Nov)", jenis: "pemasukan", wallet: "bca", kategori: "gaji", nominal: 8500000, tanggalCetak: "10 November 2026", bulan: "11", tanggalMentah: "2026-11-10" },
+                { id: +new Date() - 150000, nama: "Jalan-jalan Weekend Luar Kota (Nov)", jenis: "pengeluaran", wallet: "cash", kategori: "hiburan", nominal: 2200000, tanggalCetak: "18 November 2026", bulan: "11", tanggalMentah: "2026-11-18" },
+                
+                { id: +new Date() - 100000, nama: "Bonus Akhir Tahun Melimpah (Des)", jenis: "pemasukan", wallet: "bca", kategori: "gaji", nominal: 10000000, tanggalCetak: "15 Desember 2026", bulan: "12", tanggalMentah: "2026-12-15" },
+                { id: +new Date() - 50000, nama: "Tiket Pesawat & Hotel Liburan (Des)", jenis: "pengeluaran", wallet: "gopay", kategori: "hiburan", nominal: 5500000, tanggalCetak: "22 Desember 2026", bulan: "12", tanggalMentah: "2026-12-22" }
+            ];
+            daftarTransaksi = [...dummy, ...daftarTransaksi];
+            simpanDataKeLokal();
+            tampilkanData();
+            panggilCustomModal('Sukses Suntik! 🎯', '24 Data transaksi bebas untuk seluruh bulan di tahun 2026 berhasil disuntikkan secara ajaib!', null, 'success');
+        }
+
+        function muatDataLokalLego() {
+            const dataLokal = localStorage.getItem('transaksiKeuangan');
+            daftarTransaksi = dataLokal ? JSON.parse(dataLokal) : [];
+            const dataWishlistLokal = localStorage.getItem('wishlistBarangAnakMuda');
+            daftarWishlist = dataWishlistLokal ? JSON.parse(dataWishlistLokal) : [];
+            const dataTagihanLokal = localStorage.getItem('way_finance_tagihan_reminders');
+            daftarTagihan = dataTagihanLokal ? JSON.parse(dataTagihanLokal) : [];
+        }
+
+        function simpanDataKeLokal() {
+            localStorage.setItem('transaksiKeuangan', JSON.stringify(daftarTransaksi));
+            localStorage.setItem('wishlistBarangAnakMuda', JSON.stringify(daftarWishlist));
+            localStorage.setItem('way_finance_tagihan_reminders', JSON.stringify(daftarTagihan));
+        }
+
+        function eksekusiBackupJSON() {
+            const dataPaket = { aplikasi: "WAYFinance_Backup", waktuEkspor: new Date().toISOString(), transaksi: daftarTransaksi, wishlist: daftarWishlist, tagihan: daftarTagihan };
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(dataPaket));
+            const downloadAnchor = document.createElement('a');
+            downloadAnchor.setAttribute("href", dataStr);
+            downloadAnchor.setAttribute("download", `WAYFinance_Backup_${new Date().toISOString().split('T')[0]}.json`);
+            document.body.appendChild(downloadAnchor);
+            downloadAnchor.click();
+            downloadAnchor.remove();
+        }
+
+        function eksekusiRestoreJSON(inputElemen) {
+            const file = inputElemen.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                try {
+                    const objekData = JSON.parse(e.target.result);
+                    if (objekData.aplikasi === "WAYFinance_Backup") {
+                        daftarTransaksi = objekData.transaksi || [];
+                        daftarWishlist = objekData.wishlist || [];
+                        daftarTagihan = objekData.tagihan || [];
+                        simpanDataKeLokal();
+                        tampilkanData();
+                        panggilCustomModal('Restore Berhasil! 🎉', 'Semua data berhasil dikembalikan!', null, 'success');
+                    } else {
+                        panggilCustomModal('Format Salah ❌', 'File cadangan tidak valid!', null, 'exclamation');
+                    }
+                } catch (err) {
+                    panggilCustomModal('Eror File ❌', 'File JSON rusak!', null, 'exclamation');
+                }
+            };
+            reader.readAsText(file);
+            inputElemen.value = "";
+        }
+
+        function eksekusiExportCSV() {
+            if (daftarTransaksi.length === 0) {
+                panggilCustomModal('Data Kosong ❌', 'Belum ada data transaksi!', null, 'exclamation');
+                return;
+            }
+            let barisCsv = ["ID,Nama Transaksi,Aliran Dana,Asal Saku,Target Saku,Kategori,Nominal,Tanggal"];
+            daftarTransaksi.forEach(item => {
+                barisCsv.push(`"${item.id}","${item.nama.replace(/"/g, '""')}","${item.jenis}","${item.wallet}","${item.walletTujuan || '-'}","${item.kategori}",${item.nominal},"${item.tanggalCetak}"`);
+            });
+            const kontenCsv = "\uFEFF" + barisCsv.join("\n");
+            const blobData = new Blob([kontenCsv], { type: 'text/csv;charset=utf-8;' });
+            const linkDownload = document.createElement("a");
+            const urlBlob = URL.createObjectURL(blobData);
+            linkDownload.setAttribute("href", urlBlob);
+            linkDownload.setAttribute("download", `WAYFinance_Report_${new Date().toISOString().split('T')[0]}.csv`);
+            linkDownload.style.visibility = 'hidden';
+            document.body.appendChild(linkDownload);
+            linkDownload.click();
+            document.body.removeChild(linkDownload);
+        }
+
+        function html_escape_tag(str) {
+            if (!str) return "";
+            return str.toString().replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+        }
+
+        function panggilCustomModal(judul, pesan, callbackAksi, tipeIcon = "exclamation") {
+            const iconElemen = document.querySelector('#custom-confirm-modal i');
+            const confirmBtn = document.getElementById('modal-confirm-btn');
+            const cancelBtn = document.getElementById('modal-cancel-btn');
+            const fieldArea = document.getElementById('modal-custom-field-area');
+
+            document.getElementById('modal-title').innerText = judul;
+            document.getElementById('modal-message').innerText = pesan;
+
+            cancelBtn.style.display = "inline-block";
+            cancelBtn.innerText = "Batal";
+            fieldArea.innerHTML = "";
+
+            if (tipeIcon === "premium") {
+                iconElemen.className = "fa-solid fa-gem";
+                iconElemen.style.color = "#f39c12";
+                confirmBtn.innerText = "Hubungi Wahyu Via WA 🚀";
+                confirmBtn.className = "modal-btn modal-btn-premium";
+            } else if (tipeIcon === "developer_login") {
+                iconElemen.className = "fa-solid fa-key";
+                iconElemen.style.color = "#f39c12";
+                fieldArea.innerHTML = `<input type="text" id="input-kode-premium-field" class="modal-code-input" placeholder="Ketik Kunci Lisensi Di Sini...">`;
+                confirmBtn.innerText = "Validasi Kunci 🔓";
+                confirmBtn.className = "modal-btn modal-btn-dev-auth";
+            } else if (tipeIcon === "success") {
+                iconElemen.className = "fa-solid fa-circle-check";
+                iconElemen.style.color = "#2ecc71";
+                confirmBtn.innerText = "Oke Siap";
+                confirmBtn.className = "modal-btn modal-btn-success";
+                cancelBtn.style.display = "none";
+            } else {
+                iconElemen.className = "fa-solid fa-circle-exclamation";
+                iconElemen.style.color = "#e74c3c";
+                confirmBtn.innerText = "Iya, Eksekusi";
+                confirmBtn.className = "modal-btn modal-btn-confirm";
+            }
+
+            document.getElementById('custom-confirm-modal').classList.add('active');
+            fungsiAksiModal = callbackAksi;
+
+            confirmBtn.onclick = function () {
+                if (fungsiAksiModal) fungsiAksiModal();
+                tutupCustomModal();
+            };
+        }
+
+        function tutupCustomModal() {
+            document.getElementById('custom-confirm-modal').classList.remove('active');
+            fungsiAksiModal = null;
+        }
+
+        function lompatSectionHP(idTarget, idTombol) {
+            const elemen = document.getElementById(idTarget);
+            if (elemen) {
+                elemen.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                document.querySelectorAll('.float-btn').forEach(btn => btn.classList.remove('active'));
+                document.getElementById(idTombol).classList.add('active');
+            }
+        }
+
+        function deteksiScrollSectionHP() {
+            const scrollPos = window.scrollY + 100;
+            const historiTop = document.getElementById('panel-histori').offsetTop;
+            const goalsTop = document.getElementById('panel-goals').offsetTop;
+            document.querySelectorAll('.float-btn').forEach(btn => btn.classList.remove('active'));
+            if (scrollPos >= goalsTop) { document.getElementById('f-btn-goals').classList.add('active'); }
+            else if (scrollPos >= historiTop) { document.getElementById('f-btn-histori').classList.add('active'); }
+            else { document.getElementById('f-btn-input').classList.add('active'); }
+        }
+
+        function formatInputRupiah(elemen) {
+            let nilaiBersih = elemen.value.replace(/[^,\d]/g, '').toString();
+            let sisa = nilaiBersih.length % 3;
+            let rupiah = nilaiBersih.substr(0, sisa);
+            let ribuan = nilaiBersih.substr(sisa).match(/\d{3}/gi);
+            if (ribuan) { let separator = sisa ? '.' : ''; rupiah += separator + ribuan.join('.'); }
+            elemen.value = rupiah;
+        }
+
+        function cekKategoriKustom() {
+            const kat = document.getElementById('kategori-transaksi').value;
+            document.getElementById('kustom-kategori-group').style.display = (kat === "kustom") ? "block" : "none";
+        }
+
+        function perbaruiOpsiKategori() {
+            const jenis = document.getElementById('jenis-transaksi').value;
+            const kategoriSelect = document.getElementById('kategori-transaksi');
+            const groupKategori = document.getElementById('group-kategori-sekte');
+
+            if (jenis === "transfer") {
+                groupKategori.style.display = "none";
+                document.getElementById('kustom-kategori-group').style.display = "none";
+                return;
+            }
+
+            groupKategori.style.display = "block";
+            if (jenis === "pemasukan") {
+                kategoriSelect.innerHTML = `<option value="gaji">Gaji Hasil Nguli</option><option value="investasi">Pos Investasi Seksi</option><option value="kustom">Bebas Isi Sendiri (Kustom)...</option>`;
+            } else {
+                kategoriSelect.innerHTML = `<option value="makanan">Lambung Sejahtera (Makanan)</option><option value="transportasi">Jalan-Jalan Mulu (Bensin/Ojek)</option><option value="hiburan">Senang Sesaat (Hobi/Game)</option><option value="tagihan">Beban Rutin (Kost/Wifi)</option><option value="belanja">Lapar Mata (Self Reward Berkedok)</option><option value="kustom">Bebas Isi Sendiri (Kustom)...</option>`;
+            }
+            cekKategoriKustom();
+            if (typeof updateCustomSelectOptions === 'function') {
+                updateCustomSelectOptions('kategori-transaksi');
+            }
+        }
+
+        function ubahTemaWarna() {
+            if (idTransaksiDiedit !== null) return;
+            const jenisInput = document.getElementById('jenis-transaksi').value;
+            const tombolAksi = document.getElementById('btn-aksi');
+            const groupTujuan = document.getElementById('group-wallet-tujuan');
+
+            perbaruiOpsiKategori();
+
+            if (jenisInput === "transfer") {
+                document.body.className = "tema-transfer";
+                document.getElementById('label-nama-transaksi').innerText = "Catatan Mutasi / Keterangan Transfer:";
+                document.getElementById('label-wallet-pilihan').innerText = "Kirim Uang Dari Saku Mana?";
+                groupTujuan.style.display = "block";
+                tombolAksi.innerHTML = '<i class="fa-solid fa-arrows-rotate"></i> Luncurkan Pindah Saldo 🚀';
+                tombolAksi.className = "btn-hitung btn-transfer-mode";
+            } else if (jenisInput === "pengeluaran") {
+                document.body.className = "tema-pengeluaran";
+                document.getElementById('label-nama-transaksi').innerText = "Beli apaan lagi lo?";
+                document.getElementById('label-wallet-pilihan').innerText = "Duit Keluar Dari Mana?";
+                groupTujuan.style.display = "none";
+                tombolAksi.innerHTML = '<i class="fa-solid fa-minus-circle"></i> Ikhlaskan Duit Ini 💸';
+                tombolAksi.className = "btn-hitung btn-pengeluaran";
+            } else {
+                document.body.className = "tema-pemasukan";
+                document.getElementById('label-nama-transaksi').innerText = "Dapet rezeki dari mana lo?";
+                document.getElementById('label-wallet-pilihan').innerText = "Masuk Duit Via Apa, Cuy?";
+                groupTujuan.style.display = "none";
+                tombolAksi.innerHTML = '<i class="fa-solid fa-plus-circle"></i> Asik Tambah Kekayaan 🤑';
+                tombolAksi.className = "btn-hitung btn-pemasukan";
+            }
+
+            if (typeof syncSemuaCustomSelect === 'function') {
+                syncSemuaCustomSelect();
+            }
+        }
+
+        function tambahTransaksi() {
+            const namaInput = document.getElementById('nama-transaksi').value;
+            const jenisInput = document.getElementById('jenis-transaksi').value;
+            const walletInput = document.getElementById('wallet-pilihan').value;
+            const walletTujuanInput = document.getElementById('wallet-tujuan').value;
+            let kategoriInput = document.getElementById('kategori-transaksi').value;
+            const nominalInput = document.getElementById('nominal').value;
+            const tanggalInput = document.getElementById('tanggal-transaksi').value;
+
+            if (jenisInput === "transfer") {
+                kategoriInput = "transfer";
+                if (walletInput === walletTujuanInput) {
+                    panggilCustomModal('Gagal Mutasi ❌', 'Asal dan tujuan saku gak boleh sama, kocak! 🤣', null, 'exclamation');
+                    return;
+                }
+            } else {
+                if (kategoriInput === "kustom") {
+                    const teksKustom = document.getElementById('kategori-kustom-input').value;
+                    kategoriInput = teksKustom && teksKustom.trim() !== "" ? teksKustom.trim() : "Kustom Bebas";
+                }
+            }
+
+            if (!namaInput || namaInput.trim() === "" || !nominalInput || !tanggalInput) { return; }
+
+            const nominalAngkaMurni = parseFloat(nominalInput.replace(/\./g, ''));
+            if (isNaN(nominalAngkaMurni) || nominalAngkaMurni <= 0) { return; }
+
+            const objekWaktu = new Date(tanggalInput);
+            const tanggalTeks = objekWaktu.toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
+            const kodeBulan = String(objekWaktu.getMonth() + 1).padStart(2, '0');
+
+            if (idTransaksiDiedit !== null) {
+                daftarTransaksi = daftarTransaksi.map(item => {
+                    if (item.id === idTransaksiDiedit) {
+                        return { ...item, nama: namaInput.trim(), jenis: jenisInput, wallet: walletInput, walletTujuan: (jenisInput === "transfer" ? walletTujuanInput : undefined), kategori: kategoriInput, nominal: nominalAngkaMurni, tanggalCetak: tanggalTeks, bulan: kodeBulan, tanggalMentah: tanggalInput };
+                    }
+                    return item;
+                });
+                idTransaksiDiedit = null;
+            } else {
+                daftarTransaksi.unshift({ id: +new Date(), nama: namaInput.trim(), jenis: jenisInput, wallet: walletInput, walletTujuan: (jenisInput === "transfer" ? walletTujuanInput : undefined), kategori: kategoriInput, nominal: nominalAngkaMurni, tanggalCetak: tanggalTeks, bulan: kodeBulan, tanggalMentah: tanggalInput });
+            }
+
+            simpanDataKeLokal();
+            document.getElementById('nama-transaksi').value = "";
+            document.getElementById('nominal').value = "";
+            document.getElementById('kategori-kustom-input').value = "";
+            document.getElementById('smart-paste-box').value = "";
+            ubahTemaWarna();
+            tampilkanData();
+        }
+
+        function aktifkanModeEdit(idTransaksi) {
+            const targetData = daftarTransaksi.find(item => item.id === idTransaksi);
+            if (!targetData) return;
+            idTransaksiDiedit = idTransaksi;
+            if (window.innerWidth <= 820) { lompatSectionHP('panel-input', 'f-btn-input'); }
+
+            document.getElementById('nama-transaksi').value = targetData.nama;
+            document.getElementById('jenis-transaksi').value = targetData.jenis;
+            document.getElementById('wallet-pilihan').value = targetData.wallet || "dana";
+            if (targetData.jenis === "transfer") {
+                document.getElementById('wallet-tujuan').value = targetData.walletTujuan || "mandiri";
+            }
+            document.getElementById('tanggal-transaksi').value = targetData.tanggalMentah || "";
+
+            perbaruiOpsiKategori();
+
+            if (targetData.jenis !== "transfer") {
+                if (document.querySelector("#kategori-transaksi option[value='" + targetData.kategori + "']")) {
+                    document.getElementById('kategori-transaksi').value = targetData.kategori;
+                } else {
+                    document.getElementById('kategori-transaksi').value = "kustom";
+                    document.getElementById('kustom-kategori-group').style.display = "block";
+                    document.getElementById('kategori-kustom-input').value = targetData.kategori;
+                }
+            }
+
+            const inputNominal = document.getElementById('nominal');
+            inputNominal.value = targetData.nominal;
+            formatInputRupiah(inputNominal);
+
+            document.body.className = "tema-edit";
+            document.getElementById('label-nama-transaksi').innerText = "Plin plan lo! Mau benerin data apaan?";
+            document.getElementById('group-wallet-tujuan').style.display = (targetData.jenis === "transfer") ? "block" : "none";
+            document.getElementById('btn-aksi').className = "btn-hitung btn-edit-mode";
+            document.getElementById('btn-aksi').innerHTML = '<i class="fa-solid fa-wrench"></i> Benerin Dosa Finansial 🛠️';
+
+            if (typeof syncSemuaCustomSelect === 'function') {
+                syncSemuaCustomSelect();
+            }
+        }
+
+        function hapusSatuTransaksi(idTransaksi) {
+            panggilCustomModal('Hapus Dosa Finansial', 'Mau hapus catatan dosa finansial yang ini aja, Cuy? 🤔', () => {
+                daftarTransaksi = daftarTransaksi.filter(item => item.id !== idTransaksi);
+                simpanDataKeLokal();
+                tampilkanData();
+            });
+        }
+
+        function eksekusiResetSemuaData() {
+            panggilCustomModal('Format Ulang Seluruh Data', 'Yakin banget mau hapus seluruh riwayat & wishlist dari awal, Cuy? Data di memori lokal lo bakal terhapus bersih! 💥', () => {
+                daftarTransaksi = [];
+                daftarWishlist = [];
+                daftarTagihan = [];
+                simpanDataKeLokal();
+
+                if (objekChartGlobal) { objekChartGlobal.destroy(); objekChartGlobal = null; }
+                if (objekChartLineGlobal) { objekChartLineGlobal.destroy(); objekChartLineGlobal = null; }
+
+                tampilkanData();
+                panggilCustomModal('Sukses Format!', 'Aplikasi WAYFinance lo sekarang bersih total dari nol kembali!', null, 'success');
+            });
+        }
+
+        function tambahWishlistBaru() {
+            if (!statusUserPremium) { bukaPaywallPremium('Financial Goals / Wishlist'); return; }
+            const namaInput = document.getElementById('wishlist-nama-input').value;
+            const hargaInput = document.getElementById('wishlist-harga-input').value;
+            if (!namaInput || namaInput.trim() === "" || !hargaInput) return;
+            const hargaAngkaMurni = parseFloat(hargaInput.replace(/\./g, ''));
+            if (isNaN(hargaAngkaMurni) || hargaAngkaMurni <= 0) return;
+
+            daftarWishlist.push({ id: +new Date(), nama: namaInput.trim(), hargaTarget: hargaAngkaMurni, terkumpul: 0 });
+            document.getElementById('wishlist-nama-input').value = "";
+            document.getElementById('wishlist-harga-input').value = "";
+            simpanDataKeLokal();
+            tampilkanData();
+        }
+
+        function isiCelenganInline(idWishlist) {
+            const inputElemen = document.getElementById('input-budget-' + idWishlist);
+            const dompetPilihanElemen = document.getElementById('select-wallet-goals-' + idWishlist);
+            const nominalIsi = inputElemen.value;
+            if (!nominalIsi || nominalIsi.trim() === "") return;
+            const angkaIsi = parseFloat(nominalIsi.replace(/\./g, ''));
+            if (isNaN(angkaIsi) || angkaIsi <= 0) return;
+
+            const targetWishlist = daftarWishlist.find(item => item.id === idWishlist);
+            if (!targetWishlist) return;
+
+            const sisaKebutuhan = targetWishlist.hargaTarget - targetWishlist.terkumpul;
+            const jumlahPotongSaldo = Math.min(angkaIsi, sisaKebutuhan);
+            if (jumlahPotongSaldo <= 0) return;
+
+            let walletValue = dompetPilihanElemen.value;
+
+            daftarTransaksi.unshift({
+                id: +new Date(),
+                nama: `Celengan: ${targetWishlist.nama}`,
+                jenis: "pengeluaran",
+                wallet: walletValue,
+                kategori: "belanja",
+                nominal: jumlahPotongSaldo,
+                tanggalCetak: new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' }),
+                bulan: String(new Date().getMonth() + 1).padStart(2, '0'),
+                tanggalMentah: new Date().toISOString().split('T')[0]
+            });
+
+            daftarWishlist = daftarWishlist.map(item => (item.id === idWishlist) ? { ...item, terkumpul: item.terkumpul + jumlahPotongSaldo } : item);
+
+            simpanDataKeLokal();
+            tampilkanData();
+        }
+
+        function hapusWishlist(idWishlist) {
+            panggilCustomModal('Membatalkan Wishlist', 'Gajadi pengen beli barang ini, Cuy? 🎯', () => {
+                daftarWishlist = daftarWishlist.filter(item => item.id !== idWishlist);
+                simpanDataKeLokal();
+                tampilkanData();
+            });
+        }
+
+        function kalkulasiStatusBacot(saldo) {
+            const wadahTeks = document.getElementById('status-bacot');
+            if (daftarTransaksi.length === 0) { wadahTeks.innerText = "Belum ada duit dicatat nih..."; return; }
+            if (idTransaksiDiedit !== null) return;
+
+            let arrayKalimat = [];
+            if (saldo > 5000000) {
+                arrayKalimat = [
+                    "Asik orang kaya baru, gaya elit ekonomi elit! 😎",
+                    "Gaya lo sultan bener, inget besok siklus bayar tagihan! 💸",
+                    "Wah tabungan tebel, aman lah ya buat gacha tipis-tipis? 🎮"
+                ];
+            } else if (saldo > 1000000) {
+                arrayKalimat = [
+                    "Aman, tapi jangan sok ngide beli boba tiap hari ya. ☕",
+                    "Duit segini masih bisa makan enak, tapi batasi nongkrong lo! 🛍️",
+                    "Cukup buat hidup tegak, awas khilaf belanja online! 🛒"
+                ];
+            } else if (saldo > 100000) {
+                arrayKalimat = [
+                    "Mode bertahan hidup aktif, tgl tua menangis lirih... 💸",
+                    "Dompet mulai menipis, mending masak mie instan di kosan. 🍜",
+                    "Dompet lo mangap tuh, tobat khilaf sebelum terlambat! 🛑"
+                ];
+            } else if (saldo >= 0) {
+                arrayKalimat = [
+                    "DOMPET LO SEKARAT WOY! Makan promag aja sana! 😭",
+                    "Sisa uang segini cuma cukup buat bayar parkir seminggu! 🚗",
+                    "Kritis! Status keuangan lo masuk zona merah bahaya kelaparan! ⚠️"
+                ];
+            } else {
+                arrayKalimat = [
+                    "MINUS!! Fix gali lubang tutup lubang, beban bumi! 💀💥",
+                    "Utang di mana-mana, lo pelihara jin apa gimana? 👻",
+                    "Nangis di pojokan, saldo minus tandanya lo gagal hemat! 📉"
+                ];
+            }
+
+            const teksAcak = arrayKalimat[Math.floor(Math.random() * arrayKalimat.length)];
+            wadahTeks.innerText = teksAcak;
+        }
+
+        function regenerasiLineChartTren(petaDataTren) {
+            const ctxLine = document.getElementById('canvasChartLineTren').getContext('2d');
+            if (objekChartLineGlobal) { objekChartLineGlobal.destroy(); }
+
+            const labelBulan = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
+            const datasetGaris = [];
+            let akumulasiSaldoGaris = 0;
+
+            for (let i = 1; i <= 12; i++) {
+                const kode = String(i).padStart(2, '0');
+                const masuk = petaDataTren.masuk[kode] || 0;
+                const keluar = petaDataTren.keluar[kode] || 0;
+                akumulasiSaldoGaris += (masuk - keluar);
+                datasetGaris.push(akumulasiSaldoGaris);
+            }
+
+            objekChartLineGlobal = new Chart(ctxLine, {
+                type: 'line',
+                data: {
+                    labels: labelBulan,
+                    datasets: [{
+                        label: 'Sisa Saldo Kumulatif',
+                        data: datasetGaris,
+                        borderColor: '#2ecc71',
+                        backgroundColor: 'rgba(46, 204, 113, 0.1)',
+                        borderWidth: 2,
+                        tension: 0.3,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        x: { ticks: { color: '#94a3b8', font: { family: 'Poppins', size: 9 } }, grid: { display: false } },
+                        y: { ticks: { color: '#94a3b8', font: { family: 'Poppins', size: 9 } }, grid: { color: 'rgba(255,255,255,0.05)' } }
+                    }
+                }
+            });
+        }
+
+        function regenerasiVisualChart(totalMasuk, totalKeluar, totalTransfer) {
+            const ctx = document.getElementById('canvasChartKeuangan').getContext('2d');
+            if (objekChartGlobal) { objekChartGlobal.destroy(); }
+
+            let labelData = ['Masuk', 'Keluar', 'Transfer'];
+            let barisDataset = [totalMasuk, totalKeluar, totalTransfer];
+            let skemaWarna = ['#2ecc71', '#e74c3c', '#0081b4'];
+
+            if (totalMasuk === 0 && totalKeluar === 0 && totalTransfer === 0) {
+                labelData = ['Belum Ada Data'];
+                barisDataset = [1];
+                skemaWarna = ['#3b4758'];
+            }
+
+            objekChartGlobal = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: labelData,
+                    datasets: [{
+                        data: barisDataset,
+                        backgroundColor: skemaWarna,
+                        borderWidth: 1,
+                        borderColor: '#242c39'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'bottom', labels: { color: '#f8fafc', font: { family: 'Poppins', size: 11 } } }
+                    }
+                }
+            });
+        }
+
+        function tampilkanData() {
+            const listContainer = document.getElementById('list-transaksi');
+            const bulanDipilih = document.getElementById('filter-bulan').value;
+            const kataKunciSearch = document.getElementById('search-transaksi').value.toLowerCase().trim();
+
+            listContainer.innerHTML = "";
+
+            let saldoCash = 0, saldoDana = 0, saldoOvo = 0, saldoGopay = 0, saldoGlobal = 0;
+            let saldoBca = 0, saldoMandiri = 0, saldoBni = 0, saldoBri = 0, saldoLain = 0;
+            let pemasukanBulanIni = 0, pengeluaranBulanIni = 0, transferBulanIni = 0;
+
+            const petaDataTren = {
+                masuk: { "01": 0, "02": 0, "03": 0, "04": 0, "05": 0, "06": 0, "07": 0, "08": 0, "09": 0, "10": 0, "11": 0, "12": 0 },
+                keluar: { "01": 0, "02": 0, "03": 0, "04": 0, "05": 0, "06": 0, "07": 0, "08": 0, "09": 0, "10": 0, "11": 0, "12": 0 }
+            };
+
+            const reverseData = [...daftarTransaksi].reverse();
+            reverseData.forEach(item => {
+                const src = item.wallet || "dana";
+                const dest = item.walletTujuan;
+                const nom = item.nominal;
+
+                if (item.jenis === "pemasukan") {
+                    saldoGlobal += nom;
+                    if (src === "cash") saldoCash += nom;
+                    if (src === "dana") saldoDana += nom;
+                    if (src === "ovo") saldoOvo += nom;
+                    if (src === "gopay") saldoGopay += nom;
+                    if (src === "bca") saldoBca += nom;
+                    if (src === "mandiri") saldoMandiri += nom;
+                    if (src === "bni") saldoBni += nom;
+                    if (src === "bri") saldoBri += nom;
+                    if (src === "bank_lain") saldoLain += nom;
+
+                    if (item.bulan) petaDataTren.masuk[item.bulan] += nom;
+                }
+                else if (item.jenis === "pengeluaran") {
+                    saldoGlobal -= nom;
+                    if (src === "cash") saldoCash -= nom;
+                    if (src === "dana") saldoDana -= nom;
+                    if (src === "ovo") saldoOvo -= nom;
+                    if (src === "gopay") saldoGopay -= nom;
+                    if (src === "bca") saldoBca -= nom;
+                    if (src === "mandiri") saldoMandiri -= nom;
+                    if (src === "bni") saldoBni -= nom;
+                    if (src === "bri") saldoBri -= nom;
+                    if (src === "bank_lain") saldoLain -= nom;
+
+                    if (item.bulan) petaDataTren.keluar[item.bulan] += nom;
+                }
+                else if (item.jenis === "transfer") {
+                    if (src === "cash") saldoCash -= nom;
+                    if (src === "dana") saldoDana -= nom;
+                    if (src === "ovo") saldoOvo -= nom;
+                    if (src === "gopay") saldoGopay -= nom;
+                    if (src === "bca") saldoBca -= nom;
+                    if (src === "mandiri") saldoMandiri -= nom;
+                    if (src === "bni") saldoBni -= nom;
+                    if (src === "bri") saldoBri -= nom;
+                    if (src === "bank_lain") saldoLain -= nom;
+
+                    if (dest === "cash") saldoCash += nom;
+                    if (dest === "dana") saldoDana += nom;
+                    if (dest === "ovo") saldoOvo += nom;
+                    if (dest === "gopay") saldoGopay += nom;
+                    if (dest === "bca") saldoBca += nom;
+                    if (dest === "mandiri") saldoMandiri += nom;
+                    if (dest === "bni") saldoBni += nom;
+                    if (dest === "bri") saldoBri += nom;
+                    if (dest === "bank_lain") saldoLain += nom;
+                }
+            });
+
+            const warningBanner = document.getElementById('budget-warning');
+            if (statusUserPremium && pengeluaranBulanIni > 2500000) {
+                warningBanner.style.display = "flex";
+            } else {
+                warningBanner.style.display = "none";
+            }
+
+            daftarTransaksi.forEach(item => {
+                const cocokBulan = (bulanDipilih === "ALL" || item.bulan === bulanDipilih);
+                const cocokSearch = (kataKunciSearch === "" || item.nama.toLowerCase().includes(kataKunciSearch) || item.kategori.toLowerCase().includes(kataKunciSearch));
+
+                if (cocokBulan && cocokSearch) {
+                    let kelasItem = "pemasukan-item";
+                    let kelasNominal = "nominal-pemasukan";
+                    let tandaKarakter = "+";
+
+                    if (item.jenis === "pemasukan") {
+                        pemasukanBulanIni += item.nominal;
+                    } else if (item.jenis === "pengeluaran") {
+                        kelasItem = "pengeluaran-item";
+                        kelasNominal = "nominal-pengeluaran";
+                        tandaKarakter = "-";
+                        pengeluaranBulanIni += item.nominal;
+                    } else if (item.jenis === "transfer") {
+                        kelasItem = "transfer-item";
+                        kelasNominal = "nominal-transfer";
+                        tandaKarakter = "🔄";
+                        transferBulanIni += item.nominal;
+                    }
+
+                    let labelSaku = (item.jenis === "transfer")
+                        ? `${item.wallet.toUpperCase()} ➔ ${item.walletTujuan.toUpperCase()}`
+                        : item.wallet.toUpperCase();
+
+                    listContainer.insertAdjacentHTML('beforeend', `
+                        <li class="item-transaksi ${kelasItem}">
+                            <div class="item-kiri"><div class="icon-bulet"><i class="${kamusIkon[item.kategori] || 'fa-solid fa-wand-magic-sparkles'}"></i></div>
+                            <div class="item-detail"><span class="item-nama">${html_escape_tag(item.nama)}</span><span class="item-kategori-tag">${kamusTeksKategori[item.kategori] || '🔮 ' + html_escape_tag(item.kategori)}</span><span class="item-wallet-tag"><i class="fa-solid fa-credit-card"></i> SAKU: ${labelSaku}</span><span class="item-tanggal">${item.tanggalCetak}</span></div></div>
+                            <div class="item-kanan"><span class="${kelasNominal}">${tandaKarakter} Rp ${item.nominal.toLocaleString('id-ID')}</span>
+                            <button class="btn-aksi-item btn-edit-item" onclick="window.aktifkanModeEdit(${item.id})"><i class="fa-solid fa-pen-to-square"></i></button>
+                            <button class="btn-aksi-item btn-hapus-item" onclick="window.hapusSatuTransaksi(${item.id})"><i class="fa-regular fa-trash-can"></i></button></div>
+                        </li>
+                    `);
+                }
+            });
+
+            let totalSaldoBank = saldoBca + saldoMandiri + saldoBni + saldoBri + saldoLain;
+
+            const randerSaldo = (nominal) => (statusUserPremium && sembunyikanSaldoMode) ? "🙈 *******" : 'Rp ' + nominal.toLocaleString('id-ID');
+            document.getElementById('eye-icon').className = (statusUserPremium && sembunyikanSaldoMode) ? "fa-solid fa-eye-slash" : "fa-solid fa-eye";
+
+            document.getElementById('w-cash').innerText = randerSaldo(saldoCash);
+            document.getElementById('w-dana').innerText = randerSaldo(saldoDana);
+            document.getElementById('w-ovo').innerText = randerSaldo(saldoOvo);
+            document.getElementById('w-gopay').innerText = randerSaldo(saldoGopay);
+            document.getElementById('w-bank').innerText = randerSaldo(totalSaldoBank);
+
+            document.getElementById('wb-bca').innerText = randerSaldo(saldoBca);
+            document.getElementById('wb-mandiri').innerText = randerSaldo(saldoMandiri);
+            document.getElementById('wb-bni').innerText = randerSaldo(saldoBni);
+            document.getElementById('wb-bri').innerText = randerSaldo(saldoBri);
+            document.getElementById('wb-lain').innerText = randerSaldo(saldoLain);
+
+            document.getElementById('total-saldo').innerText = randerSaldo(saldoGlobal);
+            document.getElementById('bulan-masuk').innerText = 'Rp ' + pemasukanBulanIni.toLocaleString('id-ID');
+            document.getElementById('bulan-keluar').innerText = 'Rp ' + pengeluaranBulanIni.toLocaleString('id-ID');
+
+            kalkulasiStatusBacot(saldoGlobal);
+            renderBillVisual();
+            renderWishlistVisual();
+            regenerasiVisualChart(pemasukanBulanIni, pengeluaranBulanIni, transferBulanIni);
+            regenerasiLineChartTren(petaDataTren);
+        }
+
+        function renderBillVisual() {
+            const container = document.getElementById('bill-container');
+            if (!statusUserPremium) {
+                container.innerHTML = `<small style="color: var(--text-muted); text-align: center; font-style: italic; display: block; padding: 10px;"><i class="fa-solid fa-lock"></i> Fitur Kalender Pengingat Tagihan terkunci. Aktifkan Premium!</small>`;
+                return;
+            }
+            container.innerHTML = daftarTagihan.length === 0 ? `<small style="color: var(--text-muted); text-align: center; font-style: italic; display: block; padding: 10px;">Bersih, belum ada tagihan rutin terpasang...</small>` : "";
+            daftarTagihan.forEach(item => {
+                container.insertAdjacentHTML('beforeend', `
+                    <div class="bill-card">
+                        <div class="bill-info">
+                            <h5>📌 ${html_escape_tag(item.nama)}</h5>
+                            <p>Nominal: Rp ${item.nominal.toLocaleString('id-ID')} | Jatuh Tempo: ${item.tanggal}</p>
+                        </div>
+                        <div class="bill-actions">
+                            <select id="select-wallet-bill-${item.id}" style="padding: 6px; border-radius: 8px; background: #1a202c; color: white; border: 1px solid #3b4758; font-size: 0.75rem; outline:none;"><option value="cash">CASH</option><option value="dana">DANA</option><option value="ovo">OVO</option><option value="gopay">GOPAY</option><option value="bca">BCA</option></select>
+                            <button class="btn-celengan-mini" onclick="window.bayarTagihanOtomatis(${item.id}, document.getElementById('select-wallet-bill-${item.id}').value)">Bayar ✔</button>
+                            <button class="btn-hapus-wishlist" onclick="window.hapusTagihan(${item.id})"><i class="fa-solid fa-xmark"></i></button>
+                        </div>
+                    </div>
+                `);
+            });
+        }
+
+        function renderWishlistVisual() {
+            const container = document.getElementById('wishlist-container');
+            if (!statusUserPremium) {
+                container.innerHTML = `<small style="color: var(--text-muted); text-align: center; font-style: italic; display: block; padding: 10px;"><i class="fa-solid fa-lock"></i> Fitur Financial Goals / Wishlist terkunci. Aktifkan Premium!</small>`;
+                return;
+            }
+            container.innerHTML = daftarWishlist.length === 0 ? `<small style="color: var(--text-muted); text-align: center; font-style: italic; display: block; padding: 10px;">Belum ada target barang impian nih, Cuy...</small>` : "";
+            daftarWishlist.forEach(item => {
+                let persen = Math.min(Math.round((item.terkumpul / item.hargaTarget) * 100), 100) || 0;
+                let teksStatus = persen === 100 ? "WAKWAK LU LULUS! BURUAN BELI SEKARANG JUGA! 🤘💥" : `Kurang Rp ${(item.hargaTarget - item.terkumpul).toLocaleString('id-ID')} lagi, Cuy.`;
+                container.insertAdjacentHTML('beforeend', `
+                    <div class="wishlist-card">
+                        <div class="wishlist-meta"><span>🎯 ${html_escape_tag(item.nama)}</span><span>Rp ${item.terkumpul.toLocaleString('id-ID')} / Rp ${item.hargaTarget.toLocaleString('id-ID')}</span></div>
+                        <div class="wishlist-bar-bg"><div class="wishlist-bar-fill" style="width: ${persen}%"></div></div>
+                        <div class="wishlist-footer-actions"><span class="wishlist-status-teks">${teksStatus} (${persen}%)</span>
+                        <div class="wishlist-inline-form" style="display: flex; gap: 5px; flex-wrap: wrap; margin-top: 8px; width:100%;">
+                            <select id="select-wallet-goals-${item.id}" style="padding: 6px; border-radius: 8px; background: #1a202c; color: white; border: 1px solid #3b4758; font-size: 0.75rem; flex: 1; min-width: 75px; outline:none;"><option value="cash">CASH</option><option value="dana">DANA</option><option value="ovo">OVO</option><option value="gopay">GOPAY</option><option value="bca">BCA</option><option value="mandiri">MANDIRI</option><option value="bni">BNI</option><option value="bri">BRI</option></select>
+                            <input type="text" id="input-budget-${item.id}" placeholder="Isi Rp..." onkeyup="window.formatInputRupiah(this)" style="padding: 6px; border-radius: 8px; background: #1a202c; color: white; border: 1px solid #3b4758; font-size: 0.75rem; flex: 1; min-width: 75px; outline:none;">
+                            <button class="btn-celengan-mini" onclick="window.isiCelenganInline(${item.id})">Gas 💰</button><button class="btn-hapus-wishlist" onclick="window.hapusWishlist(${item.id})"><i class="fa-solid fa-xmark"></i></button>
+                        </div></div>
+                    </div>
+                `);
+            });
+        }
+    </script>
+</body>
+
+</html>
