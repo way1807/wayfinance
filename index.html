@@ -4106,7 +4106,7 @@
                 const lower = teksBaris.toLowerCase().trim();
 
                 // 1. Deteksi Nominal
-                const nominalRegex = /(?:rp\.?\s*)?(\d+(?:[.,]\d+)?)\s*(k|rb|ribu|jt|juta|mio|m)?\b/gi;
+                const nominalRegex = /(?:rp\.?\s*)?(\d+(?:[.,]\d{3})*(?:[.,]\d+)?)\s*(k|rb|ribu|jt|juta|mio|m)?\b/gi;
                 let match;
                 let nominal = 0;
                 let nominalText = "";
