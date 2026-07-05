@@ -2838,6 +2838,46 @@
 
             periksaWelcomeModeInput();
 
+            const notesInput = document.getElementById('notes-text-input');
+            if (notesInput) {
+                notesInput.addEventListener('input', function() {
+                    const start = this.selectionStart;
+                    const originalText = this.value;
+
+                    let digitsBeforeCursor = 0;
+                    for (let i = 0; i < start; i++) {
+                        if (/\d/.test(originalText[i])) {
+                            digitsBeforeCursor++;
+                        }
+                    }
+
+                    const formattedText = originalText.replace(/\b[\d.]+\b/g, function(match) {
+                        const cleanNum = match.replace(/\./g, '');
+                        if (/^\d{4,}$/.test(cleanNum)) {
+                            return Number(cleanNum).toLocaleString('id-ID');
+                        }
+                        return match;
+                    });
+
+                    if (formattedText !== originalText) {
+                        this.value = formattedText;
+                        let newCursorPos = 0;
+                        let digitsCounter = 0;
+                        for (let i = 0; i < formattedText.length; i++) {
+                            if (digitsCounter === digitsBeforeCursor) {
+                                newCursorPos = i;
+                                break;
+                            }
+                            if (/\d/.test(formattedText[i])) {
+                                digitsCounter++;
+                            }
+                            newCursorPos = i + 1;
+                        }
+                        this.setSelectionRange(newCursorPos, newCursorPos);
+                    }
+                });
+            }
+
             if (window.innerWidth <= 820) { window.addEventListener('scroll', deteksiScrollSectionHP); }
         });
 
