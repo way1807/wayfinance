@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WAYFinance - Local Premium Tracker</title>
+    <title>WAYFinance - Expense Tracker</title>
 
     <!-- PWA READY METADATA -->
     <meta name="theme-color" content="#161b22">
@@ -396,7 +396,8 @@
         .form-group select,
         .form-group textarea,
         .bill-box-creator input,
-        .wishlist-box-creator input {
+        .wishlist-box-creator input,
+        .debt-box-creator input {
             width: 100%;
             padding: 12px 12px 12px 42px;
             border: 2px solid rgba(255, 255, 255, 0.08);
@@ -763,9 +764,9 @@
         }
 
         .btn-premium-locked {
-            background: rgba(243, 156, 18, 0.1);
-            border: 1px dashed #f39c12;
-            color: #f39c12;
+            background: rgba(46, 204, 113, 0.1);
+            border: 1px solid #2ecc71;
+            color: #2ecc71;
             padding: 10px;
             border-radius: 12px;
             font-size: 0.75rem;
@@ -778,19 +779,7 @@
             transition: all 0.3s;
         }
 
-        .btn-premium-locked.unlocked {
-            background: rgba(46, 204, 113, 0.1);
-            border: 1px solid #2ecc71;
-            color: #2ecc71;
-        }
-
         .btn-premium-locked:hover {
-            background: #f39c12;
-            color: white;
-            box-shadow: 0 4px 12px rgba(243, 156, 18, 0.2);
-        }
-
-        .btn-premium-locked.unlocked:hover {
             background: #2ecc71;
             color: white;
             box-shadow: 0 4px 12px rgba(46, 204, 113, 0.2);
@@ -1490,6 +1479,18 @@
         /* --- STYLING UTK BUKU HITAM PIUTANG (DEBT TRACKER) --- */
         .debt-section-target {
             width: 100%;
+            border: 1px dashed rgba(231, 76, 60, 0.25);
+            border-radius: 20px;
+            padding: 18px;
+            background: rgba(231, 76, 60, 0.015);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            transition: all 0.3s ease;
+        }
+
+        .debt-section-target:hover {
+            border-color: rgba(231, 76, 60, 0.45);
+            background: rgba(231, 76, 60, 0.035);
+            box-shadow: 0 15px 35px rgba(231, 76, 60, 0.05), 0 10px 30px rgba(0, 0, 0, 0.2);
         }
 
         .section-debt-title {
@@ -1500,9 +1501,10 @@
             display: flex;
             align-items: center;
             gap: 8px;
-            border-top: 1px solid rgba(255, 255, 255, 0.08);
-            padding-top: 20px;
             width: 100%;
+            cursor: pointer;
+            padding-top: 0;
+            border-top: none;
         }
 
         .debt-box-creator {
@@ -1515,6 +1517,41 @@
 
         .debt-box-creator input {
             padding-left: 16px !important;
+        }
+
+        .debt-box-creator input:focus {
+            border-color: #e74c3c !important;
+            box-shadow: 0 0 0 4px rgba(231, 76, 60, 0.2) !important;
+        }
+
+        .btn-catat-piutang {
+            background: linear-gradient(135deg, #1f252e, #e74c3c) !important;
+            color: white !important;
+            border: 1px solid rgba(255, 255, 255, 0.05) !important;
+            padding: 14px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            border-radius: 14px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            margin-top: 5px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            box-shadow: 0 4px 15px rgba(231, 76, 60, 0.15);
+        }
+
+        .btn-catat-piutang:hover {
+            background: linear-gradient(135deg, #2c1d20, #c0392b) !important;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(231, 76, 60, 0.3);
+            border-color: rgba(255, 255, 255, 0.15) !important;
+        }
+
+        .btn-catat-piutang:active {
+            transform: translateY(0);
         }
 
         .debt-container {
@@ -2148,6 +2185,186 @@
                 padding-top: 20px;
             }
         }
+
+        /* --- SUPPORT MODE FLOATING CARD & BADGE --- */
+        .support-badge {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 9999;
+            background: linear-gradient(135deg, #1a5f7a, #0081b4);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: white;
+            padding: 10px 18px;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 8px 20px rgba(0, 129, 180, 0.4);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .support-badge:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 12px 25px rgba(0, 129, 180, 0.6);
+        }
+
+
+        .support-card {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 320px;
+            background: rgba(28, 35, 46, 0.95);
+            backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 16px;
+            padding: 16px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+            z-index: 9999;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-origin: bottom right;
+        }
+
+
+        .support-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 8px;
+        }
+
+        .support-card-header h4 {
+            font-size: 0.95rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: #f39c12;
+        }
+
+        .support-close-btn {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 1rem;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .support-close-btn:hover {
+            color: #e74c3c;
+        }
+
+        .support-card-body p {
+            font-size: 0.78rem;
+            color: #cbd5e1;
+            line-height: 1.4;
+            margin-bottom: 12px;
+        }
+
+        .support-buttons {
+            display: flex;
+            gap: 8px;
+        }
+
+        .support-btn {
+            flex: 1;
+            text-align: center;
+            padding: 8px 10px;
+            border-radius: 10px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .support-btn.saweria {
+            background: linear-gradient(135deg, #fa8231, #f39c12);
+            color: white;
+        }
+
+        .support-btn.saweria:hover {
+            box-shadow: 0 4px 12px rgba(250, 130, 49, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .support-btn.wa-chat {
+            background: #25d366;
+            color: white;
+        }
+
+        .support-btn.wa-chat:hover {
+            box-shadow: 0 4px 12px rgba(37, 211, 102, 0.4);
+            transform: translateY(-2px);
+        }
+
+        /* --- RESPONSIVE MOBILE OPTIMIZATION ENHANCEMENTS --- */
+        .item-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        @media (max-width: 820px) {
+            .item-kanan {
+                flex-direction: column !important;
+                align-items: flex-end !important;
+                gap: 6px !important;
+                justify-content: center !important;
+            }
+            #support-widget-container {
+                position: static !important;
+                width: 100% !important;
+                max-width: 100% !important;
+                display: flex !important;
+                justify-content: center !important;
+                margin: 20px 0 100px 0 !important;
+                box-sizing: border-box !important;
+                padding: 0 15px !important;
+            }
+            .support-badge {
+                position: static !important;
+                box-shadow: 0 8px 20px rgba(0, 129, 180, 0.2) !important;
+                margin: 0 auto !important;
+            }
+            .support-card {
+                position: static !important;
+                width: 100% !important;
+                max-width: 100% !important;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3) !important;
+                transform: none !important;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .wallet-section {
+                grid-template-columns: 1fr !important;
+            }
+            .wallet-card-mini,
+            .wallet-card-bank-detail {
+                grid-column: span 1 !important;
+            }
+            .custom-modal-buttons {
+                flex-direction: column !important;
+                gap: 10px !important;
+            }
+            .custom-modal-buttons .modal-btn {
+                width: 100% !important;
+            }
+        }
     </style>
 </head>
 
@@ -2187,8 +2404,8 @@
         <div id="panel-input" class="kolom-kiri">
             <div class="brand-header">
                 <h2><span>WAY</span>Finance</h2>
-                <button id="btn-lisensi-utama" class="btn-dev-trigger" onclick="window.bukaModalPenjelasanDev()">
-                    <i class="fa-solid fa-gem"></i> <span id="auth-btn-text">💎 Aktivasi WAY Premium</span>
+                <button class="btn-dev-trigger unlocked" onclick="window.tanyaSuntikData()">
+                    <i class="fa-solid fa-syringe"></i> <span>Suntik Dana Gaib</span>
                 </button>
             </div>
 
@@ -2209,8 +2426,8 @@
 
             <!-- --- SMART PASTE SMART BOX (Premium Only) --- -->
             <div class="form-group" id="smart-paste-container">
-                <label style="color: #f39c12;"><i class="fa-solid fa-wand-magic-sparkles"></i> WAY Smart Paste Mutasi
-                    (Premium)</label>
+                <label style="color: #f39c12;"><i class="fa-solid fa-wand-magic-sparkles"></i> WAY Smart Paste
+                    Mutasi</label>
                 <textarea id="smart-paste-box"
                     placeholder="Paste teks SMS / Notifikasi Mutasi Saku di sini... (Contoh: Transfer m-BCA Rp 150.000 ke...)"></textarea>
                 <!-- NEW: Tombol Pemicu Manual Apply Teks Smart Paste -->
@@ -2423,7 +2640,7 @@
                     </label>
                     <textarea id="notes-text-input"
                         placeholder="Tulis catatan keuangan lo di sini...&#10;Contoh:&#10;- Beli kopi 25k cash&#10;- Gajian masuk bca 5jt&#10;- Pindah 100k gopay ke dana"
-                        style="min-height: 120px;"></textarea>
+                        style="min-height: 120px;" oninput="window.formatNotesInput(this)"></textarea>
                     <button class="btn-add-wishlist"
                         style="background: linear-gradient(135deg, #1f252e, #f39c12); margin-top: 5px; width: 100%; border: 1px solid rgba(255,255,255,0.05);"
                         onclick="window.tambahCatatanBaru()">
@@ -2431,7 +2648,7 @@
                     </button>
                 </div>
 
-                <div style="margin-top: 15px;">
+                <div style="margin-top: 20px;">
                     <label
                         style="display: block; margin-bottom: 10px; font-weight: 600; font-size: 0.85rem; color: #ffffff;">
                         Riwayat Catatan Harian 📝
@@ -2439,10 +2656,10 @@
                     <div id="notes-container" class="notes-container"></div>
                 </div>
             </div>
-        </div>
 
-        <div class="kolom-kanan">
-            <div id="panel-histori" class="riwayat-section-target">
+            <!-- TRANSAKSI HISTORY LIST (Dosa Finansial) -->
+            <div
+                style="margin-top: 25px; border-top: 1px solid rgba(255, 255, 255, 0.08); padding-top: 20px; width: 100%;">
                 <div class="riwayat-header">
                     <h3>Dosa Finansial</h3>
 
@@ -2471,16 +2688,23 @@
 
                 <div class="premium-feature-grid">
                     <button id="btn-premium-ekspor" class="btn-premium-locked" onclick="window.pemicuBackupPremium()">
-                        <i id="lock-icon-1" class="fa-solid fa-file-arrow-down"></i> Backup JSON
+                        <i class="fa-solid fa-file-arrow-down"></i> Backup JSON
                     </button>
                     <button id="btn-premium-grafik" class="btn-premium-locked" onclick="window.pemicuRestorePremium()">
-                        <i id="lock-icon-2" class="fa-solid fa-file-arrow-up"></i> Restore JSON
+                        <i class="fa-solid fa-file-arrow-up"></i> Restore JSON
                     </button>
                     <button id="btn-premium-csv" class="btn-premium-locked" onclick="window.pemicuExportCSV()">
-                        <i id="lock-icon-3" class="fa-solid fa-file-excel"></i> Ekspor CSV
+                        <i class="fa-solid fa-file-excel"></i> Ekspor CSV
                     </button>
                 </div>
 
+                <ul id="list-transaksi" class="list-transaksi" style="max-height: 380px;">
+                </ul>
+            </div>
+        </div>
+
+        <div class="kolom-kanan">
+            <div id="panel-histori" class="riwayat-section-target">
                 <div class="chart-box-section">
                     <h4><i class="fa-solid fa-chart-pie" style="color:var(--accent-blue);"></i> Proporsi Aliran Duit
                     </h4>
@@ -2501,15 +2725,11 @@
                 <div id="panel-roast" class="roast-section-target">
                     <div class="roast-title">
                         <i class="fa-solid fa-ghost" style="color: #e74c3c;"></i> Rapor Dosa & Survival Kuliner
-                        (Premium)
                     </div>
                     <div id="roast-container">
                         <!-- Konten diisi via JS -->
                     </div>
                 </div>
-
-                <ul id="list-transaksi" class="list-transaksi">
-                </ul>
             </div>
 
             <!-- KALENDER JADWAL TAGIHAN RUTIN (BILL) -->
@@ -2568,9 +2788,7 @@
                             onkeyup="window.formatInputRupiah(this)">
                         <input type="text" id="debt-catatan-input"
                             placeholder="Catatan utang (Contoh: Uang Bensin / Pecel Lele)">
-                        <button class="btn-add-wishlist"
-                            style="background: linear-gradient(135deg, #1f252e, #e74c3c); margin-top: 5px; width: 100%; border: 1px solid rgba(255,255,255,0.05);"
-                            onclick="window.tambahPiutangBaru()">
+                        <button class="btn-catat-piutang" onclick="window.tambahPiutangBaru()">
                             <i class="fa-solid fa-plus-circle"></i> Catat Piutang di Buku Hitam 💀
                         </button>
                     </div>
@@ -2625,7 +2843,7 @@
         // --- SISTEM KUNCI LISENSI PREMIUM LOKAL ANTI-RIBET ---
         const KODE_LISENSI_RAHASIA = "WAY-PREMIUM-2026";
 
-        let statusUserPremium = false;
+        let statusUserPremium = true;
         let daftarTransaksi = [];
         let daftarWishlist = [];
         let daftarTagihan = [];
@@ -2792,6 +3010,7 @@
         window.lompatSectionHP = lompatSectionHP;
         window.formatInputRupiah = formatInputRupiah;
         window.bukaModalPenjelasanDev = bukaModalPenjelasanDev;
+        window.tanyaSuntikData = tanyaSuntikData;
         window.pemicuBackupPremium = pemicuBackupPremium;
         window.pemicuRestorePremium = pemicuRestorePremium;
         window.eksekusiRestoreJSON = eksekusiRestoreJSON;
@@ -2817,10 +3036,13 @@
         window.setModeInput = setModeInput;
         window.periksaWelcomeModeInput = periksaWelcomeModeInput;
         window.validasiKodePremiumLangsung = validasiKodePremiumLangsung;
+        window.formatNotesInput = formatNotesInput;
 
         window.addEventListener('DOMContentLoaded', () => {
-            statusUserPremium = localStorage.getItem('way_finance_premium_status') === 'true';
+            statusUserPremium = true;
             sembunyikanSaldoMode = localStorage.getItem('way_finance_hide_balance_status') === 'true';
+            const supportClosed = localStorage.getItem('way_finance_support_closed') === 'true';
+            toggleSupportCard(!supportClosed);
 
             muatDataLokalLego();
 
@@ -2836,46 +3058,6 @@
 
             periksaWelcomeModeInput();
 
-            const notesInput = document.getElementById('notes-text-input');
-            if (notesInput) {
-                notesInput.addEventListener('input', function() {
-                    const start = this.selectionStart;
-                    const originalText = this.value;
-
-                    let digitsBeforeCursor = 0;
-                    for (let i = 0; i < start; i++) {
-                        if (/\d/.test(originalText[i])) {
-                            digitsBeforeCursor++;
-                        }
-                    }
-
-                    const formattedText = originalText.replace(/\b[\d.]+\b/g, function(match) {
-                        const cleanNum = match.replace(/\./g, '');
-                        if (/^\d{4,}$/.test(cleanNum)) {
-                            return Number(cleanNum).toLocaleString('id-ID');
-                        }
-                        return match;
-                    });
-
-                    if (formattedText !== originalText) {
-                        this.value = formattedText;
-                        let newCursorPos = 0;
-                        let digitsCounter = 0;
-                        for (let i = 0; i < formattedText.length; i++) {
-                            if (digitsCounter === digitsBeforeCursor) {
-                                newCursorPos = i;
-                                break;
-                            }
-                            if (/\d/.test(formattedText[i])) {
-                                digitsCounter++;
-                            }
-                            newCursorPos = i + 1;
-                        }
-                        this.setSelectionRange(newCursorPos, newCursorPos);
-                    }
-                });
-            }
-
             if (window.innerWidth <= 820) { window.addEventListener('scroll', deteksiScrollSectionHP); }
         });
 
@@ -2883,31 +3065,36 @@
             const btnEkspor = document.getElementById('btn-premium-ekspor');
             const btnGrafik = document.getElementById('btn-premium-grafik');
             const btnCsv = document.getElementById('btn-premium-csv');
-            const btnLisensi = document.getElementById('btn-lisensi-utama');
-            const txtLisensi = document.getElementById('auth-btn-text');
             const icon1 = document.getElementById('lock-icon-1');
             const icon2 = document.getElementById('lock-icon-2');
             const icon3 = document.getElementById('lock-icon-3');
 
             if (statusUserPremium) {
-                btnEkspor.classList.add('unlocked');
-                btnGrafik.classList.add('unlocked');
-                btnCsv.classList.add('unlocked');
-                btnLisensi.classList.add('unlocked');
-                txtLisensi.innerText = "Premium Active (devoloper)";
-                icon1.className = "fa-solid fa-file-arrow-down";
-                icon2.className = "fa-solid fa-file-arrow-up";
-                icon3.className = "fa-solid fa-file-excel";
+                if (btnEkspor) btnEkspor.classList.add('unlocked');
+                if (btnGrafik) btnGrafik.classList.add('unlocked');
+                if (btnCsv) btnCsv.classList.add('unlocked');
+                if (icon1) icon1.className = "fa-solid fa-file-arrow-down";
+                if (icon2) icon2.className = "fa-solid fa-file-arrow-up";
+                if (icon3) icon3.className = "fa-solid fa-file-excel";
             } else {
-                btnEkspor.classList.remove('unlocked');
-                btnGrafik.classList.remove('unlocked');
-                btnCsv.classList.remove('unlocked');
-                btnLisensi.classList.remove('unlocked');
-                txtLisensi.innerText = "💎 Aktivasi WAY Premium";
-                icon1.className = "fa-solid fa-lock";
-                icon2.className = "fa-solid fa-lock";
-                icon3.className = "fa-solid fa-lock";
+                if (btnEkspor) btnEkspor.classList.remove('unlocked');
+                if (btnGrafik) btnGrafik.classList.remove('unlocked');
+                if (btnCsv) btnCsv.classList.remove('unlocked');
+                if (icon1) icon1.className = "fa-solid fa-lock";
+                if (icon2) icon2.className = "fa-solid fa-lock";
+                if (icon3) icon3.className = "fa-solid fa-lock";
             }
+        }
+
+        function tanyaSuntikData() {
+            panggilCustomModal(
+                'Suntik Dana Gaib? 🎯',
+                'Apakah kamu yakin ingin menyuntikkan data transaksi simulasi secara otomatis ke riwayat keuangan lo, Cuy?',
+                function () {
+                    triggerCheatDataGaib();
+                },
+                'confirm'
+            );
         }
 
         function bukaModalPenjelasanDev() {
@@ -2977,17 +3164,14 @@
         }
 
         function pemicuBackupPremium() {
-            if (!statusUserPremium) { bukaPaywallPremium('Backup Data JSON'); return; }
             eksekusiBackupJSON();
         }
 
         function pemicuRestorePremium() {
-            if (!statusUserPremium) { bukaPaywallPremium('Restore Data JSON'); return; }
             document.getElementById('json-restore-file').click();
         }
 
         function pemicuExportCSV() {
-            if (!statusUserPremium) { bukaPaywallPremium('Ekspor Format CSV'); return; }
             eksekusiExportCSV();
         }
 
@@ -3003,14 +3187,12 @@
         }
 
         function toggleSembunyikanSaldo() {
-            if (!statusUserPremium) { bukaPaywallPremium('Sembunyikan Saldo (Hide Mode)'); return; }
             sembunyikanSaldoMode = !sembunyikanSaldoMode;
             localStorage.setItem('way_finance_hide_balance_status', sembunyikanSaldoMode ? 'true' : 'false');
             tampilkanData();
         }
 
         function pemicuShortcutNominal(nilaiString) {
-            if (!statusUserPremium) { bukaPaywallPremium('Shortcut Nominal Cepat'); return; }
             const inputNom = document.getElementById('nominal');
             let nilaiSekarang = parseFloat(inputNom.value.replace(/\./g, '')) || 0;
             let nilaiTambah = parseFloat(nilaiString.replace(/\./g, '')) || 0;
@@ -3020,11 +3202,6 @@
 
         // --- SMART PASTE MANUAL MODE LOGIC (DENGAN BUTTON TRIGGER) ---
         function eksekusiSmartPaste() {
-            if (!statusUserPremium) {
-                bukaPaywallPremium('Smart Paste Mutasi');
-                document.getElementById('smart-paste-box').value = "";
-                return;
-            }
             const stringTeks = document.getElementById('smart-paste-box').value;
             if (!stringTeks || !stringTeks.trim()) {
                 panggilCustomModal('Kotak Kosong ❌', 'Ketik atau paste dulu teks mutasi lo di dalam box, Cuy!', null, 'exclamation');
@@ -3062,12 +3239,10 @@
         }
 
         function eksekusiCetakPDFLaporan() {
-            if (!statusUserPremium) { bukaPaywallPremium('Cetak Laporan PDF Resmi'); return; }
             window.print();
         }
 
         function tambahTagihanBaru() {
-            if (!statusUserPremium) { bukaPaywallPremium('Kalender Jadwal Tagihan'); return; }
             const nama = document.getElementById('bill-nama-input').value;
             const nominal = document.getElementById('bill-nominal-input').value;
             const tanggal = document.getElementById('bill-tanggal-input').value;
@@ -3113,47 +3288,125 @@
         }
 
         function triggerCheatDataGaib() {
-            const dummy = [
-                { id: +new Date() - 1200000, nama: "Gaji Hasil Nguli (Jan)", jenis: "pemasukan", wallet: "bca", kategori: "gaji", nominal: 8500000, tanggalCetak: "10 Januari 2026", bulan: "01", tanggalMentah: "2026-01-10" },
-                { id: +new Date() - 1150000, nama: "Bayar Kost Bulanan (Jan)", jenis: "pengeluaran", wallet: "cash", kategori: "tagihan", nominal: 1500000, tanggalCetak: "12 Januari 2026", bulan: "01", tanggalMentah: "2026-01-12" },
+            const sekarang = new Date();
+            const tahunSekarang = sekarang.getFullYear();
+            const bulanSekarang = sekarang.getMonth() + 1; // 1-12
+            const tanggalSekarang = sekarang.getDate();
 
-                { id: +new Date() - 1100000, nama: "Bonus Proyek Landing Page (Feb)", jenis: "pemasukan", wallet: "mandiri", kategori: "gaji", nominal: 2500000, tanggalCetak: "05 Februari 2026", bulan: "02", tanggalMentah: "2026-02-05" },
-                { id: +new Date() - 1050000, nama: "Makan Buffet All You Can Eat (Feb)", jenis: "pengeluaran", wallet: "gopay", kategori: "makanan", nominal: 450000, tanggalCetak: "14 Februari 2026", bulan: "02", tanggalMentah: "2026-02-14" },
+            const templates = [
+                // JANUARI
+                { nama: "Gaji Hasil Nguli (Jan)", jenis: "pemasukan", wallet: "bca", kategori: "gaji", nominal: 8500000, bulan: "01", hariTaksiran: 10 },
+                { nama: "Tarik Tunai dari BCA (Jan)", jenis: "transfer", wallet: "bca", walletTujuan: "cash", kategori: "transfer", nominal: 2000000, bulan: "01", hariTaksiran: 11 },
+                { nama: "Bayar Kost Bulanan (Jan)", jenis: "pengeluaran", wallet: "cash", kategori: "tagihan", nominal: 1500000, bulan: "01", hariTaksiran: 12 },
 
-                { id: +new Date() - 1000000, nama: "Dividen Saham Cair (Mar)", jenis: "pemasukan", wallet: "bca", kategori: "investasi", nominal: 1200000, tanggalCetak: "02 Maret 2026", bulan: "03", tanggalMentah: "2026-03-02" },
-                { id: +new Date() - 950000, nama: "Nonton Konser Populer (Mar)", jenis: "pengeluaran", wallet: "dana", kategori: "hiburan", nominal: 1800000, tanggalCetak: "18 Maret 2026", bulan: "03", tanggalMentah: "2026-03-18" },
+                // FEBRUARI
+                { nama: "Bonus Proyek Landing Page (Feb)", jenis: "pemasukan", wallet: "mandiri", kategori: "gaji", nominal: 2500000, bulan: "02", hariTaksiran: 5 },
+                { nama: "Top Up GoPay via BCA (Feb)", jenis: "transfer", wallet: "bca", walletTujuan: "gopay", kategori: "transfer", nominal: 500000, bulan: "02", hariTaksiran: 12 },
+                { nama: "Makan Buffet All You Can Eat (Feb)", jenis: "pengeluaran", wallet: "gopay", kategori: "makanan", nominal: 450000, bulan: "02", hariTaksiran: 14 },
 
-                { id: +new Date() - 900000, nama: "THR Cair Asik (Apr)", jenis: "pemasukan", wallet: "bca", kategori: "gaji", nominal: 7500000, tanggalCetak: "05 April 2026", bulan: "04", tanggalMentah: "2026-04-05" },
-                { id: +new Date() - 850000, nama: "Beli Baju Lebaran Keluarga (Apr)", jenis: "pengeluaran", wallet: "cash", kategori: "belanja", nominal: 2000000, tanggalCetak: "12 April 2026", bulan: "04", tanggalMentah: "2026-04-12" },
+                // MARET
+                { nama: "Dividen Saham Cair (Mar)", jenis: "pemasukan", wallet: "bca", kategori: "investasi", nominal: 1200000, bulan: "03", hariTaksiran: 2 },
+                { nama: "Top Up Dana via BCA (Mar)", jenis: "transfer", wallet: "bca", walletTujuan: "dana", kategori: "transfer", nominal: 2000000, bulan: "03", hariTaksiran: 16 },
+                { nama: "Nonton Concert Populer (Mar)", jenis: "pengeluaran", wallet: "dana", kategori: "hiburan", nominal: 1800000, bulan: "03", hariTaksiran: 18 },
 
-                { id: +new Date() - 800000, nama: "Gaji Utama Nguli (Mei)", jenis: "pemasukan", wallet: "bca", kategori: "gaji", nominal: 8500000, tanggalCetak: "10 Mei 2026", bulan: "05", tanggalMentah: "2026-05-10" },
-                { id: +new Date() - 750000, nama: "Bayar Tagihan Listrik & Internet (Mei)", jenis: "pengeluaran", wallet: "dana", kategori: "tagihan", nominal: 650000, tanggalCetak: "15 Mei 2026", bulan: "05", tanggalMentah: "2026-05-15" },
+                // APRIL
+                { nama: "THR Cair Asik (Apr)", jenis: "pemasukan", wallet: "bca", kategori: "gaji", nominal: 7500000, bulan: "04", hariTaksiran: 5 },
+                { nama: "Tarik Tunai dari BCA (Apr)", jenis: "transfer", wallet: "bca", walletTujuan: "cash", kategori: "transfer", nominal: 2000000, bulan: "04", hariTaksiran: 10 },
+                { nama: "Beli Baju Lebaran Keluarga (Apr)", jenis: "pengeluaran", wallet: "cash", kategori: "belanja", nominal: 2000000, bulan: "04", hariTaksiran: 12 },
 
-                { id: +new Date() - 700000, nama: "Hasil Jual HP Bekas (Jun)", jenis: "pemasukan", wallet: "cash", kategori: "kustom", nominal: 2200000, tanggalCetak: "08 Juni 2026", bulan: "06", tanggalMentah: "2026-06-08" },
-                { id: +new Date() - 650000, nama: "Servis Rutin Motor Kesayangan (Jun)", jenis: "pengeluaran", wallet: "bca", kategori: "transportasi", nominal: 750000, tanggalCetak: "20 Juni 2026", bulan: "06", tanggalMentah: "2026-06-20" },
+                // MEI
+                { nama: "Gaji Utama Nguli (Mei)", jenis: "pemasukan", wallet: "bca", kategori: "gaji", nominal: 8500000, bulan: "05", hariTaksiran: 10 },
+                { nama: "Top Up Dana via BCA (Mei)", jenis: "transfer", wallet: "bca", walletTujuan: "dana", kategori: "transfer", nominal: 1000000, bulan: "05", hariTaksiran: 14 },
+                { nama: "Bayar Tagihan Listrik & Internet (Mei)", jenis: "pengeluaran", wallet: "dana", kategori: "tagihan", nominal: 650000, bulan: "05", hariTaksiran: 15 },
 
-                { id: +new Date() - 600000, nama: "Gaji Utama Nguli (Jul)", jenis: "pemasukan", wallet: "bca", kategori: "gaji", nominal: 8500000, tanggalCetak: "10 Juli 2026", bulan: "07", tanggalMentah: "2026-07-10" },
-                { id: +new Date() - 550000, nama: "Khilaf Beli Gadget Baru (Jul)", jenis: "pengeluaran", wallet: "mandiri", kategori: "belanja", nominal: 4500000, tanggalCetak: "15 Juli 2026", bulan: "07", tanggalMentah: "2026-07-15" },
+                // JUNI
+                { nama: "Hasil Jual HP Bekas (Jun)", jenis: "pemasukan", wallet: "cash", kategori: "kustom", nominal: 2200000, bulan: "06", hariTaksiran: 8 },
+                { nama: "Servis Rutin Motor Kesayangan (Jun)", jenis: "pengeluaran", wallet: "bca", kategori: "transportasi", nominal: 750000, bulan: "06", hariTaksiran: 20 },
 
-                { id: +new Date() - 500000, nama: "Pemasukan Menang Lomba (Agu)", jenis: "pemasukan", wallet: "ovo", kategori: "kustom", nominal: 3500000, tanggalCetak: "17 Agustus 2026", bulan: "08", tanggalMentah: "2026-08-17" },
-                { id: +new Date() - 450000, nama: "Tiket Liburan Singkat (Agu)", jenis: "pengeluaran", wallet: "gopay", kategori: "hiburan", nominal: 1200000, tanggalCetak: "20 Agustus 2026", bulan: "08", tanggalMentah: "2026-08-20" },
+                // JULI
+                { nama: "Gaji Utama Awal Bulan (Jul)", jenis: "pemasukan", wallet: "bca", kategori: "gaji", nominal: 8500000, bulan: "07", hariTaksiran: 1 },
+                { nama: "Makan Nasi Goreng Gila (Jul)", jenis: "pengeluaran", wallet: "cash", kategori: "makanan", nominal: 30000, bulan: "07", hariTaksiran: 3 },
+                { nama: "Top Up Gopay via BCA (Jul)", jenis: "transfer", wallet: "bca", walletTujuan: "gopay", kategori: "transfer", nominal: 100000, bulan: "07", hariTaksiran: 5 },
+                { nama: "Gaji Utama Nguli (Jul)", jenis: "pemasukan", wallet: "bca", kategori: "gaji", nominal: 8500000, bulan: "07", hariTaksiran: 10 },
+                { nama: "Pindah Saldo ke Mandiri (Jul)", jenis: "transfer", wallet: "bca", walletTujuan: "mandiri", kategori: "transfer", nominal: 2000000, bulan: "07", hariTaksiran: 12 },
+                { nama: "Khilaf Beli Gadget Baru (Jul)", jenis: "pengeluaran", wallet: "mandiri", kategori: "belanja", nominal: 4500000, bulan: "07", hariTaksiran: 15 },
 
-                { id: +new Date() - 400000, nama: "Gaji Utama Nguli (Sep)", jenis: "pemasukan", wallet: "bca", kategori: "gaji", nominal: 8500000, tanggalCetak: "10 September 2026", bulan: "09", tanggalMentah: "2026-09-10" },
-                { id: +new Date() - 350000, nama: "Belanja Bulanan Supermarket (Sep)", jenis: "pengeluaran", wallet: "cash", kategori: "belanja", nominal: 1400000, tanggalCetak: "12 September 2026", bulan: "09", tanggalMentah: "2026-09-12" },
+                // AGUSTUS
+                { nama: "Pemasukan Menang Lomba (Agu)", jenis: "pemasukan", wallet: "ovo", kategori: "kustom", nominal: 3500000, bulan: "08", hariTaksiran: 17 },
+                { nama: "Top Up GoPay via BCA (Agu)", jenis: "transfer", wallet: "bca", walletTujuan: "gopay", kategori: "transfer", nominal: 1500000, bulan: "08", hariTaksiran: 18 },
+                { nama: "Tiket Liburan Singkat (Agu)", jenis: "pengeluaran", wallet: "gopay", kategori: "hiburan", nominal: 1200000, bulan: "08", hariTaksiran: 20 },
 
-                { id: +new Date() - 300000, nama: "Profit Reksadana Cair (Okt)", jenis: "pemasukan", wallet: "bca", kategori: "investasi", nominal: 1800000, tanggalCetak: "05 Oktober 2026", bulan: "10", tanggalMentah: "2026-10-05" },
-                { id: +new Date() - 250000, nama: "Beli Kopi Starbucks & Roti (Okt)", jenis: "pengeluaran", wallet: "dana", kategori: "makanan", nominal: 350000, tanggalCetak: "25 Oktober 2026", bulan: "10", tanggalMentah: "2026-10-25" },
+                // SEPTEMBER
+                { nama: "Gaji Utama Nguli (Sep)", jenis: "pemasukan", wallet: "bca", kategori: "gaji", nominal: 8500000, bulan: "09", hariTaksiran: 10 },
+                { nama: "Tarik Tunai dari BCA (Sep)", jenis: "transfer", wallet: "bca", walletTujuan: "cash", kategori: "transfer", nominal: 1500000, bulan: "09", hariTaksiran: 11 },
+                { nama: "Belanja Bulanan Supermarket (Sep)", jenis: "pengeluaran", wallet: "cash", kategori: "belanja", nominal: 1400000, bulan: "09", hariTaksiran: 12 },
 
-                { id: +new Date() - 200000, nama: "Gaji Utama Nguli (Nov)", jenis: "pemasukan", wallet: "bca", kategori: "gaji", nominal: 8500000, tanggalCetak: "10 November 2026", bulan: "11", tanggalMentah: "2026-11-10" },
-                { id: +new Date() - 150000, nama: "Jalan-jalan Weekend Luar Kota (Nov)", jenis: "pengeluaran", wallet: "cash", kategori: "hiburan", nominal: 2200000, tanggalCetak: "18 November 2026", bulan: "11", tanggalMentah: "2026-11-18" },
+                // OKTOBER
+                { nama: "Profit Reksadana Cair (Okt)", jenis: "pemasukan", wallet: "bca", kategori: "investasi", nominal: 1800000, bulan: "10", hariTaksiran: 5 },
+                { nama: "Top Up Dana via BCA (Okt)", jenis: "transfer", wallet: "bca", walletTujuan: "dana", kategori: "transfer", nominal: 500000, bulan: "10", hariTaksiran: 24 },
+                { nama: "Beli Kopi Starbucks & Roti (Okt)", jenis: "pengeluaran", wallet: "dana", kategori: "makanan", nominal: 350000, bulan: "10", hariTaksiran: 25 },
 
-                { id: +new Date() - 100000, nama: "Bonus Akhir Tahun Melimpah (Des)", jenis: "pemasukan", wallet: "bca", kategori: "gaji", nominal: 10000000, tanggalCetak: "15 Desember 2026", bulan: "12", tanggalMentah: "2026-12-15" },
-                { id: +new Date() - 50000, nama: "Tiket Pesawat & Hotel Liburan (Des)", jenis: "pengeluaran", wallet: "gopay", kategori: "hiburan", nominal: 5500000, tanggalCetak: "22 Desember 2026", bulan: "12", tanggalMentah: "2026-12-22" }
+                // NOVEMBER
+                { nama: "Gaji Utama Nguli (Nov)", jenis: "pemasukan", wallet: "bca", kategori: "gaji", nominal: 8500000, bulan: "11", hariTaksiran: 10 },
+                { nama: "Tarik Tunai dari BCA (Nov)", jenis: "transfer", wallet: "bca", walletTujuan: "cash", kategori: "transfer", nominal: 2500000, bulan: "11", hariTaksiran: 16 },
+                { nama: "Jalan-jalan Weekend Luar Kota (Nov)", jenis: "pengeluaran", wallet: "cash", kategori: "hiburan", nominal: 2200000, bulan: "11", hariTaksiran: 18 },
+
+                // DESEMBER
+                { nama: "Bonus Akhir Tahun Melimpah (Des)", jenis: "pemasukan", wallet: "bca", kategori: "gaji", nominal: 10000000, bulan: "12", hariTaksiran: 15 },
+                { nama: "Top Up GoPay via BCA (Des)", jenis: "transfer", wallet: "bca", walletTujuan: "gopay", kategori: "transfer", nominal: 6000000, bulan: "12", hariTaksiran: 20 },
+                { nama: "Tiket Pesawat & Hotel Liburan (Des)", jenis: "pengeluaran", wallet: "gopay", kategori: "hiburan", nominal: 5500000, bulan: "12", hariTaksiran: 22 }
             ];
-            daftarTransaksi = [...dummy, ...daftarTransaksi];
+
+            const injected = [];
+            templates.forEach(t => {
+                const blnNum = parseInt(t.bulan, 10);
+
+                // Hanya suntik data yang tanggalnya kurang dari atau sama dengan hari ini di tahun 2026
+                if (blnNum < bulanSekarang || (blnNum === bulanSekarang && t.hariTaksiran <= tanggalSekarang)) {
+                    // Randomisasi hari sedikit (+/- 2 hari) agar tidak selalu persis sama jika disuntik ulang
+                    let hariPilihan = t.hariTaksiran + (Math.floor(Math.random() * 5) - 2);
+                    if (hariPilihan < 1) hariPilihan = 1;
+                    if (hariPilihan > 28) hariPilihan = 28;
+
+                    // Randomisasi nominal sedikit (+/- 5% kelipatan 10.000)
+                    const persenRandom = (Math.random() * 0.1) - 0.05;
+                    const selisihNominal = Math.round((t.nominal * persenRandom) / 10000) * 10000;
+                    const nominalAkhir = t.nominal + selisihNominal;
+
+                    const objekTanggal = new Date(tahunSekarang, blnNum - 1, hariPilihan, 10, 0, 0);
+                    const tanggalMentahStr = objekTanggal.toISOString().split('T')[0];
+                    const tanggalCetakStr = objekTanggal.toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
+
+                    // ID menggunakan timestamp asli tanggal tersebut + random offset agar selalu unik
+                    const txId = objekTanggal.getTime() + Math.floor(Math.random() * 1000000);
+
+                    injected.push({
+                        id: txId,
+                        nama: t.nama,
+                        jenis: t.jenis,
+                        wallet: t.wallet,
+                        walletTujuan: t.walletTujuan,
+                        kategori: t.kategori,
+                        nominal: nominalAkhir,
+                        tanggalCetak: tanggalCetakStr,
+                        bulan: t.bulan,
+                        tanggalMentah: tanggalMentahStr
+                    });
+                }
+            });
+
+            if (injected.length === 0) {
+                panggilCustomModal('Info ℹ️', 'Belum ada jadwal data gaib yang masuk akal untuk disuntikkan sebelum tanggal hari ini.', null, 'exclamation');
+                return;
+            }
+
+            // Gabungkan dan urutkan transaksi berdasarkan ID/timestamp desc (terbaru di atas)
+            daftarTransaksi = [...injected, ...daftarTransaksi];
+            daftarTransaksi.sort((a, b) => b.id - a.id);
+
             simpanDataKeLokal();
             tampilkanData();
-            panggilCustomModal('Sukses Suntik! 🎯', '24 Data transaksi bebas untuk seluruh bulan di tahun 2026 berhasil disuntikkan secara ajaib!', null, 'success');
+            panggilCustomModal('Sukses Suntik! 🎯', `${injected.length} Data transaksi masuk akal berhasil disuntikkan secara dinamis ke riwayat keuangan lo!`, null, 'success');
         }
 
         function muatDataLokalLego() {
@@ -3339,554 +3592,607 @@
         }
 
         function lompatSectionHP(idTarget, idTombol) {
-                const elemen = document.getElementById(idTarget);
-                if (elemen) {
-                    if (elemen.classList.contains('collapsible-section') && !elemen.classList.contains('active')) {
-                        elemen.classList.add('active');
-                    }
-                    elemen.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                    document.querySelectorAll('.float-btn').forEach(btn => btn.classList.remove('active'));
-                    document.getElementById(idTombol).classList.add('active');
+            const elemen = document.getElementById(idTarget);
+            if (elemen) {
+                if (elemen.classList.contains('collapsible-section') && !elemen.classList.contains('active')) {
+                    elemen.classList.add('active');
+                }
+                elemen.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                document.querySelectorAll('.float-btn').forEach(btn => btn.classList.remove('active'));
+                document.getElementById(idTombol).classList.add('active');
+            }
+        }
+
+        function deteksiScrollSectionHP() {
+            const scrollPos = window.scrollY + 100;
+            const historiTop = document.getElementById('panel-histori').offsetTop;
+            const goalsTop = document.getElementById('panel-goals').offsetTop;
+            document.querySelectorAll('.float-btn').forEach(btn => btn.classList.remove('active'));
+            if (scrollPos >= goalsTop) { document.getElementById('f-btn-goals').classList.add('active'); }
+            else if (scrollPos >= historiTop) { document.getElementById('f-btn-histori').classList.add('active'); }
+            else { document.getElementById('f-btn-input').classList.add('active'); }
+        }
+
+        function formatInputRupiah(elemen) {
+            let nilaiBersih = elemen.value.replace(/[^,\d]/g, '').toString();
+            let sisa = nilaiBersih.length % 3;
+            let rupiah = nilaiBersih.substr(0, sisa);
+            let ribuan = nilaiBersih.substr(sisa).match(/\d{3}/gi);
+            if (ribuan) { let separator = sisa ? '.' : ''; rupiah += separator + ribuan.join('.'); }
+            elemen.value = rupiah;
+        }
+
+        function formatNumbersInText(text) {
+            // 1. Simpan sementara format tanggal ber-titik agar tidak ikut ter-strip (DD.MM.YYYY atau YYYY.MM.DD)
+            const dateRegex = /\b(\d{1,2}\.\d{1,2}\.\d{4}|\d{4}\.\d{1,2}\.\d{1,2})\b/g;
+            let tempText = text.replace(dateRegex, (dateMatch) => {
+                return dateMatch.replace(/\./g, '___DOT___');
+            });
+
+            // 2. Hilangkan semua titik yang berada di antara angka (agar angka ter-evaluasi utuh saat mengetik)
+            tempText = tempText.replace(/(\d)\.(\d)/g, '$1$2');
+
+            // 3. Format ribuan otomatis pada deretan angka >= 4 digit yang tidak berawalan 0
+            tempText = tempText.replace(/\b([1-9]\d{3,})\b/g, (match, offset, fullText) => {
+                const prevChar = fullText[offset - 1];
+                const nextChar = fullText[offset + match.length];
+
+                if (prevChar === '-' || prevChar === '/' || prevChar === ':' ||
+                    nextChar === '-' || nextChar === '/' || nextChar === ':') {
+                    return match;
+                }
+
+                return match.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+            });
+
+            // 4. Kembalikan format titik pada tanggal
+            return tempText.replace(/___DOT___/g, '.');
+        }
+
+        function formatNotesInput(element) {
+            const originalValue = element.value;
+            const cursor = element.selectionStart;
+
+            const formattedValue = formatNumbersInText(originalValue);
+
+            if (originalValue === formattedValue) return;
+
+            let nonDotCount = 0;
+            for (let i = 0; i < cursor; i++) {
+                if (originalValue[i] !== '.') {
+                    nonDotCount++;
                 }
             }
 
-            function deteksiScrollSectionHP() {
-                const scrollPos = window.scrollY + 100;
-                const historiTop = document.getElementById('panel-histori').offsetTop;
-                const goalsTop = document.getElementById('panel-goals').offsetTop;
-                document.querySelectorAll('.float-btn').forEach(btn => btn.classList.remove('active'));
-                if (scrollPos >= goalsTop) { document.getElementById('f-btn-goals').classList.add('active'); }
-                else if (scrollPos >= historiTop) { document.getElementById('f-btn-histori').classList.add('active'); }
-                else { document.getElementById('f-btn-input').classList.add('active'); }
+            element.value = formattedValue;
+
+            let newCursor = 0;
+            let currentNonDotCount = 0;
+            while (newCursor < formattedValue.length && currentNonDotCount < nonDotCount) {
+                if (formattedValue[newCursor] !== '.') {
+                    currentNonDotCount++;
+                }
+                newCursor++;
             }
 
-            function formatInputRupiah(elemen) {
-                let nilaiBersih = elemen.value.replace(/[^,\d]/g, '').toString();
-                let sisa = nilaiBersih.length % 3;
-                let rupiah = nilaiBersih.substr(0, sisa);
-                let ribuan = nilaiBersih.substr(sisa).match(/\d{3}/gi);
-                if (ribuan) { let separator = sisa ? '.' : ''; rupiah += separator + ribuan.join('.'); }
-                elemen.value = rupiah;
+            element.setSelectionRange(newCursor, newCursor);
+        }
+
+        function cekKategoriKustom() {
+            const kat = document.getElementById('kategori-transaksi').value;
+            document.getElementById('kustom-kategori-group').style.display = (kat === "kustom") ? "block" : "none";
+        }
+
+        function perbaruiOpsiKategori() {
+            const jenis = document.getElementById('jenis-transaksi').value;
+            const kategoriSelect = document.getElementById('kategori-transaksi');
+            const groupKategori = document.getElementById('group-kategori-sekte');
+
+            if (jenis === "transfer") {
+                groupKategori.style.display = "none";
+                document.getElementById('kustom-kategori-group').style.display = "none";
+                return;
             }
 
-            function cekKategoriKustom() {
-                const kat = document.getElementById('kategori-transaksi').value;
-                document.getElementById('kustom-kategori-group').style.display = (kat === "kustom") ? "block" : "none";
+            groupKategori.style.display = "block";
+            if (jenis === "pemasukan") {
+                kategoriSelect.innerHTML = `<option value="gaji">Gaji Hasil Nguli</option><option value="investasi">Pos Investasi Seksi</option><option value="kustom">Bebas Isi Sendiri (Kustom)...</option>`;
+            } else {
+                kategoriSelect.innerHTML = `<option value="makanan">Lambung Sejahtera (Makanan)</option><option value="transportasi">Jalan-Jalan Mulu (Bensin/Ojek)</option><option value="hiburan">Senang Sesaat (Hobi/Game)</option><option value="tagihan">Beban Rutin (Kost/Wifi)</option><option value="belanja">Lapar Mata (Self Reward Berkedok)</option><option value="kustom">Bebas Isi Sendiri (Kustom)...</option>`;
+            }
+            cekKategoriKustom();
+            if (typeof updateCustomSelectOptions === 'function') {
+                updateCustomSelectOptions('kategori-transaksi');
+            }
+        }
+
+        function ubahTemaWarna() {
+            if (idTransaksiDiedit !== null) return;
+            const jenisInput = document.getElementById('jenis-transaksi').value;
+            const tombolAksi = document.getElementById('btn-aksi');
+            const groupTujuan = document.getElementById('group-wallet-tujuan');
+
+            perbaruiOpsiKategori();
+
+            if (jenisInput === "transfer") {
+                document.body.className = "tema-transfer";
+                document.getElementById('label-nama-transaksi').innerText = "Catatan Mutasi / Keterangan Transfer:";
+                document.getElementById('label-wallet-pilihan').innerText = "Kirim Uang Dari Saku Mana?";
+                groupTujuan.style.display = "block";
+                tombolAksi.innerHTML = '<i class="fa-solid fa-arrows-rotate"></i> Luncurkan Pindah Saldo 🚀';
+                tombolAksi.className = "btn-hitung btn-transfer-mode";
+            } else if (jenisInput === "pengeluaran") {
+                document.body.className = "tema-pengeluaran";
+                document.getElementById('label-nama-transaksi').innerText = "Beli apaan lagi lo?";
+                document.getElementById('label-wallet-pilihan').innerText = "Duit Keluar Dari Mana?";
+                groupTujuan.style.display = "none";
+                tombolAksi.innerHTML = '<i class="fa-solid fa-minus-circle"></i> Ikhlaskan Duit Ini 💸';
+                tombolAksi.className = "btn-hitung btn-pengeluaran";
+            } else {
+                document.body.className = "tema-pemasukan";
+                document.getElementById('label-nama-transaksi').innerText = "Dapet rezeki dari mana lo?";
+                document.getElementById('label-wallet-pilihan').innerText = "Masuk Duit Via Apa, Cuy?";
+                groupTujuan.style.display = "none";
+                tombolAksi.innerHTML = '<i class="fa-solid fa-plus-circle"></i> Asik Tambah Kekayaan 🤑';
+                tombolAksi.className = "btn-hitung btn-pemasukan";
             }
 
-            function perbaruiOpsiKategori() {
-                const jenis = document.getElementById('jenis-transaksi').value;
-                const kategoriSelect = document.getElementById('kategori-transaksi');
-                const groupKategori = document.getElementById('group-kategori-sekte');
+            if (typeof syncSemuaCustomSelect === 'function') {
+                syncSemuaCustomSelect();
+            }
+        }
 
-                if (jenis === "transfer") {
-                    groupKategori.style.display = "none";
-                    document.getElementById('kustom-kategori-group').style.display = "none";
+        function tambahTransaksi() {
+            const namaInput = document.getElementById('nama-transaksi').value;
+            const jenisInput = document.getElementById('jenis-transaksi').value;
+            const walletInput = document.getElementById('wallet-pilihan').value;
+            const walletTujuanInput = document.getElementById('wallet-tujuan').value;
+            let kategoriInput = document.getElementById('kategori-transaksi').value;
+            const nominalInput = document.getElementById('nominal').value;
+            const tanggalInput = document.getElementById('tanggal-transaksi').value;
+
+            if (jenisInput === "transfer") {
+                kategoriInput = "transfer";
+                if (walletInput === walletTujuanInput) {
+                    panggilCustomModal('Gagal Mutasi ❌', 'Asal dan tujuan saku gak boleh sama, kocak! 🤣', null, 'exclamation');
                     return;
                 }
-
-                groupKategori.style.display = "block";
-                if (jenis === "pemasukan") {
-                    kategoriSelect.innerHTML = `<option value="gaji">Gaji Hasil Nguli</option><option value="investasi">Pos Investasi Seksi</option><option value="kustom">Bebas Isi Sendiri (Kustom)...</option>`;
-                } else {
-                    kategoriSelect.innerHTML = `<option value="makanan">Lambung Sejahtera (Makanan)</option><option value="transportasi">Jalan-Jalan Mulu (Bensin/Ojek)</option><option value="hiburan">Senang Sesaat (Hobi/Game)</option><option value="tagihan">Beban Rutin (Kost/Wifi)</option><option value="belanja">Lapar Mata (Self Reward Berkedok)</option><option value="kustom">Bebas Isi Sendiri (Kustom)...</option>`;
-                }
-                cekKategoriKustom();
-                if (typeof updateCustomSelectOptions === 'function') {
-                    updateCustomSelectOptions('kategori-transaksi');
+            } else {
+                if (kategoriInput === "kustom") {
+                    const teksKustom = document.getElementById('kategori-kustom-input').value;
+                    kategoriInput = teksKustom && teksKustom.trim() !== "" ? teksKustom.trim() : "Kustom Bebas";
                 }
             }
 
-            function ubahTemaWarna() {
-                if (idTransaksiDiedit !== null) return;
-                const jenisInput = document.getElementById('jenis-transaksi').value;
-                const tombolAksi = document.getElementById('btn-aksi');
-                const groupTujuan = document.getElementById('group-wallet-tujuan');
+            if (!namaInput || namaInput.trim() === "" || !nominalInput || !tanggalInput) { return; }
 
-                perbaruiOpsiKategori();
+            const nominalAngkaMurni = parseFloat(nominalInput.replace(/\./g, ''));
+            if (isNaN(nominalAngkaMurni) || nominalAngkaMurni <= 0) { return; }
 
-                if (jenisInput === "transfer") {
-                    document.body.className = "tema-transfer";
-                    document.getElementById('label-nama-transaksi').innerText = "Catatan Mutasi / Keterangan Transfer:";
-                    document.getElementById('label-wallet-pilihan').innerText = "Kirim Uang Dari Saku Mana?";
-                    groupTujuan.style.display = "block";
-                    tombolAksi.innerHTML = '<i class="fa-solid fa-arrows-rotate"></i> Luncurkan Pindah Saldo 🚀';
-                    tombolAksi.className = "btn-hitung btn-transfer-mode";
-                } else if (jenisInput === "pengeluaran") {
-                    document.body.className = "tema-pengeluaran";
-                    document.getElementById('label-nama-transaksi').innerText = "Beli apaan lagi lo?";
-                    document.getElementById('label-wallet-pilihan').innerText = "Duit Keluar Dari Mana?";
-                    groupTujuan.style.display = "none";
-                    tombolAksi.innerHTML = '<i class="fa-solid fa-minus-circle"></i> Ikhlaskan Duit Ini 💸';
-                    tombolAksi.className = "btn-hitung btn-pengeluaran";
-                } else {
-                    document.body.className = "tema-pemasukan";
-                    document.getElementById('label-nama-transaksi').innerText = "Dapet rezeki dari mana lo?";
-                    document.getElementById('label-wallet-pilihan').innerText = "Masuk Duit Via Apa, Cuy?";
-                    groupTujuan.style.display = "none";
-                    tombolAksi.innerHTML = '<i class="fa-solid fa-plus-circle"></i> Asik Tambah Kekayaan 🤑';
-                    tombolAksi.className = "btn-hitung btn-pemasukan";
-                }
+            const objekWaktu = new Date(tanggalInput);
+            const tanggalTeks = objekWaktu.toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
+            const kodeBulan = String(objekWaktu.getMonth() + 1).padStart(2, '0');
 
-                if (typeof syncSemuaCustomSelect === 'function') {
-                    syncSemuaCustomSelect();
-                }
-            }
-
-            function tambahTransaksi() {
-                const namaInput = document.getElementById('nama-transaksi').value;
-                const jenisInput = document.getElementById('jenis-transaksi').value;
-                const walletInput = document.getElementById('wallet-pilihan').value;
-                const walletTujuanInput = document.getElementById('wallet-tujuan').value;
-                let kategoriInput = document.getElementById('kategori-transaksi').value;
-                const nominalInput = document.getElementById('nominal').value;
-                const tanggalInput = document.getElementById('tanggal-transaksi').value;
-
-                if (jenisInput === "transfer") {
-                    kategoriInput = "transfer";
-                    if (walletInput === walletTujuanInput) {
-                        panggilCustomModal('Gagal Mutasi ❌', 'Asal dan tujuan saku gak boleh sama, kocak! 🤣', null, 'exclamation');
-                        return;
+            if (idTransaksiDiedit !== null) {
+                daftarTransaksi = daftarTransaksi.map(item => {
+                    if (item.id === idTransaksiDiedit) {
+                        return { ...item, nama: namaInput.trim(), jenis: jenisInput, wallet: walletInput, walletTujuan: (jenisInput === "transfer" ? walletTujuanInput : undefined), kategori: kategoriInput, nominal: nominalAngkaMurni, tanggalCetak: tanggalTeks, bulan: kodeBulan, tanggalMentah: tanggalInput };
                     }
-                } else {
-                    if (kategoriInput === "kustom") {
-                        const teksKustom = document.getElementById('kategori-kustom-input').value;
-                        kategoriInput = teksKustom && teksKustom.trim() !== "" ? teksKustom.trim() : "Kustom Bebas";
-                    }
-                }
-
-                if (!namaInput || namaInput.trim() === "" || !nominalInput || !tanggalInput) { return; }
-
-                const nominalAngkaMurni = parseFloat(nominalInput.replace(/\./g, ''));
-                if (isNaN(nominalAngkaMurni) || nominalAngkaMurni <= 0) { return; }
-
-                const objekWaktu = new Date(tanggalInput);
-                const tanggalTeks = objekWaktu.toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
-                const kodeBulan = String(objekWaktu.getMonth() + 1).padStart(2, '0');
-
-                if (idTransaksiDiedit !== null) {
-                    daftarTransaksi = daftarTransaksi.map(item => {
-                        if (item.id === idTransaksiDiedit) {
-                            return { ...item, nama: namaInput.trim(), jenis: jenisInput, wallet: walletInput, walletTujuan: (jenisInput === "transfer" ? walletTujuanInput : undefined), kategori: kategoriInput, nominal: nominalAngkaMurni, tanggalCetak: tanggalTeks, bulan: kodeBulan, tanggalMentah: tanggalInput };
-                        }
-                        return item;
-                    });
-                    idTransaksiDiedit = null;
-                } else {
-                    daftarTransaksi.unshift({ id: +new Date(), nama: namaInput.trim(), jenis: jenisInput, wallet: walletInput, walletTujuan: (jenisInput === "transfer" ? walletTujuanInput : undefined), kategori: kategoriInput, nominal: nominalAngkaMurni, tanggalCetak: tanggalTeks, bulan: kodeBulan, tanggalMentah: tanggalInput });
-                }
-
-                simpanDataKeLokal();
-                document.getElementById('nama-transaksi').value = "";
-                document.getElementById('nominal').value = "";
-                document.getElementById('kategori-kustom-input').value = "";
-                document.getElementById('smart-paste-box').value = "";
-                ubahTemaWarna();
-                tampilkanData();
-            }
-
-            function aktifkanModeEdit(idTransaksi) {
-                const targetData = daftarTransaksi.find(item => item.id === idTransaksi);
-                if (!targetData) return;
-                idTransaksiDiedit = idTransaksi;
-                if (window.innerWidth <= 820) { lompatSectionHP('panel-input', 'f-btn-input'); }
-
-                document.getElementById('nama-transaksi').value = targetData.nama;
-                document.getElementById('jenis-transaksi').value = targetData.jenis;
-                document.getElementById('wallet-pilihan').value = targetData.wallet || "dana";
-                if (targetData.jenis === "transfer") {
-                    document.getElementById('wallet-tujuan').value = targetData.walletTujuan || "mandiri";
-                }
-                document.getElementById('tanggal-transaksi').value = targetData.tanggalMentah || "";
-
-                perbaruiOpsiKategori();
-
-                if (targetData.jenis !== "transfer") {
-                    if (document.querySelector("#kategori-transaksi option[value='" + targetData.kategori + "']")) {
-                        document.getElementById('kategori-transaksi').value = targetData.kategori;
-                    } else {
-                        document.getElementById('kategori-transaksi').value = "kustom";
-                        document.getElementById('kustom-kategori-group').style.display = "block";
-                        document.getElementById('kategori-kustom-input').value = targetData.kategori;
-                    }
-                }
-
-                const inputNominal = document.getElementById('nominal');
-                inputNominal.value = targetData.nominal;
-                formatInputRupiah(inputNominal);
-
-                document.body.className = "tema-edit";
-                document.getElementById('label-nama-transaksi').innerText = "Plin plan lo! Mau benerin data apaan?";
-                document.getElementById('group-wallet-tujuan').style.display = (targetData.jenis === "transfer") ? "block" : "none";
-                document.getElementById('btn-aksi').className = "btn-hitung btn-edit-mode";
-                document.getElementById('btn-aksi').innerHTML = '<i class="fa-solid fa-wrench"></i> Benerin Dosa Finansial 🛠️';
-
-                if (typeof syncSemuaCustomSelect === 'function') {
-                    syncSemuaCustomSelect();
-                }
-            }
-
-            function hapusSatuTransaksi(idTransaksi) {
-                panggilCustomModal('Hapus Dosa Finansial', 'Mau hapus catatan dosa finansial yang ini aja, Cuy? 🤔', () => {
-                    daftarTransaksi = daftarTransaksi.filter(item => item.id !== idTransaksi);
-                    simpanDataKeLokal();
-                    tampilkanData();
+                    return item;
                 });
+                idTransaksiDiedit = null;
+            } else {
+                daftarTransaksi.unshift({ id: +new Date(), nama: namaInput.trim(), jenis: jenisInput, wallet: walletInput, walletTujuan: (jenisInput === "transfer" ? walletTujuanInput : undefined), kategori: kategoriInput, nominal: nominalAngkaMurni, tanggalCetak: tanggalTeks, bulan: kodeBulan, tanggalMentah: tanggalInput });
             }
 
-            function eksekusiResetSemuaData() {
-                panggilCustomModal('Format Ulang Seluruh Data', 'Yakin banget mau hapus seluruh riwayat & wishlist dari awal, Cuy? Data di memori lokal lo bakal terhapus bersih! 💥', () => {
-                    daftarTransaksi = [];
-                    daftarWishlist = [];
-                    daftarTagihan = [];
-                    daftarPiutang = [];
-                    daftarCatatan = [];
-                    simpanDataKeLokal();
+            simpanDataKeLokal();
+            document.getElementById('nama-transaksi').value = "";
+            document.getElementById('nominal').value = "";
+            document.getElementById('kategori-kustom-input').value = "";
+            document.getElementById('smart-paste-box').value = "";
+            ubahTemaWarna();
+            tampilkanData();
+        }
 
-                    if (objekChartGlobal) { objekChartGlobal.destroy(); objekChartGlobal = null; }
-                    if (objekChartLineGlobal) { objekChartLineGlobal.destroy(); objekChartLineGlobal = null; }
+        function aktifkanModeEdit(idTransaksi) {
+            const targetData = daftarTransaksi.find(item => item.id === idTransaksi);
+            if (!targetData) return;
+            idTransaksiDiedit = idTransaksi;
+            if (window.innerWidth <= 820) { lompatSectionHP('panel-input', 'f-btn-input'); }
 
-                    tampilkanData();
-                    panggilCustomModal('Sukses Format!', 'Aplikasi WAYFinance lo sekarang bersih total dari nol kembali!', null, 'success');
-                });
+            document.getElementById('nama-transaksi').value = targetData.nama;
+            document.getElementById('jenis-transaksi').value = targetData.jenis;
+            document.getElementById('wallet-pilihan').value = targetData.wallet || "dana";
+            if (targetData.jenis === "transfer") {
+                document.getElementById('wallet-tujuan').value = targetData.walletTujuan || "mandiri";
+            }
+            document.getElementById('tanggal-transaksi').value = targetData.tanggalMentah || "";
+
+            perbaruiOpsiKategori();
+
+            if (targetData.jenis !== "transfer") {
+                if (document.querySelector("#kategori-transaksi option[value='" + targetData.kategori + "']")) {
+                    document.getElementById('kategori-transaksi').value = targetData.kategori;
+                } else {
+                    document.getElementById('kategori-transaksi').value = "kustom";
+                    document.getElementById('kustom-kategori-group').style.display = "block";
+                    document.getElementById('kategori-kustom-input').value = targetData.kategori;
+                }
             }
 
-            function tambahWishlistBaru() {
-                if (!statusUserPremium) { bukaPaywallPremium('Financial Goals / Wishlist'); return; }
-                const namaInput = document.getElementById('wishlist-nama-input').value;
-                const hargaInput = document.getElementById('wishlist-harga-input').value;
-                if (!namaInput || namaInput.trim() === "" || !hargaInput) return;
-                const hargaAngkaMurni = parseFloat(hargaInput.replace(/\./g, ''));
-                if (isNaN(hargaAngkaMurni) || hargaAngkaMurni <= 0) return;
+            const inputNominal = document.getElementById('nominal');
+            inputNominal.value = targetData.nominal;
+            formatInputRupiah(inputNominal);
 
-                daftarWishlist.push({ id: +new Date(), nama: namaInput.trim(), hargaTarget: hargaAngkaMurni, terkumpul: 0 });
-                document.getElementById('wishlist-nama-input').value = "";
-                document.getElementById('wishlist-harga-input').value = "";
+            document.body.className = "tema-edit";
+            document.getElementById('label-nama-transaksi').innerText = "Plin plan lo! Mau benerin data apaan?";
+            document.getElementById('group-wallet-tujuan').style.display = (targetData.jenis === "transfer") ? "block" : "none";
+            document.getElementById('btn-aksi').className = "btn-hitung btn-edit-mode";
+            document.getElementById('btn-aksi').innerHTML = '<i class="fa-solid fa-wrench"></i> Benerin Dosa Finansial 🛠️';
+
+            if (typeof syncSemuaCustomSelect === 'function') {
+                syncSemuaCustomSelect();
+            }
+        }
+
+        function hapusSatuTransaksi(idTransaksi) {
+            panggilCustomModal('Hapus Dosa Finansial', 'Mau hapus catatan dosa finansial yang ini aja, Cuy? 🤔', () => {
+                daftarTransaksi = daftarTransaksi.filter(item => item.id !== idTransaksi);
                 simpanDataKeLokal();
                 tampilkanData();
-            }
+            });
+        }
 
-            function isiCelenganInline(idWishlist) {
-                const inputElemen = document.getElementById('input-budget-' + idWishlist);
-                const dompetPilihanElemen = document.getElementById('select-wallet-goals-' + idWishlist);
-                const nominalIsi = inputElemen.value;
-                if (!nominalIsi || nominalIsi.trim() === "") return;
-                const angkaIsi = parseFloat(nominalIsi.replace(/\./g, ''));
-                if (isNaN(angkaIsi) || angkaIsi <= 0) return;
+        function eksekusiResetSemuaData() {
+            panggilCustomModal('Format Ulang Seluruh Data', 'Yakin banget mau hapus seluruh riwayat & wishlist dari awal, Cuy? Data di memori lokal lo bakal terhapus bersih! 💥', () => {
+                daftarTransaksi = [];
+                daftarWishlist = [];
+                daftarTagihan = [];
+                daftarPiutang = [];
+                daftarCatatan = [];
+                simpanDataKeLokal();
 
-                const targetWishlist = daftarWishlist.find(item => item.id === idWishlist);
-                if (!targetWishlist) return;
+                if (objekChartGlobal) { objekChartGlobal.destroy(); objekChartGlobal = null; }
+                if (objekChartLineGlobal) { objekChartLineGlobal.destroy(); objekChartLineGlobal = null; }
 
-                const sisaKebutuhan = targetWishlist.hargaTarget - targetWishlist.terkumpul;
-                const jumlahPotongSaldo = Math.min(angkaIsi, sisaKebutuhan);
-                if (jumlahPotongSaldo <= 0) return;
+                tampilkanData();
+                panggilCustomModal('Sukses Format!', 'Aplikasi WAYFinance lo sekarang bersih total dari nol kembali!', null, 'success');
+            });
+        }
 
-                let walletValue = dompetPilihanElemen.value;
+        function tambahWishlistBaru() {
+            const namaInput = document.getElementById('wishlist-nama-input').value;
+            const hargaInput = document.getElementById('wishlist-harga-input').value;
+            if (!namaInput || namaInput.trim() === "" || !hargaInput) return;
+            const hargaAngkaMurni = parseFloat(hargaInput.replace(/\./g, ''));
+            if (isNaN(hargaAngkaMurni) || hargaAngkaMurni <= 0) return;
 
-                daftarTransaksi.unshift({
-                    id: +new Date(),
-                    nama: `Celengan: ${targetWishlist.nama}`,
-                    jenis: "pengeluaran",
-                    wallet: walletValue,
-                    kategori: "belanja",
-                    nominal: jumlahPotongSaldo,
-                    tanggalCetak: new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' }),
-                    bulan: String(new Date().getMonth() + 1).padStart(2, '0'),
-                    tanggalMentah: new Date().toISOString().split('T')[0]
-                });
+            daftarWishlist.push({ id: +new Date(), nama: namaInput.trim(), hargaTarget: hargaAngkaMurni, terkumpul: 0 });
+            document.getElementById('wishlist-nama-input').value = "";
+            document.getElementById('wishlist-harga-input').value = "";
+            simpanDataKeLokal();
+            tampilkanData();
+        }
 
-                daftarWishlist = daftarWishlist.map(item => (item.id === idWishlist) ? { ...item, terkumpul: item.terkumpul + jumlahPotongSaldo } : item);
+        function isiCelenganInline(idWishlist) {
+            const inputElemen = document.getElementById('input-budget-' + idWishlist);
+            const dompetPilihanElemen = document.getElementById('select-wallet-goals-' + idWishlist);
+            const nominalIsi = inputElemen.value;
+            if (!nominalIsi || nominalIsi.trim() === "") return;
+            const angkaIsi = parseFloat(nominalIsi.replace(/\./g, ''));
+            if (isNaN(angkaIsi) || angkaIsi <= 0) return;
 
+            const targetWishlist = daftarWishlist.find(item => item.id === idWishlist);
+            if (!targetWishlist) return;
+
+            const sisaKebutuhan = targetWishlist.hargaTarget - targetWishlist.terkumpul;
+            const jumlahPotongSaldo = Math.min(angkaIsi, sisaKebutuhan);
+            if (jumlahPotongSaldo <= 0) return;
+
+            let walletValue = dompetPilihanElemen.value;
+
+            daftarTransaksi.unshift({
+                id: +new Date(),
+                nama: `Celengan: ${targetWishlist.nama}`,
+                jenis: "pengeluaran",
+                wallet: walletValue,
+                kategori: "belanja",
+                nominal: jumlahPotongSaldo,
+                tanggalCetak: new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' }),
+                bulan: String(new Date().getMonth() + 1).padStart(2, '0'),
+                tanggalMentah: new Date().toISOString().split('T')[0]
+            });
+
+            daftarWishlist = daftarWishlist.map(item => (item.id === idWishlist) ? { ...item, terkumpul: item.terkumpul + jumlahPotongSaldo } : item);
+
+            simpanDataKeLokal();
+            tampilkanData();
+        }
+
+        function hapusWishlist(idWishlist) {
+            panggilCustomModal('Membatalkan Wishlist', 'Gajadi pengen beli barang ini, Cuy? 🎯', () => {
+                daftarWishlist = daftarWishlist.filter(item => item.id !== idWishlist);
                 simpanDataKeLokal();
                 tampilkanData();
+            });
+        }
+
+        function kalkulasiStatusBacot(saldo) {
+            const wadahTeks = document.getElementById('status-bacot');
+            if (daftarTransaksi.length === 0) { wadahTeks.innerText = "Belum ada duit dicatat nih..."; return; }
+            if (idTransaksiDiedit !== null) return;
+
+            let arrayKalimat = [];
+            if (saldo > 5000000) {
+                arrayKalimat = [
+                    "Asik orang kaya baru, gaya elit ekonomi elit! 😎",
+                    "Gaya lo sultan bener, inget besok siklus bayar tagihan! 💸",
+                    "Wah tabungan tebel, aman lah ya buat gacha tipis-tipis? 🎮"
+                ];
+            } else if (saldo > 1000000) {
+                arrayKalimat = [
+                    "Aman, tapi jangan sok ngide beli boba tiap hari ya. ☕",
+                    "Duit segini masih bisa makan enak, tapi batasi nongkrong lo! 🛍️",
+                    "Cukup buat hidup tegak, awas khilaf belanja online! 🛒"
+                ];
+            } else if (saldo > 100000) {
+                arrayKalimat = [
+                    "Mode bertahan hidup aktif, tgl tua menangis lirih... 💸",
+                    "Dompet mulai menipis, mending masak mie instan di kosan. 🍜",
+                    "Dompet lo mangap tuh, tobat khilaf sebelum terlambat! 🛑"
+                ];
+            } else if (saldo >= 0) {
+                arrayKalimat = [
+                    "DOMPET LO SEKARAT WOY! Makan promag aja sana! 😭",
+                    "Sisa uang segini cuma cukup buat bayar parkir seminggu! 🚗",
+                    "Kritis! Status keuangan lo masuk zona merah bahaya kelaparan! ⚠️"
+                ];
+            } else {
+                arrayKalimat = [
+                    "MINUS!! Fix gali lubang tutup lubang, beban bumi! 💀💥",
+                    "Utang di mana-mana, lo pelihara jin apa gimana? 👻",
+                    "Nangis di pojokan, saldo minus tandanya lo gagal hemat! 📉"
+                ];
             }
 
-            function hapusWishlist(idWishlist) {
-                panggilCustomModal('Membatalkan Wishlist', 'Gajadi pengen beli barang ini, Cuy? 🎯', () => {
-                    daftarWishlist = daftarWishlist.filter(item => item.id !== idWishlist);
-                    simpanDataKeLokal();
-                    tampilkanData();
-                });
+            const teksAcak = arrayKalimat[Math.floor(Math.random() * arrayKalimat.length)];
+            wadahTeks.innerText = teksAcak;
+        }
+
+        function regenerasiLineChartTren(petaDataTren) {
+            const ctxLine = document.getElementById('canvasChartLineTren').getContext('2d');
+            if (objekChartLineGlobal) { objekChartLineGlobal.destroy(); }
+
+            const labelBulan = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
+            const datasetGaris = [];
+            let akumulasiSaldoGaris = 0;
+
+            for (let i = 1; i <= 12; i++) {
+                const kode = String(i).padStart(2, '0');
+                const masuk = petaDataTren.masuk[kode] || 0;
+                const keluar = petaDataTren.keluar[kode] || 0;
+                akumulasiSaldoGaris += (masuk - keluar);
+                datasetGaris.push(akumulasiSaldoGaris);
             }
 
-            function kalkulasiStatusBacot(saldo) {
-                const wadahTeks = document.getElementById('status-bacot');
-                if (daftarTransaksi.length === 0) { wadahTeks.innerText = "Belum ada duit dicatat nih..."; return; }
-                if (idTransaksiDiedit !== null) return;
-
-                let arrayKalimat = [];
-                if (saldo > 5000000) {
-                    arrayKalimat = [
-                        "Asik orang kaya baru, gaya elit ekonomi elit! 😎",
-                        "Gaya lo sultan bener, inget besok siklus bayar tagihan! 💸",
-                        "Wah tabungan tebel, aman lah ya buat gacha tipis-tipis? 🎮"
-                    ];
-                } else if (saldo > 1000000) {
-                    arrayKalimat = [
-                        "Aman, tapi jangan sok ngide beli boba tiap hari ya. ☕",
-                        "Duit segini masih bisa makan enak, tapi batasi nongkrong lo! 🛍️",
-                        "Cukup buat hidup tegak, awas khilaf belanja online! 🛒"
-                    ];
-                } else if (saldo > 100000) {
-                    arrayKalimat = [
-                        "Mode bertahan hidup aktif, tgl tua menangis lirih... 💸",
-                        "Dompet mulai menipis, mending masak mie instan di kosan. 🍜",
-                        "Dompet lo mangap tuh, tobat khilaf sebelum terlambat! 🛑"
-                    ];
-                } else if (saldo >= 0) {
-                    arrayKalimat = [
-                        "DOMPET LO SEKARAT WOY! Makan promag aja sana! 😭",
-                        "Sisa uang segini cuma cukup buat bayar parkir seminggu! 🚗",
-                        "Kritis! Status keuangan lo masuk zona merah bahaya kelaparan! ⚠️"
-                    ];
-                } else {
-                    arrayKalimat = [
-                        "MINUS!! Fix gali lubang tutup lubang, beban bumi! 💀💥",
-                        "Utang di mana-mana, lo pelihara jin apa gimana? 👻",
-                        "Nangis di pojokan, saldo minus tandanya lo gagal hemat! 📉"
-                    ];
-                }
-
-                const teksAcak = arrayKalimat[Math.floor(Math.random() * arrayKalimat.length)];
-                wadahTeks.innerText = teksAcak;
-            }
-
-            function regenerasiLineChartTren(petaDataTren) {
-                const ctxLine = document.getElementById('canvasChartLineTren').getContext('2d');
-                if (objekChartLineGlobal) { objekChartLineGlobal.destroy(); }
-
-                const labelBulan = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
-                const datasetGaris = [];
-                let akumulasiSaldoGaris = 0;
-
-                for (let i = 1; i <= 12; i++) {
-                    const kode = String(i).padStart(2, '0');
-                    const masuk = petaDataTren.masuk[kode] || 0;
-                    const keluar = petaDataTren.keluar[kode] || 0;
-                    akumulasiSaldoGaris += (masuk - keluar);
-                    datasetGaris.push(akumulasiSaldoGaris);
-                }
-
-                objekChartLineGlobal = new Chart(ctxLine, {
-                    type: 'line',
-                    data: {
-                        labels: labelBulan,
-                        datasets: [{
-                            label: 'Sisa Saldo Kumulatif',
-                            data: datasetGaris,
-                            borderColor: '#2ecc71',
-                            backgroundColor: 'rgba(46, 204, 113, 0.1)',
-                            borderWidth: 2,
-                            tension: 0.3,
-                            fill: true
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        plugins: { legend: { display: false } },
-                        scales: {
-                            x: { ticks: { color: '#94a3b8', font: { family: 'Poppins', size: 9 } }, grid: { display: false } },
-                            y: { ticks: { color: '#94a3b8', font: { family: 'Poppins', size: 9 } }, grid: { color: 'rgba(255,255,255,0.05)' } }
-                        }
+            objekChartLineGlobal = new Chart(ctxLine, {
+                type: 'line',
+                data: {
+                    labels: labelBulan,
+                    datasets: [{
+                        label: 'Sisa Saldo Kumulatif',
+                        data: datasetGaris,
+                        borderColor: '#2ecc71',
+                        backgroundColor: 'rgba(46, 204, 113, 0.1)',
+                        borderWidth: 2,
+                        tension: 0.3,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        x: { ticks: { color: '#94a3b8', font: { family: 'Poppins', size: 9 } }, grid: { display: false } },
+                        y: { ticks: { color: '#94a3b8', font: { family: 'Poppins', size: 9 } }, grid: { color: 'rgba(255,255,255,0.05)' } }
                     }
-                });
-            }
-
-            function regenerasiVisualChart(totalMasuk, totalKeluar, totalTransfer) {
-                const ctx = document.getElementById('canvasChartKeuangan').getContext('2d');
-                if (objekChartGlobal) { objekChartGlobal.destroy(); }
-
-                let labelData = ['Masuk', 'Keluar', 'Transfer'];
-                let barisDataset = [totalMasuk, totalKeluar, totalTransfer];
-                let skemaWarna = ['#2ecc71', '#e74c3c', '#0081b4'];
-
-                if (totalMasuk === 0 && totalKeluar === 0 && totalTransfer === 0) {
-                    labelData = ['Belum Ada Data'];
-                    barisDataset = [1];
-                    skemaWarna = ['#3b4758'];
                 }
+            });
+        }
 
-                objekChartGlobal = new Chart(ctx, {
-                    type: 'doughnut',
-                    data: {
-                        labels: labelData,
-                        datasets: [{
-                            data: barisDataset,
-                            backgroundColor: skemaWarna,
-                            borderWidth: 1,
-                            borderColor: '#242c39'
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        plugins: {
-                            legend: { position: 'bottom', labels: { color: '#f8fafc', font: { family: 'Poppins', size: 11 } } }
-                        }
-                    }
-                });
+        function regenerasiVisualChart(totalMasuk, totalKeluar, totalTransfer) {
+            const ctx = document.getElementById('canvasChartKeuangan').getContext('2d');
+            if (objekChartGlobal) { objekChartGlobal.destroy(); }
+
+            let labelData = ['Masuk', 'Keluar', 'Transfer'];
+            let barisDataset = [totalMasuk, totalKeluar, totalTransfer];
+            let skemaWarna = ['#2ecc71', '#e74c3c', '#0081b4'];
+
+            if (totalMasuk === 0 && totalKeluar === 0 && totalTransfer === 0) {
+                labelData = ['Belum Ada Data'];
+                barisDataset = [1];
+                skemaWarna = ['#3b4758'];
             }
 
-            function tampilkanData() {
-                const listContainer = document.getElementById('list-transaksi');
-                const bulanDipilih = document.getElementById('filter-bulan').value;
-                const kataKunciSearch = document.getElementById('search-transaksi').value.toLowerCase().trim();
+            objekChartGlobal = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: labelData,
+                    datasets: [{
+                        data: barisDataset,
+                        backgroundColor: skemaWarna,
+                        borderWidth: 1,
+                        borderColor: '#242c39'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'bottom', labels: { color: '#f8fafc', font: { family: 'Poppins', size: 11 } } }
+                    }
+                }
+            });
+        }
 
-                listContainer.innerHTML = "";
+        function tampilkanData() {
+            const listContainer = document.getElementById('list-transaksi');
+            const bulanDipilih = document.getElementById('filter-bulan').value;
+            const kataKunciSearch = document.getElementById('search-transaksi').value.toLowerCase().trim();
 
-                let saldoCash = 0, saldoDana = 0, saldoOvo = 0, saldoGopay = 0, saldoGlobal = 0;
-                let saldoBca = 0, saldoMandiri = 0, saldoBni = 0, saldoBri = 0, saldoLain = 0;
-                let pemasukanBulanIni = 0, pengeluaranBulanIni = 0, transferBulanIni = 0;
+            listContainer.innerHTML = "";
 
-                const petaDataTren = {
-                    masuk: { "01": 0, "02": 0, "03": 0, "04": 0, "05": 0, "06": 0, "07": 0, "08": 0, "09": 0, "10": 0, "11": 0, "12": 0 },
-                    keluar: { "01": 0, "02": 0, "03": 0, "04": 0, "05": 0, "06": 0, "07": 0, "08": 0, "09": 0, "10": 0, "11": 0, "12": 0 }
-                };
+            let saldoCash = 0, saldoDana = 0, saldoOvo = 0, saldoGopay = 0, saldoGlobal = 0;
+            let saldoBca = 0, saldoMandiri = 0, saldoBni = 0, saldoBri = 0, saldoLain = 0;
+            let pemasukanBulanIni = 0, pengeluaranBulanIni = 0, transferBulanIni = 0;
 
-                const reverseData = [...daftarTransaksi].reverse();
-                reverseData.forEach(item => {
-                    const src = item.wallet || "dana";
-                    const dest = item.walletTujuan;
-                    const nom = item.nominal;
+            const petaDataTren = {
+                masuk: { "01": 0, "02": 0, "03": 0, "04": 0, "05": 0, "06": 0, "07": 0, "08": 0, "09": 0, "10": 0, "11": 0, "12": 0 },
+                keluar: { "01": 0, "02": 0, "03": 0, "04": 0, "05": 0, "06": 0, "07": 0, "08": 0, "09": 0, "10": 0, "11": 0, "12": 0 }
+            };
+
+            const reverseData = [...daftarTransaksi].reverse();
+            reverseData.forEach(item => {
+                const src = item.wallet || "dana";
+                const dest = item.walletTujuan;
+                const nom = item.nominal;
+
+                if (item.jenis === "pemasukan") {
+                    saldoGlobal += nom;
+                    if (src === "cash") saldoCash += nom;
+                    if (src === "dana") saldoDana += nom;
+                    if (src === "ovo") saldoOvo += nom;
+                    if (src === "gopay") saldoGopay += nom;
+                    if (src === "bca") saldoBca += nom;
+                    if (src === "mandiri") saldoMandiri += nom;
+                    if (src === "bni") saldoBni += nom;
+                    if (src === "bri") saldoBri += nom;
+                    if (src === "bank_lain") saldoLain += nom;
+
+                    if (item.bulan) petaDataTren.masuk[item.bulan] += nom;
+                }
+                else if (item.jenis === "pengeluaran") {
+                    saldoGlobal -= nom;
+                    if (src === "cash") saldoCash -= nom;
+                    if (src === "dana") saldoDana -= nom;
+                    if (src === "ovo") saldoOvo -= nom;
+                    if (src === "gopay") saldoGopay -= nom;
+                    if (src === "bca") saldoBca -= nom;
+                    if (src === "mandiri") saldoMandiri -= nom;
+                    if (src === "bni") saldoBni -= nom;
+                    if (src === "bri") saldoBri -= nom;
+                    if (src === "bank_lain") saldoLain -= nom;
+
+                    if (item.bulan) petaDataTren.keluar[item.bulan] += nom;
+                }
+                else if (item.jenis === "transfer") {
+                    if (src === "cash") saldoCash -= nom;
+                    if (src === "dana") saldoDana -= nom;
+                    if (src === "ovo") saldoOvo -= nom;
+                    if (src === "gopay") saldoGopay -= nom;
+                    if (src === "bca") saldoBca -= nom;
+                    if (src === "mandiri") saldoMandiri -= nom;
+                    if (src === "bni") saldoBni -= nom;
+                    if (src === "bri") saldoBri -= nom;
+                    if (src === "bank_lain") saldoLain -= nom;
+
+                    if (dest === "cash") saldoCash += nom;
+                    if (dest === "dana") saldoDana += nom;
+                    if (dest === "ovo") saldoOvo += nom;
+                    if (dest === "gopay") saldoGopay += nom;
+                    if (dest === "bca") saldoBca += nom;
+                    if (dest === "mandiri") saldoMandiri += nom;
+                    if (dest === "bni") saldoBni += nom;
+                    if (dest === "bri") saldoBri += nom;
+                    if (dest === "bank_lain") saldoLain += nom;
+                }
+            });
+
+            const warningBanner = document.getElementById('budget-warning');
+            if (statusUserPremium && pengeluaranBulanIni > 2500000) {
+                warningBanner.style.display = "flex";
+            } else {
+                warningBanner.style.display = "none";
+            }
+
+            daftarTransaksi.forEach(item => {
+                const cocokBulan = (bulanDipilih === "ALL" || item.bulan === bulanDipilih);
+                const cocokSearch = (kataKunciSearch === "" || item.nama.toLowerCase().includes(kataKunciSearch) || item.kategori.toLowerCase().includes(kataKunciSearch));
+
+                if (cocokBulan && cocokSearch) {
+                    let kelasItem = "pemasukan-item";
+                    let kelasNominal = "nominal-pemasukan";
+                    let tandaKarakter = "+";
 
                     if (item.jenis === "pemasukan") {
-                        saldoGlobal += nom;
-                        if (src === "cash") saldoCash += nom;
-                        if (src === "dana") saldoDana += nom;
-                        if (src === "ovo") saldoOvo += nom;
-                        if (src === "gopay") saldoGopay += nom;
-                        if (src === "bca") saldoBca += nom;
-                        if (src === "mandiri") saldoMandiri += nom;
-                        if (src === "bni") saldoBni += nom;
-                        if (src === "bri") saldoBri += nom;
-                        if (src === "bank_lain") saldoLain += nom;
-
-                        if (item.bulan) petaDataTren.masuk[item.bulan] += nom;
+                        pemasukanBulanIni += item.nominal;
+                    } else if (item.jenis === "pengeluaran") {
+                        kelasItem = "pengeluaran-item";
+                        kelasNominal = "nominal-pengeluaran";
+                        tandaKarakter = "-";
+                        pengeluaranBulanIni += item.nominal;
+                    } else if (item.jenis === "transfer") {
+                        kelasItem = "transfer-item";
+                        kelasNominal = "nominal-transfer";
+                        tandaKarakter = "🔄";
+                        transferBulanIni += item.nominal;
                     }
-                    else if (item.jenis === "pengeluaran") {
-                        saldoGlobal -= nom;
-                        if (src === "cash") saldoCash -= nom;
-                        if (src === "dana") saldoDana -= nom;
-                        if (src === "ovo") saldoOvo -= nom;
-                        if (src === "gopay") saldoGopay -= nom;
-                        if (src === "bca") saldoBca -= nom;
-                        if (src === "mandiri") saldoMandiri -= nom;
-                        if (src === "bni") saldoBni -= nom;
-                        if (src === "bri") saldoBri -= nom;
-                        if (src === "bank_lain") saldoLain -= nom;
 
-                        if (item.bulan) petaDataTren.keluar[item.bulan] += nom;
-                    }
-                    else if (item.jenis === "transfer") {
-                        if (src === "cash") saldoCash -= nom;
-                        if (src === "dana") saldoDana -= nom;
-                        if (src === "ovo") saldoOvo -= nom;
-                        if (src === "gopay") saldoGopay -= nom;
-                        if (src === "bca") saldoBca -= nom;
-                        if (src === "mandiri") saldoMandiri -= nom;
-                        if (src === "bni") saldoBni -= nom;
-                        if (src === "bri") saldoBri -= nom;
-                        if (src === "bank_lain") saldoLain -= nom;
+                    let labelSaku = (item.jenis === "transfer")
+                        ? `${item.wallet.toUpperCase()} ➔ ${item.walletTujuan.toUpperCase()}`
+                        : item.wallet.toUpperCase();
 
-                        if (dest === "cash") saldoCash += nom;
-                        if (dest === "dana") saldoDana += nom;
-                        if (dest === "ovo") saldoOvo += nom;
-                        if (dest === "gopay") saldoGopay += nom;
-                        if (dest === "bca") saldoBca += nom;
-                        if (dest === "mandiri") saldoMandiri += nom;
-                        if (dest === "bni") saldoBni += nom;
-                        if (dest === "bri") saldoBri += nom;
-                        if (dest === "bank_lain") saldoLain += nom;
-                    }
-                });
-
-                const warningBanner = document.getElementById('budget-warning');
-                if (statusUserPremium && pengeluaranBulanIni > 2500000) {
-                    warningBanner.style.display = "flex";
-                } else {
-                    warningBanner.style.display = "none";
-                }
-
-                daftarTransaksi.forEach(item => {
-                    const cocokBulan = (bulanDipilih === "ALL" || item.bulan === bulanDipilih);
-                    const cocokSearch = (kataKunciSearch === "" || item.nama.toLowerCase().includes(kataKunciSearch) || item.kategori.toLowerCase().includes(kataKunciSearch));
-
-                    if (cocokBulan && cocokSearch) {
-                        let kelasItem = "pemasukan-item";
-                        let kelasNominal = "nominal-pemasukan";
-                        let tandaKarakter = "+";
-
-                        if (item.jenis === "pemasukan") {
-                            pemasukanBulanIni += item.nominal;
-                        } else if (item.jenis === "pengeluaran") {
-                            kelasItem = "pengeluaran-item";
-                            kelasNominal = "nominal-pengeluaran";
-                            tandaKarakter = "-";
-                            pengeluaranBulanIni += item.nominal;
-                        } else if (item.jenis === "transfer") {
-                            kelasItem = "transfer-item";
-                            kelasNominal = "nominal-transfer";
-                            tandaKarakter = "🔄";
-                            transferBulanIni += item.nominal;
-                        }
-
-                        let labelSaku = (item.jenis === "transfer")
-                            ? `${item.wallet.toUpperCase()} ➔ ${item.walletTujuan.toUpperCase()}`
-                            : item.wallet.toUpperCase();
-
-                        listContainer.insertAdjacentHTML('beforeend', `
+                    listContainer.insertAdjacentHTML('beforeend', `
                         <li class="item-transaksi ${kelasItem}">
                             <div class="item-kiri"><div class="icon-bulet"><i class="${kamusIkon[item.kategori] || 'fa-solid fa-wand-magic-sparkles'}"></i></div>
                             <div class="item-detail"><span class="item-nama">${html_escape_tag(item.nama)}</span><span class="item-kategori-tag">${kamusTeksKategori[item.kategori] || '🔮 ' + html_escape_tag(item.kategori)}</span><span class="item-wallet-tag"><i class="fa-solid fa-credit-card"></i> SAKU: ${labelSaku}</span><span class="item-tanggal">${item.tanggalCetak}</span></div></div>
                             <div class="item-kanan"><span class="${kelasNominal}">${tandaKarakter} Rp ${item.nominal.toLocaleString('id-ID')}</span>
-                            <button class="btn-aksi-item btn-edit-item" onclick="window.aktifkanModeEdit(${item.id})"><i class="fa-solid fa-pen-to-square"></i></button>
-                            <button class="btn-aksi-item btn-hapus-item" onclick="window.hapusSatuTransaksi(${item.id})"><i class="fa-regular fa-trash-can"></i></button></div>
+                            <div class="item-actions">
+                                <button class="btn-aksi-item btn-edit-item" onclick="window.aktifkanModeEdit(${item.id})"><i class="fa-solid fa-pen-to-square"></i></button>
+                                <button class="btn-aksi-item btn-hapus-item" onclick="window.hapusSatuTransaksi(${item.id})"><i class="fa-regular fa-trash-can"></i></button>
+                            </div></div>
                         </li>
                     `);
-                    }
-                });
-
-                let totalSaldoBank = saldoBca + saldoMandiri + saldoBni + saldoBri + saldoLain;
-
-                const randerSaldo = (nominal) => (statusUserPremium && sembunyikanSaldoMode) ? "🙈 *******" : 'Rp ' + nominal.toLocaleString('id-ID');
-                document.getElementById('eye-icon').className = (statusUserPremium && sembunyikanSaldoMode) ? "fa-solid fa-eye-slash" : "fa-solid fa-eye";
-
-                document.getElementById('w-cash').innerText = randerSaldo(saldoCash);
-                document.getElementById('w-dana').innerText = randerSaldo(saldoDana);
-                document.getElementById('w-ovo').innerText = randerSaldo(saldoOvo);
-                document.getElementById('w-gopay').innerText = randerSaldo(saldoGopay);
-                document.getElementById('w-bank').innerText = randerSaldo(totalSaldoBank);
-
-                document.getElementById('wb-bca').innerText = randerSaldo(saldoBca);
-                document.getElementById('wb-mandiri').innerText = randerSaldo(saldoMandiri);
-                document.getElementById('wb-bni').innerText = randerSaldo(saldoBni);
-                document.getElementById('wb-bri').innerText = randerSaldo(saldoBri);
-                document.getElementById('wb-lain').innerText = randerSaldo(saldoLain);
-
-                document.getElementById('total-saldo').innerText = randerSaldo(saldoGlobal);
-                document.getElementById('bulan-masuk').innerText = 'Rp ' + pemasukanBulanIni.toLocaleString('id-ID');
-                document.getElementById('bulan-keluar').innerText = 'Rp ' + pengeluaranBulanIni.toLocaleString('id-ID');
-
-                kalkulasiStatusBacot(saldoGlobal);
-                renderBillVisual();
-                renderWishlistVisual();
-                kalkulasiRoastDanSurvival(saldoGlobal, pemasukanBulanIni, pengeluaranBulanIni);
-                renderDebtVisual();
-                renderNotesVisual();
-                regenerasiVisualChart(pemasukanBulanIni, pengeluaranBulanIni, transferBulanIni);
-                regenerasiLineChartTren(petaDataTren);
-            }
-
-            function renderBillVisual() {
-                const container = document.getElementById('bill-container');
-                if (!statusUserPremium) {
-                    container.innerHTML = `<small style="color: var(--text-muted); text-align: center; font-style: italic; display: block; padding: 10px;"><i class="fa-solid fa-lock"></i> Fitur Kalender Pengingat Tagihan terkunci. Aktifkan Premium!</small>`;
-                    return;
                 }
-                container.innerHTML = daftarTagihan.length === 0 ? `<small style="color: var(--text-muted); text-align: center; font-style: italic; display: block; padding: 10px;">Bersih, belum ada tagihan rutin terpasang...</small>` : "";
-                daftarTagihan.forEach(item => {
-                    container.insertAdjacentHTML('beforeend', `
+            });
+
+            let totalSaldoBank = saldoBca + saldoMandiri + saldoBni + saldoBri + saldoLain;
+
+            const randerSaldo = (nominal) => (statusUserPremium && sembunyikanSaldoMode) ? "🙈 *******" : 'Rp ' + nominal.toLocaleString('id-ID');
+            document.getElementById('eye-icon').className = (statusUserPremium && sembunyikanSaldoMode) ? "fa-solid fa-eye-slash" : "fa-solid fa-eye";
+
+            document.getElementById('w-cash').innerText = randerSaldo(saldoCash);
+            document.getElementById('w-dana').innerText = randerSaldo(saldoDana);
+            document.getElementById('w-ovo').innerText = randerSaldo(saldoOvo);
+            document.getElementById('w-gopay').innerText = randerSaldo(saldoGopay);
+            document.getElementById('w-bank').innerText = randerSaldo(totalSaldoBank);
+
+            document.getElementById('wb-bca').innerText = randerSaldo(saldoBca);
+            document.getElementById('wb-mandiri').innerText = randerSaldo(saldoMandiri);
+            document.getElementById('wb-bni').innerText = randerSaldo(saldoBni);
+            document.getElementById('wb-bri').innerText = randerSaldo(saldoBri);
+            document.getElementById('wb-lain').innerText = randerSaldo(saldoLain);
+
+            document.getElementById('total-saldo').innerText = randerSaldo(saldoGlobal);
+            document.getElementById('bulan-masuk').innerText = 'Rp ' + pemasukanBulanIni.toLocaleString('id-ID');
+            document.getElementById('bulan-keluar').innerText = 'Rp ' + pengeluaranBulanIni.toLocaleString('id-ID');
+
+            kalkulasiStatusBacot(saldoGlobal);
+            renderBillVisual();
+            renderWishlistVisual();
+            kalkulasiRoastDanSurvival(saldoGlobal, pemasukanBulanIni, pengeluaranBulanIni);
+            renderDebtVisual();
+            renderNotesVisual();
+            regenerasiVisualChart(pemasukanBulanIni, pengeluaranBulanIni, transferBulanIni);
+            regenerasiLineChartTren(petaDataTren);
+        }
+
+        function renderBillVisual() {
+            const container = document.getElementById('bill-container');
+            container.innerHTML = daftarTagihan.length === 0 ? `<small style="color: var(--text-muted); text-align: center; font-style: italic; display: block; padding: 10px;">Bersih, belum ada tagihan rutin terpasang...</small>` : "";
+            daftarTagihan.forEach(item => {
+                container.insertAdjacentHTML('beforeend', `
                     <div class="bill-card">
                         <div class="bill-info">
                             <h5>📌 ${html_escape_tag(item.nama)}</h5>
@@ -3899,20 +4205,16 @@
                         </div>
                     </div>
                 `);
-                });
-            }
+            });
+        }
 
-            function renderWishlistVisual() {
-                const container = document.getElementById('wishlist-container');
-                if (!statusUserPremium) {
-                    container.innerHTML = `<small style="color: var(--text-muted); text-align: center; font-style: italic; display: block; padding: 10px;"><i class="fa-solid fa-lock"></i> Fitur Financial Goals / Wishlist terkunci. Aktifkan Premium!</small>`;
-                    return;
-                }
-                container.innerHTML = daftarWishlist.length === 0 ? `<small style="color: var(--text-muted); text-align: center; font-style: italic; display: block; padding: 10px;">Belum ada target barang impian nih, Cuy...</small>` : "";
-                daftarWishlist.forEach(item => {
-                    let persen = Math.min(Math.round((item.terkumpul / item.hargaTarget) * 100), 100) || 0;
-                    let teksStatus = persen === 100 ? "WAKWAK LU LULUS! BURUAN BELI SEKARANG JUGA! 🤘💥" : `Kurang Rp ${(item.hargaTarget - item.terkumpul).toLocaleString('id-ID')} lagi, Cuy.`;
-                    container.insertAdjacentHTML('beforeend', `
+        function renderWishlistVisual() {
+            const container = document.getElementById('wishlist-container');
+            container.innerHTML = daftarWishlist.length === 0 ? `<small style="color: var(--text-muted); text-align: center; font-style: italic; display: block; padding: 10px;">Belum ada target barang impian nih, Cuy...</small>` : "";
+            daftarWishlist.forEach(item => {
+                let persen = Math.min(Math.round((item.terkumpul / item.hargaTarget) * 100), 100) || 0;
+                let teksStatus = persen === 100 ? "WAKWAK LU LULUS! BURUAN BELI SEKARANG JUGA! 🤘💥" : `Kurang Rp ${(item.hargaTarget - item.terkumpul).toLocaleString('id-ID')} lagi, Cuy.`;
+                container.insertAdjacentHTML('beforeend', `
                     <div class="wishlist-card">
                         <div class="wishlist-meta"><span>🎯 ${html_escape_tag(item.nama)}</span><span>Rp ${item.terkumpul.toLocaleString('id-ID')} / Rp ${item.hargaTarget.toLocaleString('id-ID')}</span></div>
                         <div class="wishlist-bar-bg"><div class="wishlist-bar-fill" style="width: ${persen}%"></div></div>
@@ -3924,18 +4226,14 @@
                         </div></div>
                     </div>
                 `);
-                });
-            }
+            });
+        }
 
-            function renderDebtVisual() {
-                const container = document.getElementById('debt-container');
-                if (!statusUserPremium) {
-                    container.innerHTML = `<small style="color: var(--text-muted); text-align: center; font-style: italic; display: block; padding: 10px;"><i class="fa-solid fa-lock"></i> Fitur Buku Hitam Piutang terkunci. Aktifkan Premium!</small>`;
-                    return;
-                }
-                container.innerHTML = daftarPiutang.length === 0 ? `<small style="color: var(--text-muted); text-align: center; font-style: italic; display: block; padding: 10px;">Buku Hitam bersih, gak ada temen yang ngutang... (Aman/Tobat)</small>` : "";
-                daftarPiutang.forEach(item => {
-                    container.insertAdjacentHTML('beforeend', `
+        function renderDebtVisual() {
+            const container = document.getElementById('debt-container');
+            container.innerHTML = daftarPiutang.length === 0 ? `<small style="color: var(--text-muted); text-align: center; font-style: italic; display: block; padding: 10px;">Buku Hitam bersih, gak ada temen yang ngutang... (Aman/Tobat)</small>` : "";
+            daftarPiutang.forEach(item => {
+                container.insertAdjacentHTML('beforeend', `
                     <div class="debt-card">
                         <div class="debt-info">
                             <h5>💀 ${html_escape_tag(item.nama)}</h5>
@@ -3950,135 +4248,130 @@
                         </div>
                     </div>
                 `);
-                });
-            }
+            });
+        }
 
-            function tambahPiutangBaru() {
-                if (!statusUserPremium) { bukaPaywallPremium('Buku Hitam Piutang'); return; }
-                const nama = document.getElementById('debt-nama-input').value;
-                const nominal = document.getElementById('debt-nominal-input').value;
-                const catatan = document.getElementById('debt-catatan-input').value;
+        function tambahPiutangBaru() {
+            const nama = document.getElementById('debt-nama-input').value;
+            const nominal = document.getElementById('debt-nominal-input').value;
+            const catatan = document.getElementById('debt-catatan-input').value;
 
-                if (!nama || nama.trim() === "" || !nominal) return;
-                const nominalMurni = parseFloat(nominal.replace(/\./g, ''));
-                if (isNaN(nominalMurni) || nominalMurni <= 0) return;
+            if (!nama || nama.trim() === "" || !nominal) return;
+            const nominalMurni = parseFloat(nominal.replace(/\./g, ''));
+            if (isNaN(nominalMurni) || nominalMurni <= 0) return;
 
-                daftarPiutang.push({
-                    id: +new Date(),
-                    nama: nama.trim(),
-                    nominal: nominalMurni,
-                    catatan: catatan && catatan.trim() !== "" ? catatan.trim() : "Khilaf Gak Jelas"
-                });
+            daftarPiutang.push({
+                id: +new Date(),
+                nama: nama.trim(),
+                nominal: nominalMurni,
+                catatan: catatan && catatan.trim() !== "" ? catatan.trim() : "Khilaf Gak Jelas"
+            });
 
-                document.getElementById('debt-nama-input').value = "";
-                document.getElementById('debt-nominal-input').value = "";
-                document.getElementById('debt-catatan-input').value = "";
+            document.getElementById('debt-nama-input').value = "";
+            document.getElementById('debt-nominal-input').value = "";
+            document.getElementById('debt-catatan-input').value = "";
 
-                simpanDataKeLokal();
-                tampilkanData();
-                panggilCustomModal('Catatan Ditambahkan 💀', `Berhasil memasukkan ${nama.trim()} ke Buku Hitam Piutang!`, null, 'success');
-            }
+            simpanDataKeLokal();
+            tampilkanData();
+            panggilCustomModal('Catatan Ditambahkan 💀', `Berhasil memasukkan ${nama.trim()} ke Buku Hitam Piutang!`, null, 'success');
+        }
 
-            function hapusPiutang(idDebt) {
-                panggilCustomModal('Hapus Piutang 💀', 'Mau hapus catatan piutang ini secara ikhlas tanpa ditagih? 🤔', () => {
-                    daftarPiutang = daftarPiutang.filter(d => d.id !== idDebt);
-                    simpanDataKeLokal();
-                    tampilkanData();
-                });
-            }
-
-            function tandaiPiutangLunas(idDebt, walletValue) {
-                const target = daftarPiutang.find(d => d.id === idDebt);
-                if (!target) return;
-
-                // Masukkan nominal sebagai Pemasukan di saku yang dipilih
-                daftarTransaksi.unshift({
-                    id: +new Date(),
-                    nama: `Lunas Utang: ${target.nama}`,
-                    jenis: "pemasukan",
-                    wallet: walletValue,
-                    kategori: "kustom",
-                    nominal: target.nominal,
-                    tanggalCetak: new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' }),
-                    bulan: String(new Date().getMonth() + 1).padStart(2, '0'),
-                    tanggalMentah: new Date().toISOString().split('T')[0]
-                });
-
-                // Hapus piutang dari daftar
+        function hapusPiutang(idDebt) {
+            panggilCustomModal('Hapus Piutang 💀', 'Mau hapus catatan piutang ini secara ikhlas tanpa ditagih? 🤔', () => {
                 daftarPiutang = daftarPiutang.filter(d => d.id !== idDebt);
                 simpanDataKeLokal();
                 tampilkanData();
-                panggilCustomModal('Piutang Lunas! 🎉', `${target.nama} akhirnya sadar diri dan bayar utangnya! Saldo ${walletValue.toUpperCase()} lo bertambah.`, null, 'success');
+            });
+        }
+
+        function tandaiPiutangLunas(idDebt, walletValue) {
+            const target = daftarPiutang.find(d => d.id === idDebt);
+            if (!target) return;
+
+            // Masukkan nominal sebagai Pemasukan di saku yang dipilih
+            daftarTransaksi.unshift({
+                id: +new Date(),
+                nama: `Lunas Utang: ${target.nama}`,
+                jenis: "pemasukan",
+                wallet: walletValue,
+                kategori: "kustom",
+                nominal: target.nominal,
+                tanggalCetak: new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' }),
+                bulan: String(new Date().getMonth() + 1).padStart(2, '0'),
+                tanggalMentah: new Date().toISOString().split('T')[0]
+            });
+
+            // Hapus piutang dari daftar
+            daftarPiutang = daftarPiutang.filter(d => d.id !== idDebt);
+            simpanDataKeLokal();
+            tampilkanData();
+            panggilCustomModal('Piutang Lunas! 🎉', `${target.nama} akhirnya sadar diri dan bayar utangnya! Saldo ${walletValue.toUpperCase()} lo bertambah.`, null, 'success');
+        }
+
+        function kirimReminderWA(idDebt) {
+            const target = daftarPiutang.find(d => d.id === idDebt);
+            if (!target) return;
+
+            const pesan = `Halo ${target.nama}, cuma ngingetin utang lo yang Rp ${target.nominal.toLocaleString('id-ID')} buat "${target.catatan}" belum lunas nih. Udah jatuh tempo cuy, buruan bayar ya sebelum saku gua ikutan sekarat! 💸`;
+            const url = `https://api.whatsapp.com/send?text=${encodeURIComponent(pesan)}`;
+            window.open(url, '_blank');
+        }
+
+        function kalkulasiRoastDanSurvival(saldo, masuk, keluar) {
+            const roastContainer = document.getElementById('roast-container');
+            if (!roastContainer) return;
+
+            let bubbleClass = "status-aman";
+            let teksRoast = "";
+            let emojiSurvival = "🍱";
+            let tingkatSurvival = "Aman Sentosa";
+            let rekomendasiKuliner = "";
+
+            // 1. EVALUASI ROAST (PENGELUARAN VS PEMASUKAN)
+            if (daftarTransaksi.length === 0) {
+                teksRoast = "Masih suci tanpa catatan dosa finansial bulan ini. Keren, pertahankan keheningan saku lo! 🕊️";
+                bubbleClass = "status-aman";
+            } else if (masuk === 0 && keluar > 0) {
+                teksRoast = "WADUH! Gak ada pemasukan sama sekali tapi belanjanya ngegas terus. Lo miara tuyul atau ngepet di mana, Cuy?! 👻💸";
+                bubbleClass = "status-kritis";
+            } else if (keluar > masuk) {
+                teksRoast = "Pengeluaran lebih gede dari pemasukan! Selamat, lo resmi jadi beban masa depan lo sendiri. Tobat woy! 💀🔥";
+                bubbleClass = "status-kritis";
+            } else if (keluar > masuk * 0.8) {
+                teksRoast = "Gaya hidup lo elit tapi tabungan lo pailit! Dikit lagi masuk jurang kemiskinan ekstrem kalau gak rem belanja. 🛒📈";
+                bubbleClass = "status-waspada";
+            } else if (keluar > masuk * 0.5) {
+                teksRoast = "Borosnya standar anak muda jaman sekarang. Setengah duit ludes buat self-reward berkedok gengsi. 🛍️☕";
+                bubbleClass = "status-waspada";
+            } else {
+                teksRoast = "Wah, tumben pinter nyimpen duit! Kerasukan malaikat hemat dari mana lo? Pertahankan, Cuy! 😎💎";
+                bubbleClass = "status-aman";
             }
 
-            function kirimReminderWA(idDebt) {
-                const target = daftarPiutang.find(d => d.id === idDebt);
-                if (!target) return;
-
-                const pesan = `Halo ${target.nama}, cuma ngingetin utang lo yang Rp ${target.nominal.toLocaleString('id-ID')} buat "${target.catatan}" belum lunas nih. Udah jatuh tempo cuy, buruan bayar ya sebelum saku gua ikutan sekarat! 💸`;
-                const url = `https://api.whatsapp.com/send?text=${encodeURIComponent(pesan)}`;
-                window.open(url, '_blank');
+            // 2. SURVIVAL KULINER (BERDASARKAN SALDO SEKARANG)
+            if (saldo < 0) {
+                emojiSurvival = "💀";
+                tingkatSurvival = "Darurat Bencana Kelaparan (Minus!)";
+                rekomendasiKuliner = "Sangat Kritis! Disarankan puasa senin-kamis berturut-turut, numpang makan gratis di rumah temen (pura-pura main), atau cari sisa kembalian di kolong meja.";
+            } else if (saldo < 100000) {
+                emojiSurvival = "🍜";
+                tingkatSurvival = "Survival Level Ekstrem";
+                rekomendasiKuliner = "Mie instan mentah (biar hemat gas), Promag 3x sehari sebelum lapar melanda, atau nasi putih lauk kuah warteg gratisan campur garam.";
+            } else if (saldo < 500000) {
+                emojiSurvival = "🍛";
+                tingkatSurvival = "Survival Level Sedang";
+                rekomendasiKuliner = "Nasi Padang lauk kuah doang + kerupuk kulit, nasi goreng pinggir jalan porsi kuli dibagi dua, atau gorengan Rp 5.000 + es teh anget.";
+            } else if (saldo < 2000000) {
+                emojiSurvival = "🍗";
+                tingkatSurvival = "Aman Terkendali";
+                rekomendasiKuliner = "Pecel lele pinggir jalan, sate ayam Madura lewat depan kosan, atau makan warteg mewah pakai lauk ayam + telur + sayur lengkap.";
+            } else {
+                emojiSurvival = "🥩";
+                tingkatSurvival = "Sultan Bebas Khilaf";
+                rekomendasiKuliner = "Bebas pilih! Mau All You Can Eat premium, ganti menu Starbucks harian, atau nongkrong cantik di cafe elit. Tapi inget besok bayar kostan, Bos!";
             }
 
-            function kalkulasiRoastDanSurvival(saldo, masuk, keluar) {
-                const roastContainer = document.getElementById('roast-container');
-                if (!roastContainer) return;
-                if (!statusUserPremium) {
-                    roastContainer.innerHTML = `<small style="color: var(--text-muted); text-align: center; font-style: italic; display: block; padding: 10px;"><i class="fa-solid fa-lock"></i> Fitur Rapor Dosa & Survival Kuliner terkunci. Aktifkan Premium!</small>`;
-                    return;
-                }
-
-                let bubbleClass = "status-aman";
-                let teksRoast = "";
-                let emojiSurvival = "🍱";
-                let tingkatSurvival = "Aman Sentosa";
-                let rekomendasiKuliner = "";
-
-                // 1. EVALUASI ROAST (PENGELUARAN VS PEMASUKAN)
-                if (daftarTransaksi.length === 0) {
-                    teksRoast = "Masih suci tanpa catatan dosa finansial bulan ini. Keren, pertahankan keheningan saku lo! 🕊️";
-                    bubbleClass = "status-aman";
-                } else if (masuk === 0 && keluar > 0) {
-                    teksRoast = "WADUH! Gak ada pemasukan sama sekali tapi belanjanya ngegas terus. Lo miara tuyul atau ngepet di mana, Cuy?! 👻💸";
-                    bubbleClass = "status-kritis";
-                } else if (keluar > masuk) {
-                    teksRoast = "Pengeluaran lebih gede dari pemasukan! Selamat, lo resmi jadi beban masa depan lo sendiri. Tobat woy! 💀🔥";
-                    bubbleClass = "status-kritis";
-                } else if (keluar > masuk * 0.8) {
-                    teksRoast = "Gaya hidup lo elit tapi tabungan lo pailit! Dikit lagi masuk jurang kemiskinan ekstrem kalau gak rem belanja. 🛒📈";
-                    bubbleClass = "status-waspada";
-                } else if (keluar > masuk * 0.5) {
-                    teksRoast = "Borosnya standar anak muda jaman sekarang. Setengah duit ludes buat self-reward berkedok gengsi. 🛍️☕";
-                    bubbleClass = "status-waspada";
-                } else {
-                    teksRoast = "Wah, tumben pinter nyimpen duit! Kerasukan malaikat hemat dari mana lo? Pertahankan, Cuy! 😎💎";
-                    bubbleClass = "status-aman";
-                }
-
-                // 2. SURVIVAL KULINER (BERDASARKAN SALDO SEKARANG)
-                if (saldo < 0) {
-                    emojiSurvival = "💀";
-                    tingkatSurvival = "Darurat Bencana Kelaparan (Minus!)";
-                    rekomendasiKuliner = "Sangat Kritis! Disarankan puasa senin-kamis berturut-turut, numpang makan gratis di rumah temen (pura-pura main), atau cari sisa kembalian di kolong meja.";
-                } else if (saldo < 100000) {
-                    emojiSurvival = "🍜";
-                    tingkatSurvival = "Survival Level Ekstrem";
-                    rekomendasiKuliner = "Mie instan mentah (biar hemat gas), Promag 3x sehari sebelum lapar melanda, atau nasi putih lauk kuah warteg gratisan campur garam.";
-                } else if (saldo < 500000) {
-                    emojiSurvival = "🍛";
-                    tingkatSurvival = "Survival Level Sedang";
-                    rekomendasiKuliner = "Nasi Padang lauk kuah doang + kerupuk kulit, nasi goreng pinggir jalan porsi kuli dibagi dua, atau gorengan Rp 5.000 + es teh anget.";
-                } else if (saldo < 2000000) {
-                    emojiSurvival = "🍗";
-                    tingkatSurvival = "Aman Terkendali";
-                    rekomendasiKuliner = "Pecel lele pinggir jalan, sate ayam Madura lewat depan kosan, atau makan warteg mewah pakai lauk ayam + telur + sayur lengkap.";
-                } else {
-                    emojiSurvival = "🥩";
-                    tingkatSurvival = "Sultan Bebas Khilaf";
-                    rekomendasiKuliner = "Bebas pilih! Mau All You Can Eat premium, ganti menu Starbucks harian, atau nongkrong cantik di cafe elit. Tapi inget besok bayar kostan, Bos!";
-                }
-
-                roastContainer.innerHTML = `
+            roastContainer.innerHTML = `
                 <div class="roast-card">
                     <div class="roast-bubble ${bubbleClass}">
                         <i class="fa-solid fa-comment-dots"></i> <strong>Bacot AI Analisis:</strong><br>
@@ -4096,334 +4389,313 @@
                     </div>
                 </div>
             `;
-            }
+        }
 
-            // --- SISTEM BUKU CATATAN KEUANGAN PINTAR ---
-            function parseCatatanKeTransaksi(teksBaris) {
-                if (!teksBaris || !teksBaris.trim()) return null;
+        // --- SISTEM BUKU CATATAN KEUANGAN PINTAR ---
+        function parseCatatanKeTransaksi(teksBaris) {
+            if (!teksBaris || !teksBaris.trim()) return null;
 
-                const lower = teksBaris.toLowerCase().trim();
+            const lower = teksBaris.toLowerCase().trim();
 
-                // 1. Deteksi Nominal
-                const nominalRegex = /(?:rp\.?\s*)?(\d+(?:[.,]\d{3})*(?:[.,]\d+)?)\s*(k|rb|ribu|jt|juta|mio|m)?\b/gi;
-                let match;
-                let nominal = 0;
-                let nominalText = "";
+            // 1. Deteksi Nominal
+            const nominalRegex = /(?:rp\.?\s*)?(\d+(?:[.,]\d{3})*(?:[.,]\d+)?)\s*(k|rb|ribu|jt|juta|mio|m)?\b/gi;
+            let match;
+            let nominal = 0;
+            let nominalText = "";
 
-                while ((match = nominalRegex.exec(lower)) !== null) {
-                    let numStr = match[1].replace(/,/g, '.');
-                    const parts = numStr.split('.');
-                    if (parts.length > 2) {
+            while ((match = nominalRegex.exec(lower)) !== null) {
+                let numStr = match[1].replace(/,/g, '.');
+                const parts = numStr.split('.');
+                if (parts.length > 2) {
+                    numStr = numStr.replace(/\./g, '');
+                } else if (parts.length === 2) {
+                    if (parts[1].length === 3) {
                         numStr = numStr.replace(/\./g, '');
-                    } else if (parts.length === 2) {
-                        if (parts[1].length === 3) {
-                            numStr = numStr.replace(/\./g, '');
-                        }
-                    }
-
-                    let parsedNum = parseFloat(numStr);
-                    if (isNaN(parsedNum)) continue;
-
-                    let multiplier = match[2] ? match[2].toLowerCase() : "";
-                    if (multiplier === "k" || multiplier === "rb" || multiplier === "ribu") {
-                        parsedNum *= 1000;
-                    } else if (multiplier === "jt" || multiplier === "juta") {
-                        parsedNum *= 1000000;
-                    }
-
-                    if (parsedNum > 0) {
-                        nominal = parsedNum;
-                        nominalText = match[0];
-                        break;
                     }
                 }
 
-                if (nominal <= 0) return null;
+                let parsedNum = parseFloat(numStr);
+                if (isNaN(parsedNum)) continue;
 
-                // 2. Deteksi Saku/Wallet
-                let wallet = "cash";
-                let walletTujuan = undefined;
-                let jenis = "pengeluaran";
-
-                const walletsFound = [];
-                const walletKeywords = {
-                    cash: ["cash", "dompet", "fisik", "tunai", "kantong"],
-                    dana: ["dana"],
-                    ovo: ["ovo"],
-                    gopay: ["gopay", "go-pay", "gojek"],
-                    bca: ["bca"],
-                    mandiri: ["mandiri"],
-                    bni: ["bni"],
-                    bri: ["bri"],
-                    bank_lain: ["bank", "atm", "rekening", "lainnya", "lain"]
-                };
-
-                Object.keys(walletKeywords).forEach(wKey => {
-                    walletKeywords[wKey].forEach(kw => {
-                        let index = lower.indexOf(kw);
-                        if (index !== -1) {
-                            walletsFound.push({ key: wKey, index: index });
-                        }
-                    });
-                });
-
-                walletsFound.sort((a, b) => a.index - b.index);
-
-                // 3. Deteksi Aliran Dana (Jenis)
-                const isTransfer = lower.includes("transfer") || lower.includes("pindah") || lower.includes("kirim") || lower.includes("mutasi") || lower.includes("ke saku");
-                const isPemasukan = lower.includes("masuk") || lower.includes("terima") || lower.includes("gajian") || lower.includes("gaji") || lower.includes("bonus") || lower.includes("dapat") || lower.includes("dapet") || lower.includes("cair") || lower.includes("untung") || lower.includes("+");
-
-                if (isTransfer && walletsFound.length >= 2) {
-                    jenis = "transfer";
-                    wallet = walletsFound[0].key;
-                    walletTujuan = walletsFound[1].key;
-                } else if (isPemasukan) {
-                    jenis = "pemasukan";
-                    wallet = walletsFound.length > 0 ? walletsFound[0].key : "cash";
-                } else {
-                    jenis = "pengeluaran";
-                    wallet = walletsFound.length > 0 ? walletsFound[0].key : "cash";
+                let multiplier = match[2] ? match[2].toLowerCase() : "";
+                if (multiplier === "k" || multiplier === "rb" || multiplier === "ribu") {
+                    parsedNum *= 1000;
+                } else if (multiplier === "jt" || multiplier === "juta") {
+                    parsedNum *= 1000000;
                 }
 
-                // 4. Deteksi Kategori
-                let kategori = "kustom";
-                const categoryKeywords = {
-                    makanan: ["makan", "minum", "kopi", "boba", "starbucks", "resto", "warteg", "kuliner", "jajan", "seblak", "bakso", "nasi", "burger", "pizza", "roti", "cafe"],
-                    transportasi: ["ojek", "grab", "gojek", "bensin", "pertalite", "pertamax", "gokar", "transport", "busway", "kereta", "tiket", "parkir", "motor", "mobil", "toll", "tol"],
-                    hiburan: ["game", "gacha", "nonton", "bioskop", "cinema", "netflix", "konser", "spotify", "hobi", "main", "healing", "wisata", "karoke", "steam", "topup"],
-                    tagihan: ["kost", "kosan", "wifi", "indihome", "listrik", "pln", "token", "air", "pdam", "kontrakan", "tagihan", "rutin", "pulsa", "kuota", "bpjs"],
-                    belanja: ["belanja", "baju", "sepatu", "skincare", "makeup", "tas", "tokopedia", "shopee", "lazada", "mall", "reward", "shirt", "celana", "jaket"],
-                    gaji: ["gaji", "nguli", "upah", "gajian", "dividen", "side", "freelance"],
-                    investasi: ["investasi", "reksadana", "saham", "crypto", "emas", "bibit"]
-                };
+                // Filter validasi nominal transaksi
+                let hasRpPrefix = /^\s*rp/i.test(match[0]);
+                let hasMultiplier = !!match[2];
+                let isLargeNumber = parsedNum >= 100;
 
-                Object.keys(categoryKeywords).forEach(catKey => {
-                    categoryKeywords[catKey].forEach(kw => {
-                        if (lower.includes(kw)) {
-                            kategori = catKey;
-                        }
-                    });
-                });
-
-                if (jenis === "transfer") {
-                    kategori = "transfer";
-                }
-
-                // 5. Bersihkan nama transaksi
-                let cleanName = teksBaris;
-
-                // Hapus string nominal
-                cleanName = cleanName.replace(new RegExp(nominalText.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'), 'gi'), '');
-
-                // Hapus keyword wallet
-                Object.values(walletKeywords).flat().forEach(kw => {
-                    cleanName = cleanName.replace(new RegExp('\\b' + kw + '\\b', 'gi'), '');
-                });
-
-                // Hapus kata penghubung dan stop words
-                const stopWords = ["beli", "bayar", "dapet", "dapat", "terima", "gajian", "masuk", "keluar", "pindah", "kirim", "ke", "dari", "via", "pakai", "pake", "untuk", "buat", "habis", "sebesar", "nominal", "rp", "-", "+", ":"];
-                stopWords.forEach(sw => {
-                    const escapedSw = sw.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
-                    const regexStr = /^[a-zA-Z0-9]+$/.test(sw) ? '\\b' + escapedSw + '\\b' : escapedSw;
-                    cleanName = cleanName.replace(new RegExp(regexStr, 'gi'), '');
-                });
-
-                cleanName = cleanName.replace(/[^a-zA-Z0-9\s]/g, '');
-                cleanName = cleanName.replace(/\s+/g, ' ').trim();
-
-                if (cleanName.length > 0) {
-                    cleanName = cleanName.charAt(0).toUpperCase() + cleanName.slice(1);
-                } else {
-                    if (jenis === "pemasukan") cleanName = "Pemasukan Catatan";
-                    else if (jenis === "pengeluaran") cleanName = "Pengeluaran Catatan";
-                    else cleanName = "Transfer Catatan";
-                }
-
-                return {
-                    nama: cleanName,
-                    jenis: jenis,
-                    wallet: wallet,
-                    walletTujuan: walletTujuan,
-                    kategori: kategori,
-                    nominal: nominal
-                };
-            }
-
-            function tambahCatatanBaru() {
-                const inputEl = document.getElementById('notes-text-input');
-                let teks = inputEl.value;
-                if (!teks || !teks.trim()) return;
-
-                // Format raw numbers (4 or more digits) in the text harian to have thousands separator dots automatically
-                teks = teks.replace(/\b\d{4,}\b/g, function(match) {
-                    return Number(match).toLocaleString('id-ID');
-                });
-
-                const lines = teks.split('\n');
-                const parsedTransactions = [];
-                const createdTxIds = [];
-                const waktuSekarang = new Date();
-                const tanggalTeks = waktuSekarang.toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
-                const kodeBulan = String(waktuSekarang.getMonth() + 1).padStart(2, '0');
-                const tanggalInput = waktuSekarang.toISOString().split('T')[0];
-
-                let hasSkippedTransfer = false;
-
-                lines.forEach(line => {
-                    const parsed = parseCatatanKeTransaksi(line);
-                    if (parsed) {
-                        if (parsed.jenis === "transfer" && !statusUserPremium) {
-                            hasSkippedTransfer = true;
-                            return;
-                        }
-                        const txId = +new Date() + Math.floor(Math.random() * 1000);
-                        const txObj = {
-                            id: txId,
-                            nama: parsed.nama,
-                            jenis: parsed.jenis,
-                            wallet: parsed.wallet,
-                            walletTujuan: parsed.walletTujuan,
-                            kategori: parsed.kategori,
-                            nominal: parsed.nominal,
-                            tanggalCetak: tanggalTeks,
-                            bulan: kodeBulan,
-                            tanggalMentah: tanggalInput
-                        };
-                        daftarTransaksi.unshift(txObj);
-                        createdTxIds.push(txId);
-                        parsedTransactions.push(parsed);
-                    }
-                });
-
-                if (parsedTransactions.length === 0) {
-                    if (hasSkippedTransfer) {
-                        bukaPaywallPremium("Transfer via Catatan");
-                    } else {
-                        panggilCustomModal(
-                            'Tidak Ada Transaksi Terdeteksi ❌',
-                            'Sistem tidak menemukan nominal atau informasi transaksi yang valid dari catatan lo, Cuy! Coba cek formatnya lagi.',
-                            null,
-                            'exclamation'
-                        );
-                    }
-                    return;
-                }
-
-                const catatanId = +new Date();
-                daftarCatatan.push({
-                    id: catatanId,
-                    teks: teks.trim(),
-                    tanggal: waktuSekarang.toLocaleString('id-ID', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' }),
-                    createdTxIds: createdTxIds,
-                    parsedTransactions: parsedTransactions
-                });
-
-                inputEl.value = "";
-                simpanDataKeLokal();
-                tampilkanData();
-
-                if (hasSkippedTransfer) {
-                    panggilCustomModal(
-                        'Catatan Disinkronkan (Sebagian) ⚡',
-                        `Pemasukan & pengeluaran berhasil dicatat. Namun, baris transfer diblokir karena membutuhkan lisensi Premium!`,
-                        function () {
-                            bukaPaywallPremium("Transfer via Catatan");
-                        },
-                        'success'
-                    );
-                } else {
-                    panggilCustomModal(
-                        'Catatan Berhasil Disinkronkan! 🎉',
-                        `Berhasil memproses catatan dan menambahkan ${parsedTransactions.length} transaksi baru ke WAYFinance!`,
-                        null,
-                        'success'
-                    );
+                if (parsedNum > 0 && (hasRpPrefix || hasMultiplier || isLargeNumber)) {
+                    nominal = parsedNum;
+                    nominalText = match[0];
+                    break;
                 }
             }
 
-            function hapusCatatan(catatanId) {
-                const targetNote = daftarCatatan.find(c => c.id === catatanId);
-                if (!targetNote) return;
+            if (nominal <= 0) return null;
 
-                const existingTxIds = targetNote.createdTxIds.filter(txId =>
-                    daftarTransaksi.some(tx => tx.id === txId)
+            // 2. Deteksi Saku/Wallet
+            let wallet = "cash";
+            let walletTujuan = undefined;
+            let jenis = "pengeluaran";
+
+            const walletsFound = [];
+            const walletKeywords = {
+                cash: ["cash", "dompet", "fisik", "tunai", "kantong"],
+                dana: ["dana"],
+                ovo: ["ovo"],
+                gopay: ["gopay", "go-pay", "gojek"],
+                bca: ["bca"],
+                mandiri: ["mandiri"],
+                bni: ["bni"],
+                bri: ["bri"],
+                bank_lain: ["bank", "atm", "rekening", "lainnya", "lain"]
+            };
+
+            Object.keys(walletKeywords).forEach(wKey => {
+                walletKeywords[wKey].forEach(kw => {
+                    let index = lower.indexOf(kw);
+                    if (index !== -1) {
+                        walletsFound.push({ key: wKey, index: index });
+                    }
+                });
+            });
+
+            walletsFound.sort((a, b) => a.index - b.index);
+
+            // 3. Deteksi Aliran Dana (Jenis)
+            const isTransfer = lower.includes("transfer") || lower.includes("pindah") || lower.includes("kirim") || lower.includes("mutasi") || lower.includes("ke saku");
+            const isPemasukan = lower.includes("masuk") || lower.includes("terima") || lower.includes("gajian") || lower.includes("gaji") || lower.includes("bonus") || lower.includes("dapat") || lower.includes("dapet") || lower.includes("cair") || lower.includes("untung") || lower.includes("+");
+
+            if (isTransfer && walletsFound.length >= 2) {
+                jenis = "transfer";
+                wallet = walletsFound[0].key;
+                walletTujuan = walletsFound[1].key;
+            } else if (isPemasukan) {
+                jenis = "pemasukan";
+                wallet = walletsFound.length > 0 ? walletsFound[0].key : "cash";
+            } else {
+                jenis = "pengeluaran";
+                wallet = walletsFound.length > 0 ? walletsFound[0].key : "cash";
+            }
+
+            // 4. Deteksi Kategori
+            let kategori = "kustom";
+            const categoryKeywords = {
+                makanan: ["makan", "minum", "kopi", "boba", "starbucks", "resto", "warteg", "kuliner", "jajan", "seblak", "bakso", "nasi", "burger", "pizza", "roti", "cafe"],
+                transportasi: ["ojek", "grab", "gojek", "bensin", "pertalite", "pertamax", "gokar", "transport", "busway", "kereta", "tiket", "parkir", "motor", "mobil", "toll", "tol"],
+                hiburan: ["game", "gacha", "nonton", "bioskop", "cinema", "netflix", "konser", "spotify", "hobi", "main", "healing", "wisata", "karoke", "steam", "topup"],
+                tagihan: ["kost", "kosan", "wifi", "indihome", "listrik", "pln", "token", "air", "pdam", "kontrakan", "tagihan", "rutin", "pulsa", "kuota", "bpjs"],
+                belanja: ["belanja", "baju", "sepatu", "skincare", "makeup", "tas", "tokopedia", "shopee", "lazada", "mall", "reward", "shirt", "celana", "jaket"],
+                gaji: ["gaji", "nguli", "upah", "gajian", "dividen", "side", "freelance"],
+                investasi: ["investasi", "reksadana", "saham", "crypto", "emas", "bibit"]
+            };
+
+            Object.keys(categoryKeywords).forEach(catKey => {
+                categoryKeywords[catKey].forEach(kw => {
+                    if (lower.includes(kw)) {
+                        kategori = catKey;
+                    }
+                });
+            });
+
+            if (jenis === "transfer") {
+                kategori = "transfer";
+            }
+
+            // 5. Bersihkan nama transaksi
+            let cleanName = teksBaris;
+
+            // Hapus string nominal
+            cleanName = cleanName.replace(new RegExp(nominalText.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'), 'gi'), '');
+
+            // Hapus keyword wallet
+            Object.values(walletKeywords).flat().forEach(kw => {
+                cleanName = cleanName.replace(new RegExp('\\b' + kw + '\\b', 'gi'), '');
+            });
+
+            // Hapus kata penghubung dan stop words
+            const stopWords = ["beli", "bayar", "dapet", "dapat", "terima", "gajian", "masuk", "keluar", "pindah", "kirim", "ke", "dari", "via", "pakai", "pake", "untuk", "buat", "habis", "sebesar", "nominal", "rp", "-", "+", ":"];
+            stopWords.forEach(sw => {
+                const escapedSw = sw.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+                const regexStr = /^[a-zA-Z0-9]+$/.test(sw) ? '\\b' + escapedSw + '\\b' : escapedSw;
+                cleanName = cleanName.replace(new RegExp(regexStr, 'gi'), '');
+            });
+
+            cleanName = cleanName.replace(/[^a-zA-Z0-9\s]/g, '');
+            cleanName = cleanName.replace(/\s+/g, ' ').trim();
+
+            if (cleanName.length > 0) {
+                cleanName = cleanName.charAt(0).toUpperCase() + cleanName.slice(1);
+            } else {
+                if (jenis === "pemasukan") cleanName = "Pemasukan Catatan";
+                else if (jenis === "pengeluaran") cleanName = "Pengeluaran Catatan";
+                else cleanName = "Transfer Catatan";
+            }
+
+            return {
+                nama: cleanName,
+                jenis: jenis,
+                wallet: wallet,
+                walletTujuan: walletTujuan,
+                kategori: kategori,
+                nominal: nominal
+            };
+        }
+
+        function tambahCatatanBaru() {
+            const inputEl = document.getElementById('notes-text-input');
+            let teks = inputEl.value;
+            if (!teks || !teks.trim()) return;
+
+            const lines = teks.split('\n');
+            const parsedTransactions = [];
+            const createdTxIds = [];
+            const waktuSekarang = new Date();
+            const tanggalTeks = waktuSekarang.toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
+            const kodeBulan = String(waktuSekarang.getMonth() + 1).padStart(2, '0');
+            const tanggalInput = waktuSekarang.toISOString().split('T')[0];
+
+            lines.forEach(line => {
+                const parsed = parseCatatanKeTransaksi(line);
+                if (parsed) {
+                    const txId = +new Date() + Math.floor(Math.random() * 1000);
+                    const txObj = {
+                        id: txId,
+                        nama: parsed.nama,
+                        jenis: parsed.jenis,
+                        wallet: parsed.wallet,
+                        walletTujuan: parsed.walletTujuan,
+                        kategori: parsed.kategori,
+                        nominal: parsed.nominal,
+                        tanggalCetak: tanggalTeks,
+                        bulan: kodeBulan,
+                        tanggalMentah: tanggalInput
+                    };
+                    daftarTransaksi.unshift(txObj);
+                    createdTxIds.push(txId);
+                    parsedTransactions.push(parsed);
+                }
+            });
+
+            if (parsedTransactions.length === 0) {
+                panggilCustomModal(
+                    'Tidak Ada Transaksi Terdeteksi ❌',
+                    'Sistem tidak menemukan nominal atau informasi transaksi yang valid dari catatan lo, Cuy! Coba cek formatnya lagi.',
+                    null,
+                    'exclamation'
                 );
+                return;
+            }
 
-                if (existingTxIds.length > 0) {
-                    panggilCustomModal(
-                        'Hapus Catatan & Transaksi? 🗑️',
-                        `Catatan ini terhubung dengan ${existingTxIds.length} transaksi aktif.\n\nApakah kamu juga ingin menghapus seluruh transaksi tersebut dari WAYFinance?`,
-                        function () {
-                            daftarTransaksi = daftarTransaksi.filter(tx => !existingTxIds.includes(tx.id));
-                            daftarCatatan = daftarCatatan.filter(c => c.id !== catatanId);
-                            simpanDataKeLokal();
-                            tampilkanData();
-                            panggilCustomModal('Terhapus Bersih! 🧹', 'Catatan dan transaksi terkait berhasil dihapus.', null, 'success');
-                        },
-                        'confirm'
-                    );
+            const catatanId = +new Date();
+            daftarCatatan.push({
+                id: catatanId,
+                teks: teks.trim(),
+                tanggal: waktuSekarang.toLocaleString('id-ID', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' }),
+                createdTxIds: createdTxIds,
+                parsedTransactions: parsedTransactions
+            });
 
-                    const confirmBtn = document.getElementById('modal-confirm-btn');
-                    const cancelBtn = document.getElementById('modal-cancel-btn');
-                    confirmBtn.innerText = "Hapus Keduanya 💥";
-                    cancelBtn.innerText = "Catatannya Saja 📝";
-                    cancelBtn.onclick = function () {
+            inputEl.value = "";
+            simpanDataKeLokal();
+            tampilkanData();
+
+            panggilCustomModal(
+                'Catatan Berhasil Disinkronkan! 🎉',
+                `Berhasil memproses catatan and menambahkan ${parsedTransactions.length} transaksi baru ke WAYFinance!`,
+                null,
+                'success'
+            );
+        }
+
+        function hapusCatatan(catatanId) {
+            const targetNote = daftarCatatan.find(c => c.id === catatanId);
+            if (!targetNote) return;
+
+            const existingTxIds = targetNote.createdTxIds.filter(txId =>
+                daftarTransaksi.some(tx => tx.id === txId)
+            );
+
+            if (existingTxIds.length > 0) {
+                panggilCustomModal(
+                    'Hapus Catatan & Transaksi? 🗑️',
+                    `Catatan ini terhubung dengan ${existingTxIds.length} transaksi aktif.\n\nApakah kamu juga ingin menghapus seluruh transaksi tersebut dari WAYFinance?`,
+                    function () {
+                        daftarTransaksi = daftarTransaksi.filter(tx => !existingTxIds.includes(tx.id));
                         daftarCatatan = daftarCatatan.filter(c => c.id !== catatanId);
                         simpanDataKeLokal();
                         tampilkanData();
-                        tutupCustomModal();
-                        panggilCustomModal('Terhapus! 📝', 'Hanya catatan yang dihapus. Transaksi tetap tersimpan.', null, 'success');
-                    };
-                } else {
-                    panggilCustomModal(
-                        'Hapus Catatan',
-                        'Apakah kamu yakin ingin menghapus catatan ini?',
-                        function () {
-                            daftarCatatan = daftarCatatan.filter(c => c.id !== catatanId);
-                            simpanDataKeLokal();
-                            tampilkanData();
-                        }
-                    );
-                }
+                        panggilCustomModal('Terhapus Bersih! 🧹', 'Catatan dan transaksi terkait berhasil dihapus.', null, 'success');
+                    },
+                    'confirm'
+                );
+
+                const confirmBtn = document.getElementById('modal-confirm-btn');
+                const cancelBtn = document.getElementById('modal-cancel-btn');
+                confirmBtn.innerText = "Hapus Keduanya 💥";
+                cancelBtn.innerText = "Catatannya Saja 📝";
+                cancelBtn.onclick = function () {
+                    daftarCatatan = daftarCatatan.filter(c => c.id !== catatanId);
+                    simpanDataKeLokal();
+                    tampilkanData();
+                    tutupCustomModal();
+                    panggilCustomModal('Terhapus! 📝', 'Hanya catatan yang dihapus. Transaksi tetap tersimpan.', null, 'success');
+                };
+            } else {
+                panggilCustomModal(
+                    'Hapus Catatan',
+                    'Apakah kamu yakin ingin menghapus catatan ini?',
+                    function () {
+                        daftarCatatan = daftarCatatan.filter(c => c.id !== catatanId);
+                        simpanDataKeLokal();
+                        tampilkanData();
+                    }
+                );
+            }
+        }
+
+        function renderNotesVisual() {
+            const container = document.getElementById('notes-container');
+            if (!container) return;
+
+            if (daftarCatatan.length === 0) {
+                container.innerHTML = `<small style="color: var(--text-muted); text-align: center; font-style: italic; display: block; padding: 10px;">Belum ada catatan harian tersimpan...</small>`;
+                return;
             }
 
-            function renderNotesVisual() {
-                const container = document.getElementById('notes-container');
-                if (!container) return;
+            container.innerHTML = "";
+            daftarCatatan.forEach(item => {
+                let badgeHtml = "";
+                item.parsedTransactions.forEach(tx => {
+                    let flowClass = tx.jenis;
+                    let prefixSymbol = "-";
+                    let label = "";
 
-                if (daftarCatatan.length === 0) {
-                    container.innerHTML = `<small style="color: var(--text-muted); text-align: center; font-style: italic; display: block; padding: 10px;">Belum ada catatan harian tersimpan...</small>`;
-                    return;
-                }
+                    if (tx.jenis === "pemasukan") {
+                        prefixSymbol = "+";
+                        label = `${tx.wallet.toUpperCase()}`;
+                    } else if (tx.jenis === "pengeluaran") {
+                        prefixSymbol = "-";
+                        label = `${tx.wallet.toUpperCase()}`;
+                    } else if (tx.jenis === "transfer") {
+                        prefixSymbol = "🔄";
+                        label = `${tx.wallet.toUpperCase()} ➔ ${tx.walletTujuan.toUpperCase()}`;
+                    }
 
-                container.innerHTML = "";
-                daftarCatatan.forEach(item => {
-                    let badgeHtml = "";
-                    item.parsedTransactions.forEach(tx => {
-                        let flowClass = tx.jenis;
-                        let prefixSymbol = "-";
-                        let label = "";
-
-                        if (tx.jenis === "pemasukan") {
-                            prefixSymbol = "+";
-                            label = `${tx.wallet.toUpperCase()}`;
-                        } else if (tx.jenis === "pengeluaran") {
-                            prefixSymbol = "-";
-                            label = `${tx.wallet.toUpperCase()}`;
-                        } else if (tx.jenis === "transfer") {
-                            prefixSymbol = "🔄";
-                            label = `${tx.wallet.toUpperCase()} ➔ ${tx.walletTujuan.toUpperCase()}`;
-                        }
-
-                        badgeHtml += `
+                    badgeHtml += `
                         <div class="parsed-badge ${flowClass}">
                             <span>${prefixSymbol} Rp ${tx.nominal.toLocaleString('id-ID')}</span>
                             <small>(${label})</small>
                         </div>
                     `;
-                    });
+                });
 
-                    container.insertAdjacentHTML('beforeend', `
+                container.insertAdjacentHTML('beforeend', `
                     <div class="notes-card">
                         <div class="notes-info">
                             <span class="notes-date"><i class="fa-regular fa-clock"></i> ${item.tanggal}</span>
@@ -4437,69 +4709,114 @@
                         </div>
                     </div>
                 `);
-                });
+            });
+        }
+
+        function setModeInput(mode) {
+            const btnManual = document.getElementById('btn-mode-manual');
+            const btnSimpel = document.getElementById('btn-mode-simpel');
+            const wrapperManual = document.getElementById('wrapper-input-manual');
+            const wrapperSimpel = document.getElementById('wrapper-input-simpel');
+
+            if (!btnManual || !btnSimpel || !wrapperManual || !wrapperSimpel) return;
+
+            if (mode === 'simpel') {
+                btnManual.classList.remove('active');
+                btnSimpel.classList.add('active');
+                wrapperManual.style.display = 'none';
+                wrapperSimpel.style.display = 'block';
+                localStorage.setItem('way_finance_input_mode', 'simpel');
+            } else {
+                btnManual.classList.add('active');
+                btnSimpel.classList.remove('active');
+                wrapperManual.style.display = 'block';
+                wrapperSimpel.style.display = 'none';
+                localStorage.setItem('way_finance_input_mode', 'manual');
             }
+        }
 
-            function setModeInput(mode) {
-                const btnManual = document.getElementById('btn-mode-manual');
-                const btnSimpel = document.getElementById('btn-mode-simpel');
-                const wrapperManual = document.getElementById('wrapper-input-manual');
-                const wrapperSimpel = document.getElementById('wrapper-input-simpel');
-
-                if (!btnManual || !btnSimpel || !wrapperManual || !wrapperSimpel) return;
-
-                if (mode === 'simpel') {
-                    btnManual.classList.remove('active');
-                    btnSimpel.classList.add('active');
-                    wrapperManual.style.display = 'none';
-                    wrapperSimpel.style.display = 'block';
-                    localStorage.setItem('way_finance_input_mode', 'simpel');
-                } else {
-                    btnManual.classList.add('active');
-                    btnSimpel.classList.remove('active');
-                    wrapperManual.style.display = 'block';
-                    wrapperSimpel.style.display = 'none';
-                    localStorage.setItem('way_finance_input_mode', 'manual');
-                }
-            }
-
-            function periksaWelcomeModeInput() {
-                const savedMode = localStorage.getItem('way_finance_input_mode');
-                if (!savedMode) {
-                    panggilCustomModal(
-                        'Pilih Mode Catat Keuangan! 🎯',
-                        'Halo Cuy! Selamat datang di WAYFinance. Mau pakai mode apa buat catat pemasukan/pengeluaran lo?',
-                        null,
-                        'welcome_selection'
-                    );
-                } else {
-                    setModeInput(savedMode);
-                }
-            }
-
-            function toggleSectionCollapse(sectionId) {
-                const section = document.getElementById(sectionId);
-                if (section) {
-                    section.classList.toggle('active');
-                }
-            }
-            window.toggleSectionCollapse = toggleSectionCollapse;
-
-            function keluarDariPremium() {
-                statusUserPremium = false;
-                localStorage.setItem('way_finance_premium_status', 'false');
-                perbaruiTampilanTombolPremium();
-                tampilkanData();
-                tutupCustomModal();
+        function periksaWelcomeModeInput() {
+            const savedMode = localStorage.getItem('way_finance_input_mode');
+            if (!savedMode) {
                 panggilCustomModal(
-                    'Kembali Ke Versi Biasa 🚪',
-                    'Kamu telah keluar dari mode premium dan kembali ke versi standar non-premium, Cuy!',
+                    'Pilih Mode Catat Keuangan! 🎯',
+                    'Halo Cuy! Selamat datang di WAYFinance. Mau pakai mode apa buat catat pemasukan/pengeluaran lo?',
                     null,
-                    'success'
+                    'welcome_selection'
                 );
+            } else {
+                setModeInput(savedMode);
             }
-            window.keluarDariPremium = keluarDariPremium;
+        }
+
+        function toggleSupportCard(show) {
+            const card = document.getElementById('support-card');
+            const badge = document.getElementById('support-badge');
+            if (!card || !badge) return;
+            if (show) {
+                card.style.display = 'flex';
+                badge.style.display = 'none';
+                localStorage.setItem('way_finance_support_closed', 'false');
+            } else {
+                card.style.display = 'none';
+                badge.style.display = 'flex';
+                localStorage.setItem('way_finance_support_closed', 'true');
+            }
+        }
+        window.toggleSupportCard = toggleSupportCard;
+
+        function toggleSectionCollapse(sectionId) {
+            const section = document.getElementById(sectionId);
+            if (section) {
+                section.classList.toggle('active');
+            }
+        }
+        window.toggleSectionCollapse = toggleSectionCollapse;
+
+        function keluarDariPremium() {
+            statusUserPremium = true;
+            localStorage.setItem('way_finance_premium_status', 'true');
+            perbaruiTampilanTombolPremium();
+            tampilkanData();
+            tutupCustomModal();
+            panggilCustomModal(
+                'Kembali Ke Versi Biasa 🚪',
+                'Kamu telah keluar dari mode premium dan kembali ke versi standar non-premium, Cuy!',
+                null,
+                'success'
+            );
+        }
+        window.keluarDariPremium = keluarDariPremium;
     </script>
+
+    <!-- SUPPORT MODE FLOAT WIDGET -->
+    <div id="support-widget-container">
+        <button id="support-badge" class="support-badge" onclick="window.toggleSupportCard(true)"
+            style="display: none;">
+            <i class="fa-solid fa-mug-hot"></i> Dukung WAYFinance
+        </button>
+        <div id="support-card" class="support-card">
+            <div class="support-card-header">
+                <h4><i class="fa-solid fa-mug-hot"></i> Dukung WAYFinance ☕</h4>
+                <button class="support-close-btn" onclick="window.toggleSupportCard(false)">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <div class="support-card-body">
+                <p>Suka dengan aplikasi ini? Sekarang semua fitur Premium 100% GRATIS! Traktir kopi developer biar makin
+                    semangat update fitur. 😊</p>
+                <div class="support-buttons">
+                    <a href="https://saweria.co/whyukrniawan" target="_blank" class="support-btn saweria">
+                        <i class="fa-solid fa-heart"></i> Saweria
+                    </a>
+                    <a href="https://wa.me/6283832883308?text=Halo%20Bang%20Wahyu,%20gua%20mau%20donasi%20buat%20WAYFinance%20nih!"
+                        target="_blank" class="support-btn wa-chat">
+                        <i class="fa-brands fa-whatsapp"></i> Chat Developer
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 
 </html>

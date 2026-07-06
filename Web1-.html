@@ -1637,7 +1637,8 @@
     <div class="dashboard-wrapper">
         <div id="panel-input" class="kolom-kiri">
             <div class="brand-header">
-                <h2><img src="logo-wayfinance.png" alt="Logo" style="height: 35px; width: auto; object-fit: contain;"><span>WAY</span>Finance</h2>
+                <h2><img src="logo-wayfinance.png" alt="Logo"
+                        style="height: 35px; width: auto; object-fit: contain;"><span>WAY</span>Finance</h2>
                 <button id="btn-lisensi-utama" class="btn-dev-trigger" onclick="window.bukaModalPenjelasanDev()">
                     <i class="fa-solid fa-gem"></i> <span id="auth-btn-text">💎 Aktivasi WAY Premium</span>
                 </button>
@@ -1983,7 +1984,7 @@
         // --- SISTEM KUNCI LISENSI PREMIUM LOKAL ANTI-RIBET ---
         const KODE_LISENSI_RAHASIA = "WAY-PREMIUM-2026";
 
-        let statusUserPremium = false;
+        let statusUserPremium = true;
         let daftarTransaksi = [];
         let daftarWishlist = [];
         let daftarTagihan = [];
@@ -2163,7 +2164,7 @@
         window.eksekusiCetakPDFLaporan = eksekusiCetakPDFLaporan;
 
         window.addEventListener('DOMContentLoaded', () => {
-            statusUserPremium = localStorage.getItem('way_finance_premium_status') === 'true';
+            statusUserPremium = true;
             sembunyikanSaldoMode = localStorage.getItem('way_finance_hide_balance_status') === 'true';
 
             muatDataLokalLego();
@@ -2192,23 +2193,23 @@
             const icon3 = document.getElementById('lock-icon-3');
 
             if (statusUserPremium) {
-                btnEkspor.classList.add('unlocked');
-                btnGrafik.classList.add('unlocked');
-                btnCsv.classList.add('unlocked');
-                btnLisensi.classList.add('unlocked');
-                txtLisensi.innerText = "Premium Active (Wahyu)";
-                icon1.className = "fa-solid fa-file-arrow-down";
-                icon2.className = "fa-solid fa-file-arrow-up";
-                icon3.className = "fa-solid fa-file-excel";
+                if (btnEkspor) btnEkspor.classList.add('unlocked');
+                if (btnGrafik) btnGrafik.classList.add('unlocked');
+                if (btnCsv) btnCsv.classList.add('unlocked');
+                if (btnLisensi) btnLisensi.classList.add('unlocked');
+                if (txtLisensi) txtLisensi.innerText = "Premium Active (Wahyu)";
+                if (icon1) icon1.className = "fa-solid fa-file-arrow-down";
+                if (icon2) icon2.className = "fa-solid fa-file-arrow-up";
+                if (icon3) icon3.className = "fa-solid fa-file-excel";
             } else {
-                btnEkspor.classList.remove('unlocked');
-                btnGrafik.classList.remove('unlocked');
-                btnCsv.classList.remove('unlocked');
-                btnLisensi.classList.remove('unlocked');
-                txtLisensi.innerText = "💎 Aktivasi WAY Premium";
-                icon1.className = "fa-solid fa-lock";
-                icon2.className = "fa-solid fa-lock";
-                icon3.className = "fa-solid fa-lock";
+                if (btnEkspor) btnEkspor.classList.remove('unlocked');
+                if (btnGrafik) btnGrafik.classList.remove('unlocked');
+                if (btnCsv) btnCsv.classList.remove('unlocked');
+                if (btnLisensi) btnLisensi.classList.remove('unlocked');
+                if (txtLisensi) txtLisensi.innerText = "💎 Aktivasi WAY Premium";
+                if (icon1) icon1.className = "fa-solid fa-lock";
+                if (icon2) icon2.className = "fa-solid fa-lock";
+                if (icon3) icon3.className = "fa-solid fa-lock";
             }
         }
 
@@ -2996,7 +2997,7 @@
                     if (src === "bri") saldoBri -= nom;
                     if (src === "bank_lain") saldoLain -= nom;
 
-                    if (item.bulan) petaDataTren.keluar[item.bulan] += nom;
+                    if (item.bulan) petaDataTren.keluar[item.sudabulan] += nom;
                 }
                 else if (item.jenis === "transfer") {
                     if (src === "cash") saldoCash -= nom;
