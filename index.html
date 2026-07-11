@@ -2621,7 +2621,7 @@
             <div class="brand-header">
                 <h2><span>WAY</span>Finance</h2>
                 <button class="btn-dev-trigger unlocked" onclick="window.tanyaSuntikData()">
-                    <i class="fa-solid fa-syringe"></i> <span>Suntik Dana Gaib</span>
+                    <i class="fa-solid fa-chart-line"></i> <span>Simulasi Keuangan</span>
                 </button>
             </div>
 
@@ -3014,6 +3014,16 @@
                         Pasang batas maksimal pengeluaran bulanan lo di sini, Cuy. Biar saku lo gak jebol tanpa sadar!
                     </p>
 
+                    <div class="budget-warning-config" style="display: flex; flex-wrap: wrap; gap: 10px; align-items: flex-end; margin-bottom: 18px;">
+                        <div style="display: flex; flex: 1 1 360px; gap: 10px; flex-wrap: wrap;">
+                            <input type="text" id="global-budget-threshold-input" placeholder="Rp 2.500.000" onkeyup="window.formatInputRupiah(this)" style="padding: 10px 14px; border-radius: 12px; background: var(--dark-card); border: 1px solid rgba(255,255,255,0.08); color: white; min-width: 220px; flex: 1; outline: none;">
+                            <button class="btn-add-wishlist" style="min-width: 170px; padding: 10px 14px;" onclick="window.simpanBatasBudgetGlobal()">
+                                <i class="fa-solid fa-sliders"></i> Set Batas Peringatan
+                            </button>
+                        </div>
+                        <span style="color: var(--text-muted); font-size: 0.72rem; flex-basis: 100%;">Batas ini akan memicu banner peringatan ketika pengeluaran bulan ini melewatinya.</span>
+                    </div>
+
                     <!-- GLOBAL BUDGET SUMMARY CARD -->
                     <div id="global-budget-summary"
                         style="background: linear-gradient(135deg, #2c3e50, #1a252f); border: 1px solid rgba(255, 255, 255, 0.08); padding: 16px; border-radius: 18px; margin-bottom: 18px; display: none; transition: all 0.3s ease;">
@@ -3197,6 +3207,8 @@
             belanja: 0,
             kustom: 0
         };
+        let globalBudgetWarningThreshold = 2500000;
+        const GLOBAL_BUDGET_WARNING_KEY = 'way_finance_global_budget_threshold';
 
         const kamusTeksKategori = {
             "makanan": "☕ Lambung Sejahtera",
@@ -3402,6 +3414,7 @@
             toggleSupportCard(!supportClosed);
 
             muatDataLokalLego();
+            muatBatasBudgetGlobal();
 
             const waktuSekarang = new Date();
             const tanggalHariIniLokal = dapatkanTanggalLokalHariIni(waktuSekarang);
@@ -3471,8 +3484,8 @@
 
         function tanyaSuntikData() {
             panggilCustomModal(
-                'Suntik Dana Gaib? 🎯',
-                'Apakah kamu yakin ingin menyuntikkan data transaksi simulasi secara otomatis ke riwayat keuangan lo, Cuy?',
+                'Simulasi Keuangan? 🧮',
+                'Apakah kamu mau menambahkan simulasi transaksi realistis dengan pemasukan, pengeluaran, dan mutasi agar total sisa uang hidup terlihat lebih masuk akal?',
                 function () {
                     triggerCheatDataGaib();
                 },
@@ -3673,94 +3686,38 @@
         function triggerCheatDataGaib() {
             const sekarang = new Date();
             const tahunSekarang = sekarang.getFullYear();
-            const bulanSekarang = sekarang.getMonth() + 1; // 1-12
+            const bulanSekarang = sekarang.getMonth() + 1;
             const tanggalSekarang = sekarang.getDate();
+            const bulanLabel = String(bulanSekarang).padStart(2, '0');
 
             const templates = [
-                // JANUARI
-                { nama: "Gaji Hasil Nguli (Jan)", jenis: "pemasukan", wallet: "bca", kategori: "gaji", nominal: 8500000, bulan: "01", hariTaksiran: 10 },
-                { nama: "Tarik Tunai dari BCA (Jan)", jenis: "transfer", wallet: "bca", walletTujuan: "cash", kategori: "transfer", nominal: 2000000, bulan: "01", hariTaksiran: 11 },
-                { nama: "Bayar Kost Bulanan (Jan)", jenis: "pengeluaran", wallet: "cash", kategori: "tagihan", nominal: 1500000, bulan: "01", hariTaksiran: 12 },
-
-                // FEBRUARI
-                { nama: "Bonus Proyek Landing Page (Feb)", jenis: "pemasukan", wallet: "mandiri", kategori: "gaji", nominal: 2500000, bulan: "02", hariTaksiran: 5 },
-                { nama: "Top Up GoPay via BCA (Feb)", jenis: "transfer", wallet: "bca", walletTujuan: "gopay", kategori: "transfer", nominal: 500000, bulan: "02", hariTaksiran: 12 },
-                { nama: "Makan Buffet All You Can Eat (Feb)", jenis: "pengeluaran", wallet: "gopay", kategori: "makanan", nominal: 450000, bulan: "02", hariTaksiran: 14 },
-
-                // MARET
-                { nama: "Dividen Saham Cair (Mar)", jenis: "pemasukan", wallet: "bca", kategori: "investasi", nominal: 1200000, bulan: "03", hariTaksiran: 2 },
-                { nama: "Top Up Dana via BCA (Mar)", jenis: "transfer", wallet: "bca", walletTujuan: "dana", kategori: "transfer", nominal: 2000000, bulan: "03", hariTaksiran: 16 },
-                { nama: "Nonton Concert Populer (Mar)", jenis: "pengeluaran", wallet: "dana", kategori: "hiburan", nominal: 1800000, bulan: "03", hariTaksiran: 18 },
-
-                // APRIL
-                { nama: "THR Cair Asik (Apr)", jenis: "pemasukan", wallet: "bca", kategori: "gaji", nominal: 7500000, bulan: "04", hariTaksiran: 5 },
-                { nama: "Tarik Tunai dari BCA (Apr)", jenis: "transfer", wallet: "bca", walletTujuan: "cash", kategori: "transfer", nominal: 2000000, bulan: "04", hariTaksiran: 10 },
-                { nama: "Beli Baju Lebaran Keluarga (Apr)", jenis: "pengeluaran", wallet: "cash", kategori: "belanja", nominal: 2000000, bulan: "04", hariTaksiran: 12 },
-
-                // MEI
-                { nama: "Gaji Utama Nguli (Mei)", jenis: "pemasukan", wallet: "bca", kategori: "gaji", nominal: 8500000, bulan: "05", hariTaksiran: 10 },
-                { nama: "Top Up Dana via BCA (Mei)", jenis: "transfer", wallet: "bca", walletTujuan: "dana", kategori: "transfer", nominal: 1000000, bulan: "05", hariTaksiran: 14 },
-                { nama: "Bayar Tagihan Listrik & Internet (Mei)", jenis: "pengeluaran", wallet: "dana", kategori: "tagihan", nominal: 650000, bulan: "05", hariTaksiran: 15 },
-
-                // JUNI
-                { nama: "Hasil Jual HP Bekas (Jun)", jenis: "pemasukan", wallet: "cash", kategori: "kustom", nominal: 2200000, bulan: "06", hariTaksiran: 8 },
-                { nama: "Servis Rutin Motor Kesayangan (Jun)", jenis: "pengeluaran", wallet: "bca", kategori: "transportasi", nominal: 750000, bulan: "06", hariTaksiran: 20 },
-
-                // JULI
-                { nama: "Gaji Utama Awal Bulan (Jul)", jenis: "pemasukan", wallet: "bca", kategori: "gaji", nominal: 8500000, bulan: "07", hariTaksiran: 1 },
-                { nama: "Makan Nasi Goreng Gila (Jul)", jenis: "pengeluaran", wallet: "cash", kategori: "makanan", nominal: 30000, bulan: "07", hariTaksiran: 3 },
-                { nama: "Top Up Gopay via BCA (Jul)", jenis: "transfer", wallet: "bca", walletTujuan: "gopay", kategori: "transfer", nominal: 100000, bulan: "07", hariTaksiran: 5 },
-                { nama: "Gaji Utama Nguli (Jul)", jenis: "pemasukan", wallet: "bca", kategori: "gaji", nominal: 8500000, bulan: "07", hariTaksiran: 10 },
-                { nama: "Pindah Saldo ke Mandiri (Jul)", jenis: "transfer", wallet: "bca", walletTujuan: "mandiri", kategori: "transfer", nominal: 2000000, bulan: "07", hariTaksiran: 12 },
-                { nama: "Khilaf Beli Gadget Baru (Jul)", jenis: "pengeluaran", wallet: "mandiri", kategori: "belanja", nominal: 4500000, bulan: "07", hariTaksiran: 15 },
-
-                // AGUSTUS
-                { nama: "Pemasukan Menang Lomba (Agu)", jenis: "pemasukan", wallet: "ovo", kategori: "kustom", nominal: 3500000, bulan: "08", hariTaksiran: 17 },
-                { nama: "Top Up GoPay via BCA (Agu)", jenis: "transfer", wallet: "bca", walletTujuan: "gopay", kategori: "transfer", nominal: 1500000, bulan: "08", hariTaksiran: 18 },
-                { nama: "Tiket Liburan Singkat (Agu)", jenis: "pengeluaran", wallet: "gopay", kategori: "hiburan", nominal: 1200000, bulan: "08", hariTaksiran: 20 },
-
-                // SEPTEMBER
-                { nama: "Gaji Utama Nguli (Sep)", jenis: "pemasukan", wallet: "bca", kategori: "gaji", nominal: 8500000, bulan: "09", hariTaksiran: 10 },
-                { nama: "Tarik Tunai dari BCA (Sep)", jenis: "transfer", wallet: "bca", walletTujuan: "cash", kategori: "transfer", nominal: 1500000, bulan: "09", hariTaksiran: 11 },
-                { nama: "Belanja Bulanan Supermarket (Sep)", jenis: "pengeluaran", wallet: "cash", kategori: "belanja", nominal: 1400000, bulan: "09", hariTaksiran: 12 },
-
-                // OKTOBER
-                { nama: "Profit Reksadana Cair (Okt)", jenis: "pemasukan", wallet: "bca", kategori: "investasi", nominal: 1800000, bulan: "10", hariTaksiran: 5 },
-                { nama: "Top Up Dana via BCA (Okt)", jenis: "transfer", wallet: "bca", walletTujuan: "dana", kategori: "transfer", nominal: 500000, bulan: "10", hariTaksiran: 24 },
-                { nama: "Beli Kopi Starbucks & Roti (Okt)", jenis: "pengeluaran", wallet: "dana", kategori: "makanan", nominal: 350000, bulan: "10", hariTaksiran: 25 },
-
-                // NOVEMBER
-                { nama: "Gaji Utama Nguli (Nov)", jenis: "pemasukan", wallet: "bca", kategori: "gaji", nominal: 8500000, bulan: "11", hariTaksiran: 10 },
-                { nama: "Tarik Tunai dari BCA (Nov)", jenis: "transfer", wallet: "bca", walletTujuan: "cash", kategori: "transfer", nominal: 2500000, bulan: "11", hariTaksiran: 16 },
-                { nama: "Jalan-jalan Weekend Luar Kota (Nov)", jenis: "pengeluaran", wallet: "cash", kategori: "hiburan", nominal: 2200000, bulan: "11", hariTaksiran: 18 },
-
-                // DESEMBER
-                { nama: "Bonus Akhir Tahun Melimpah (Des)", jenis: "pemasukan", wallet: "bca", kategori: "gaji", nominal: 10000000, bulan: "12", hariTaksiran: 15 },
-                { nama: "Top Up GoPay via BCA (Des)", jenis: "transfer", wallet: "bca", walletTujuan: "gopay", kategori: "transfer", nominal: 6000000, bulan: "12", hariTaksiran: 20 },
-                { nama: "Tiket Pesawat & Hotel Liburan (Des)", jenis: "pengeluaran", wallet: "gopay", kategori: "hiburan", nominal: 5500000, bulan: "12", hariTaksiran: 22 }
+                { nama: 'Gaji Bulan Ini', jenis: 'pemasukan', wallet: 'bca', kategori: 'gaji', nominal: 6500000, bulan: bulanLabel, hariTaksiran: 1 },
+                { nama: 'Bayar Sewa Kost', jenis: 'pengeluaran', wallet: 'cash', kategori: 'tagihan', nominal: 1400000, bulan: bulanLabel, hariTaksiran: 3 },
+                { nama: 'Belanja Kebutuhan', jenis: 'pengeluaran', wallet: 'gopay', kategori: 'makanan', nominal: 420000, bulan: bulanLabel, hariTaksiran: 5 },
+                { nama: 'Top Up Dana', jenis: 'transfer', wallet: 'bca', walletTujuan: 'dana', kategori: 'transfer', nominal: 250000, bulan: bulanLabel, hariTaksiran: 6 },
+                { nama: 'Transport & Bensin', jenis: 'pengeluaran', wallet: 'bca', kategori: 'transportasi', nominal: 180000, bulan: bulanLabel, hariTaksiran: 8 },
+                { nama: 'Bonus Cepat', jenis: 'pemasukan', wallet: 'mandiri', kategori: 'kustom', nominal: 700000, bulan: bulanLabel, hariTaksiran: 12 },
+                { nama: 'Transfer ke Cash', jenis: 'transfer', wallet: 'bca', walletTujuan: 'cash', kategori: 'transfer', nominal: 400000, bulan: bulanLabel, hariTaksiran: 14 },
+                { nama: 'Makan Siang', jenis: 'pengeluaran', wallet: 'gopay', kategori: 'makanan', nominal: 80000, bulan: bulanLabel, hariTaksiran: 16 },
+                { nama: 'Hadiah Kecil', jenis: 'pemasukan', wallet: 'ovo', kategori: 'kustom', nominal: 300000, bulan: bulanLabel, hariTaksiran: 20 }
             ];
 
             const injected = [];
             templates.forEach(t => {
                 const blnNum = parseInt(t.bulan, 10);
 
-                // Hanya suntik data yang tanggalnya kurang dari atau sama dengan hari ini di tahun 2026
-                if (blnNum < bulanSekarang || (blnNum === bulanSekarang && t.hariTaksiran <= tanggalSekarang)) {
-                    // Randomisasi hari sedikit (+/- 2 hari) agar tidak selalu persis sama jika disuntik ulang
-                    let hariPilihan = t.hariTaksiran + (Math.floor(Math.random() * 5) - 2);
+                if (blnNum === bulanSekarang && t.hariTaksiran <= tanggalSekarang) {
+                    let hariPilihan = t.hariTaksiran + (Math.floor(Math.random() * 3) - 1);
                     if (hariPilihan < 1) hariPilihan = 1;
                     if (hariPilihan > 28) hariPilihan = 28;
 
-                    // Randomisasi nominal sedikit (+/- 5% kelipatan 10.000)
-                    const persenRandom = (Math.random() * 0.1) - 0.05;
+                    const persenRandom = (Math.random() * 0.08) - 0.04;
                     const selisihNominal = Math.round((t.nominal * persenRandom) / 10000) * 10000;
                     const nominalAkhir = t.nominal + selisihNominal;
 
                     const objekTanggal = new Date(tahunSekarang, blnNum - 1, hariPilihan, 10, 0, 0);
                     const tanggalMentahStr = dapatkanTanggalLokalHariIni(objekTanggal);
                     const tanggalCetakStr = objekTanggal.toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
-
-                    // ID menggunakan timestamp asli tanggal tersebut + random offset agar selalu unik
                     const txId = objekTanggal.getTime() + Math.floor(Math.random() * 1000000);
 
                     injected.push({
@@ -3779,17 +3736,26 @@
             });
 
             if (injected.length === 0) {
-                panggilCustomModal('Info ℹ️', 'Belum ada jadwal data gaib yang masuk akal untuk disuntikkan sebelum tanggal hari ini.', null, 'exclamation');
+                panggilCustomModal('Info ℹ️', 'Simulasi belum bisa dibuat karena belum ada transaksi yang jatuh tempo di bulan ini.', null, 'exclamation');
                 return;
             }
 
-            // Gabungkan dan urutkan transaksi berdasarkan ID/timestamp desc (terbaru di atas)
+            const totalPemasukan = injected.filter(item => item.jenis === 'pemasukan').reduce((sum, item) => sum + item.nominal, 0);
+            const totalPengeluaran = injected.filter(item => item.jenis === 'pengeluaran').reduce((sum, item) => sum + item.nominal, 0);
+            const totalTransfer = injected.filter(item => item.jenis === 'transfer').reduce((sum, item) => sum + item.nominal, 0);
+            const saldoBersih = totalPemasukan - totalPengeluaran - totalTransfer;
+
             daftarTransaksi = [...injected, ...daftarTransaksi];
             daftarTransaksi.sort((a, b) => b.id - a.id);
 
             simpanDataKeLokal();
             tampilkanData();
-            panggilCustomModal('Sukses Suntik! 🎯', `${injected.length} Data transaksi masuk akal berhasil disuntikkan secara dinamis ke riwayat keuangan lo!`, null, 'success');
+            panggilCustomModal(
+                'Simulasi Selesai! 🧮',
+                `Simulasi dibuat dengan ${injected.length} transaksi realistis: pemasukan Rp ${totalPemasukan.toLocaleString('id-ID')}, pengeluaran Rp ${totalPengeluaran.toLocaleString('id-ID')}, mutasi Rp ${totalTransfer.toLocaleString('id-ID')}. Sisa kas estimasinya sekitar Rp ${saldoBersih.toLocaleString('id-ID')}.`,
+                null,
+                'success'
+            );
         }
 
         function gantiProfilKeuangan(profil) {
@@ -4645,7 +4611,7 @@
             // Warning budget banner logic (dipindah ke sini agar membaca nilai pengeluaranBulanIni yang aktual)
             const warningBanner = document.getElementById('budget-warning');
             if (warningBanner) {
-                if (statusUserPremium && pengeluaranBulanIni > 2500000) {
+                if (statusUserPremium && globalBudgetWarningThreshold > 0 && pengeluaranBulanIni > globalBudgetWarningThreshold) {
                     warningBanner.style.display = "flex";
                 } else {
                     warningBanner.style.display = "none";
@@ -5020,6 +4986,32 @@
                 panggilCustomModal('Limit Dihapus! ⚠️', `Limit untuk kategori ${kamusTeksKategori[kat] || kat} telah dihapus (tidak terbatas).`, null, 'success');
             } else {
                 panggilCustomModal('Limit Disimpan! ⚠️', `Limit untuk kategori ${kamusTeksKategori[kat] || kat} telah diatur menjadi Rp ${nominal.toLocaleString('id-ID')}.`, null, 'success');
+            }
+        }
+
+        function simpanBatasBudgetGlobal() {
+            const inputEl = document.getElementById('global-budget-threshold-input');
+            if (!inputEl) return;
+            const nominal = parseInt(inputEl.value.replace(/\./g, '')) || 0;
+            globalBudgetWarningThreshold = nominal;
+            localStorage.setItem(GLOBAL_BUDGET_WARNING_KEY, String(globalBudgetWarningThreshold));
+            tampilkanData();
+
+            if (nominal === 0) {
+                panggilCustomModal('Peringatan Dimatikan', 'Banner peringatan global kini nonaktif. Anda tidak akan menerima notifikasi batas pengeluaran.', null, 'success');
+            } else {
+                panggilCustomModal('Batas Peringatan Disimpan', `Banner peringatan global akan muncul setelah pengeluaran bulan ini melewati Rp ${nominal.toLocaleString('id-ID')}.`, null, 'success');
+            }
+        }
+
+        function muatBatasBudgetGlobal() {
+            const storedThreshold = localStorage.getItem(GLOBAL_BUDGET_WARNING_KEY);
+            if (storedThreshold !== null) {
+                globalBudgetWarningThreshold = parseInt(storedThreshold, 10) || 0;
+            }
+            const inputEl = document.getElementById('global-budget-threshold-input');
+            if (inputEl) {
+                inputEl.value = globalBudgetWarningThreshold > 0 ? globalBudgetWarningThreshold.toLocaleString('id-ID') : '';
             }
         }
 
