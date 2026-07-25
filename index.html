@@ -761,7 +761,7 @@
 
         .premium-feature-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(2, 1fr);
             gap: 10px;
             margin-bottom: 15px;
             width: 100%;
@@ -2581,6 +2581,311 @@
             color: #ffffff;
             box-shadow: 0 4px 10px rgba(46, 204, 113, 0.15);
         }
+
+        .btn-undo-action {
+            background: rgba(231, 76, 60, 0.1);
+            border: 1px dashed rgba(231, 76, 60, 0.3);
+            color: #e74c3c;
+            padding: 6px 14px;
+            font-size: 0.78rem;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.25s ease;
+        }
+
+        .btn-undo-action:hover {
+            background: rgba(231, 76, 60, 0.25);
+            color: #ff6b6b;
+            border-color: rgba(231, 76, 60, 0.5);
+            transform: scale(1.05);
+        }
+
+        .btn-undo-action:active {
+            transform: scale(0.95);
+        }
+
+        /* --- MODE SIMULASI (STYLE CATATAN/NOTEPAD PREMIUM) --- */
+        body.mode-simulasi-aktif {
+            background: radial-gradient(circle at top right, #f3f0fc, #ece9f7, #e0dced) !important;
+            color: #2c3e50 !important;
+        }
+
+        body.mode-simulasi-aktif .dashboard-wrapper {
+            background: rgba(255, 255, 255, 0.95) !important;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 0, 0, 0.08) !important;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08) !important;
+            grid-template-columns: 1fr !important;
+            max-width: 600px !important;
+        }
+
+        body.mode-simulasi-aktif .kolom-kanan {
+            display: none !important;
+        }
+
+        body.mode-simulasi-aktif .wallet-section,
+        body.mode-simulasi-aktif #smart-paste-container,
+        body.mode-simulasi-aktif #info-terboros-container,
+        body.mode-simulasi-aktif #info-prestasi-container,
+        body.mode-simulasi-aktif .toggle-mode-container,
+        body.mode-simulasi-aktif #wrapper-input-manual,
+        body.mode-simulasi-aktif .box-mini.box-transfer,
+        body.mode-simulasi-aktif .premium-feature-grid {
+            display: none !important;
+        }
+
+        body.mode-simulasi-aktif .ringkasan-bulan {
+            grid-template-columns: 1fr 1fr !important;
+        }
+
+        body.mode-simulasi-aktif h2,
+        body.mode-simulasi-aktif h3,
+        body.mode-simulasi-aktif h5,
+        body.mode-simulasi-aktif h4,
+        body.mode-simulasi-aktif label,
+        body.mode-simulasi-aktif p,
+        body.mode-simulasi-aktif span,
+        body.mode-simulasi-aktif strong {
+            color: #2c3e50 !important;
+        }
+
+        body.mode-simulasi-aktif .brand-header h2 span {
+            background: none !important;
+            -webkit-text-fill-color: initial !important;
+            color: #2c3e50 !important;
+        }
+
+        /* Saldo Box jadi Sticky Note Lavender Kertas */
+        body.mode-simulasi-aktif .saldo-box {
+            background: #f7f4ff !important;
+            border: 1px dashed #c0b3f0 !important;
+            box-shadow: 5px 5px 15px rgba(0,0,0,0.05) !important;
+        }
+
+        body.mode-simulasi-aktif .saldo-box h1 {
+            color: #2c3e50 !important;
+        }
+
+        body.mode-simulasi-aktif .saldo-box p {
+            color: #7f8c8d !important;
+        }
+
+        /* Box mini & list cards */
+        body.mode-simulasi-aktif .wallet-card-mini,
+        body.mode-simulasi-aktif .box-mini,
+        body.mode-simulasi-aktif .info-terboros-box,
+        body.mode-simulasi-aktif .info-prestasi-box,
+        body.mode-simulasi-aktif .budget-limit-card,
+        body.mode-simulasi-aktif .bill-card,
+        body.mode-simulasi-aktif .debt-card,
+        body.mode-simulasi-aktif .notes-card {
+            background: #ffffff !important;
+            border: 1px solid #e2e8f0 !important;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02) !important;
+        }
+
+        body.mode-simulasi-aktif .wallet-icon i {
+            color: #7f8c8d !important;
+        }
+
+        /* Inputs & Form styling */
+        body.mode-simulasi-aktif .input-wrapper {
+            background: #ffffff !important;
+            border: 1px solid #cbd5e1 !important;
+        }
+
+        body.mode-simulasi-aktif .input-wrapper input,
+        body.mode-simulasi-aktif .input-wrapper select,
+        body.mode-simulasi-aktif textarea {
+            background: #ffffff !important;
+            color: #2c3e50 !important;
+        }
+
+        body.mode-simulasi-aktif .input-wrapper i {
+            color: #94a3b8 !important;
+        }
+
+        /* Transaction Items styling */
+        body.mode-simulasi-aktif .item-transaksi {
+            background: #ffffff !important;
+            border: 1px solid #f1f5f9 !important;
+            border-bottom: 2px solid #e2e8f0 !important;
+        }
+
+        body.mode-simulasi-aktif .item-nama {
+            color: #1e293b !important;
+        }
+
+        body.mode-simulasi-aktif .icon-bulet {
+            background: #f1f5f9 !important;
+            color: #64748b !important;
+        }
+
+        /* Toggle Mode input buttons */
+        body.mode-simulasi-aktif .btn-toggle-mode {
+            background: #f1f5f9 !important;
+            color: #64748b !important;
+        }
+
+        body.mode-simulasi-aktif .btn-toggle-mode.active {
+            background: #2c3e50 !important;
+            color: #ffffff !important;
+        }
+        
+        body.mode-simulasi-aktif #support-badge {
+            display: none !important;
+        }
+
+        .btn-format-action {
+            background: rgba(231, 76, 60, 0.08);
+            border: 1px dashed rgba(231, 76, 60, 0.3);
+            color: #e74c3c;
+            padding: 6px 14px;
+            font-size: 0.78rem;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.25s ease;
+        }
+
+        .btn-format-action:hover {
+            background: rgba(231, 76, 60, 0.2);
+            color: #ff4d4d;
+            border-color: rgba(231, 76, 60, 0.5);
+            transform: scale(1.05);
+        }
+
+        .btn-format-action:active {
+            transform: scale(0.95);
+        }
+
+        /* --- STYLE BADGE PENGELUARAN HARI INI DI SALDO BOX --- */
+        .hari-ini-box {
+            margin-top: 10px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            background: rgba(231, 76, 60, 0.15);
+            border: 1px solid rgba(231, 76, 60, 0.25);
+            border-radius: 12px;
+            padding: 8px 12px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            align-self: center;
+        }
+
+        .hari-ini-box strong {
+            color: #ff6b6b;
+            font-weight: 700;
+        }
+
+        /* --- STYLE SECTION RIWAYAT PENGELUARAN HARIAN (BLUE THEME) --- */
+        .daily-expenses-section-target {
+            width: 100%;
+            border: 1px dashed rgba(52, 152, 219, 0.25) !important;
+            border-radius: 20px !important;
+            padding: 18px !important;
+            background: rgba(52, 152, 219, 0.015) !important;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15) !important;
+            transition: all 0.3s ease;
+        }
+
+        .daily-expenses-section-target:hover {
+            border-color: rgba(52, 152, 219, 0.45) !important;
+            background: rgba(52, 152, 219, 0.035) !important;
+            box-shadow: 0 15px 35px rgba(52, 152, 219, 0.05), 0 10px 30px rgba(0, 0, 0, 0.2) !important;
+        }
+
+        .daily-expenses-container {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            max-height: 250px;
+            overflow-y: auto;
+            padding-right: 4px;
+            margin-bottom: 10px;
+            width: 100%;
+        }
+
+        .daily-expense-card {
+            background-color: var(--dark-card);
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            padding: 14px;
+            border-radius: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            width: 100%;
+        }
+
+        .daily-expense-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            border-bottom: 1px dashed rgba(255, 255, 255, 0.05);
+            padding-bottom: 6px;
+        }
+
+        .daily-expense-date {
+            font-size: 0.85rem;
+            color: white;
+            font-weight: 600;
+        }
+
+        .daily-expense-total {
+            font-size: 0.9rem;
+            color: #e74c3c;
+            font-weight: 700;
+        }
+
+        .daily-expense-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 4px;
+        }
+
+        .daily-expense-actions button {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            color: white;
+            padding: 6px 10px;
+            font-size: 0.7rem;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            transition: all 0.2s ease;
+        }
+
+        .daily-expense-actions button:hover {
+            background: var(--accent-blue);
+            border-color: var(--accent-blue);
+        }
+
+        .daily-expense-items-list {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            padding-left: 4px;
+        }
+
+        .daily-expense-item {
+            display: flex;
+            justify-content: space-between;
+        }
     </style>
 </head>
 
@@ -2588,6 +2893,8 @@
 
     <!-- HIDDEN INPUT UNTUK RESTORE FILE JSON -->
     <input type="file" id="json-restore-file" style="display:none;" onchange="window.eksekusiRestoreJSON(this)">
+    <!-- HIDDEN INPUT UNTUK RESTORE FILE CSV -->
+    <input type="file" id="csv-restore-file" style="display:none;" accept=".csv" onchange="window.eksekusiRestoreCSV(this)">
 
     <div id="custom-confirm-modal" class="custom-modal-overlay">
         <div class="custom-modal-box">
@@ -2631,9 +2938,17 @@
                     onclick="window.gantiProfilKeuangan('pribadi')" style="flex: 1; justify-content: center;">
                     <i class="fa-solid fa-house"></i> Pribadi 🏠
                 </button>
-                <button class="profile-switch-btn" id="profile-btn-bisnis"
-                    onclick="window.gantiProfilKeuangan('bisnis')" style="flex: 1; justify-content: center;">
-                    <i class="fa-solid fa-briefcase"></i> Bisnis 💼
+                <button class="profile-switch-btn" id="profile-btn-simulasi"
+                    onclick="window.gantiProfilKeuangan('simulasi')" style="flex: 1; justify-content: center;">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i> Simulasi 🧮
+                </button>
+                <button class="btn-undo-action" id="btn-undo-global"
+                    onclick="window.triggerUndo()" style="display: none; justify-content: center; align-items: center;">
+                    <i class="fa-solid fa-rotate-left"></i> Undo 🔄
+                </button>
+                <button class="btn-format-action" id="btn-format-simulasi"
+                    onclick="window.eksekusiResetSemuaData()" style="display: none; justify-content: center; align-items: center;">
+                    <i class="fa-solid fa-trash-can"></i> Format 🧹
                 </button>
             </div>
 
@@ -2647,8 +2962,12 @@
                 <!-- sembunyikan saldo button icon -->
                 <button class="btn-hide-balance" onclick="window.toggleSembunyikanSaldo()"><i id="eye-icon"
                         class="fa-solid fa-eye"></i></button>
-                <p>Total Sisa Uang Hidup (Awas Kritis)</p>
+                <p id="label-total-saldo">Total Sisa Uang Hidup (Awas Kritis)</p>
                 <h1 id="total-saldo">Rp 0</h1>
+                <div id="hari-ini-box" class="hari-ini-box" style="display: none;">
+                    <i class="fa-solid fa-fire-flame-curved" style="color: #ff6b6b;"></i>
+                    <span>Hari Ini Keluar: <strong id="hari-ini-keluar">Rp 0</strong></span>
+                </div>
                 <div id="status-bacot" class="status-bacot">Belum ada duit dicatat nih...</div>
             </div>
 
@@ -2747,7 +3066,8 @@
                     <p>Hari Terkelam: <strong id="hari-terkelam-val">-</strong></p>
                     <p
                         style="border-top: 1px dashed rgba(231, 76, 60, 0.3); padding-top: 8px; margin-top: 8px; font-style: italic; color: #f39c12;">
-                        <i class="fa-solid fa-ghost"></i> <span id="roast-dinamis-val">-</span></p>
+                        <i class="fa-solid fa-ghost"></i> <span id="roast-dinamis-val">-</span>
+                    </p>
                 </div>
             </div>
 
@@ -2889,11 +3209,11 @@
 
             <!-- WRAPPER MODE SIMPEL (CATATAN) -->
             <div id="wrapper-input-simpel" style="display: none;">
-                <div class="helper-info-notes"
+                <div class="helper-info-notes" id="notes-helper-box"
                     style="background: rgba(243, 156, 18, 0.05); border: 1px dashed rgba(243, 156, 18, 0.25); padding: 10px 12px; border-radius: 12px; margin-bottom: 15px; font-size: 0.72rem; color: #f39c12; display: flex; align-items: flex-start; gap: 8px; line-height: 1.4;">
-                    <i class="fa-solid fa-lightbulb" style="margin-top: 2px;"></i>
-                    <div>
-                        <span style="font-weight: 600; display: block; margin-bottom: 2px; color: #ffffff;">Tips Menulis
+                    <i id="notes-helper-icon" class="fa-solid fa-lightbulb" style="margin-top: 2px;"></i>
+                    <div id="notes-helper-content">
+                        <span id="notes-helper-title" style="font-weight: 600; display: block; margin-bottom: 2px; color: #ffffff;">Tips Menulis
                             Catatan:</span>
                         Gunakan pola sederhana: <strong>[kegiatan] [nominal] [saku]</strong>.<br />
                         • Contoh: <em>Makan mie 20k cash</em><br />
@@ -2903,14 +3223,14 @@
                 </div>
 
                 <div class="notes-box-creator">
-                    <label
+                    <label id="notes-input-label"
                         style="display: block; margin-bottom: 6px; font-weight: 600; font-size: 0.8rem; color: var(--text-muted);">
                         Tulis Catatan Harian Lo di Sini, Cuy:
                     </label>
                     <textarea id="notes-text-input"
                         placeholder="Tulis catatan keuangan lo di sini...&#10;Contoh:&#10;- Beli kopi 25k cash&#10;- Gajian masuk bca 5jt&#10;- Pindah 100k gopay ke dana"
                         style="min-height: 120px;" oninput="window.formatNotesInput(this)"></textarea>
-                    <button class="btn-add-wishlist"
+                    <button id="btn-save-notes" class="btn-add-wishlist"
                         style="background: linear-gradient(135deg, #1f252e, #f39c12); margin-top: 5px; width: 100%; border: 1px solid rgba(255,255,255,0.05);"
                         onclick="window.tambahCatatanBaru()">
                         <i class="fa-solid fa-circle-plus"></i> Simpan & Sinkronkan Catatan ⚡
@@ -2918,7 +3238,7 @@
                 </div>
 
                 <div style="margin-top: 20px;">
-                    <label
+                    <label id="notes-history-label"
                         style="display: block; margin-bottom: 10px; font-weight: 600; font-size: 0.85rem; color: #ffffff;">
                         Riwayat Catatan Harian 📝
                     </label>
@@ -2957,13 +3277,16 @@
 
                 <div class="premium-feature-grid">
                     <button id="btn-premium-ekspor" class="btn-premium-locked" onclick="window.pemicuBackupPremium()">
-                        <i class="fa-solid fa-file-arrow-down"></i> Backup JSON
+                        <i id="lock-icon-1" class="fa-solid fa-file-arrow-down"></i> Backup JSON
                     </button>
                     <button id="btn-premium-grafik" class="btn-premium-locked" onclick="window.pemicuRestorePremium()">
-                        <i class="fa-solid fa-file-arrow-up"></i> Restore JSON
+                        <i id="lock-icon-2" class="fa-solid fa-file-arrow-up"></i> Restore JSON
                     </button>
                     <button id="btn-premium-csv" class="btn-premium-locked" onclick="window.pemicuExportCSV()">
-                        <i class="fa-solid fa-file-excel"></i> Ekspor CSV
+                        <i id="lock-icon-3" class="fa-solid fa-file-excel"></i> Ekspor CSV
+                    </button>
+                    <button id="btn-premium-csv-restore" class="btn-premium-locked" onclick="window.pemicuRestoreCSV()">
+                        <i id="lock-icon-4" class="fa-solid fa-file-import"></i> Restore CSV
                     </button>
                 </div>
 
@@ -3014,14 +3337,19 @@
                         Pasang batas maksimal pengeluaran bulanan lo di sini, Cuy. Biar saku lo gak jebol tanpa sadar!
                     </p>
 
-                    <div class="budget-warning-config" style="display: flex; flex-wrap: wrap; gap: 10px; align-items: flex-end; margin-bottom: 18px;">
+                    <div class="budget-warning-config"
+                        style="display: flex; flex-wrap: wrap; gap: 10px; align-items: flex-end; margin-bottom: 18px;">
                         <div style="display: flex; flex: 1 1 360px; gap: 10px; flex-wrap: wrap;">
-                            <input type="text" id="global-budget-threshold-input" placeholder="Rp 2.500.000" onkeyup="window.formatInputRupiah(this)" style="padding: 10px 14px; border-radius: 12px; background: var(--dark-card); border: 1px solid rgba(255,255,255,0.08); color: white; min-width: 220px; flex: 1; outline: none;">
-                            <button class="btn-add-wishlist" style="min-width: 170px; padding: 10px 14px;" onclick="window.simpanBatasBudgetGlobal()">
+                            <input type="text" id="global-budget-threshold-input" placeholder="Rp 2.500.000"
+                                onkeyup="window.formatInputRupiah(this)"
+                                style="padding: 10px 14px; border-radius: 12px; background: var(--dark-card); border: 1px solid rgba(255,255,255,0.08); color: white; min-width: 220px; flex: 1; outline: none;">
+                            <button class="btn-add-wishlist" style="min-width: 170px; padding: 10px 14px;"
+                                onclick="window.simpanBatasBudgetGlobal()">
                                 <i class="fa-solid fa-sliders"></i> Set Batas Peringatan
                             </button>
                         </div>
-                        <span style="color: var(--text-muted); font-size: 0.72rem; flex-basis: 100%;">Batas ini akan memicu banner peringatan ketika pengeluaran bulan ini melewatinya.</span>
+                        <span style="color: var(--text-muted); font-size: 0.72rem; flex-basis: 100%;">Batas ini akan
+                            memicu banner peringatan ketika pengeluaran bulan ini melewatinya.</span>
                     </div>
 
                     <!-- GLOBAL BUDGET SUMMARY CARD -->
@@ -3121,6 +3449,23 @@
                 </div>
             </div>
 
+            <!-- KALENDER PENGELUARAN HARIAN & RIWAYAT (DAILY EXPENSES) -->
+            <div id="panel-daily-expenses" class="daily-expenses-section-target collapsible-section" style="width: 100%; display: none;">
+                <div class="section-daily-expenses-title section-collapsible-header"
+                    onclick="window.toggleSectionCollapse('panel-daily-expenses')">
+                    <span><i class="fa-solid fa-calendar-day" style="color: #3498db;"></i> Pengeluaran Harian & Riwayat 📅</span>
+                    <i class="fa-solid fa-chevron-down toggle-chevron"></i>
+                </div>
+                <div class="collapsible-content">
+                    <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 15px;">
+                        Pantau total pengeluaran harian lo di sini, Cuy. Lo juga bisa nyalin pengeluaran kemarin ke hari ini biar gampang.
+                    </p>
+                    <div id="daily-expenses-container" class="daily-expenses-container">
+                        <!-- List dinamis dari JS -->
+                    </div>
+                </div>
+            </div>
+
             <!-- PRINT LAPORAN RESMI PDF -->
             <button class="btn-print-pdf" onclick="window.eksekusiCetakPDFLaporan()">
                 <i class="fa-solid fa-file-pdf"></i> Cetak Dokumen / Simpan Laporan Keuangan PDF Resmi
@@ -3182,6 +3527,8 @@
 
         // --- MULTI-PROFIL FINANSIAL LOGIC ---
         let profilAktif = localStorage.getItem('way_finance_active_profile') || 'pribadi';
+        let riwayatUndo = [];
+        let dataTerakhir = null;
 
         function dapatkanKunciProfil(kunciDasar) {
             if (profilAktif === 'pribadi') {
@@ -3189,6 +3536,50 @@
             } else {
                 return kunciDasar + '_' + profilAktif;
             }
+        }
+
+        function dapatkanSnapshotSekarang() {
+            return JSON.stringify({
+                daftarTransaksi: daftarTransaksi,
+                daftarWishlist: daftarWishlist,
+                daftarTagihan: daftarTagihan,
+                daftarPiutang: daftarPiutang,
+                daftarCatatan: daftarCatatan
+            });
+        }
+
+        function perbaruiTampilanUndo() {
+            const btnUndo = document.getElementById('btn-undo-global');
+            if (!btnUndo) return;
+            if (riwayatUndo && riwayatUndo.length > 0) {
+                btnUndo.style.display = 'flex';
+                btnUndo.title = `Batalkan aksi terakhir (${riwayatUndo.length} riwayat)`;
+            } else {
+                btnUndo.style.display = 'none';
+            }
+        }
+
+        function triggerUndo() {
+            if (riwayatUndo.length === 0) return;
+            const stateSebelumnyaTeks = riwayatUndo.pop();
+            const stateSebelumnya = JSON.parse(stateSebelumnyaTeks);
+            
+            daftarTransaksi = stateSebelumnya.daftarTransaksi || [];
+            daftarWishlist = stateSebelumnya.daftarWishlist || [];
+            daftarTagihan = stateSebelumnya.daftarTagihan || [];
+            daftarPiutang = stateSebelumnya.daftarPiutang || [];
+            daftarCatatan = stateSebelumnya.daftarCatatan || [];
+            
+            // Simpan ke local storage dengan lewatiUndo = true agar tidak mencatat state pemulihan sebagai undo baru
+            simpanDataKeLokal(true); 
+            
+            dataTerakhir = stateSebelumnyaTeks;
+            
+            tampilkanData();
+            ubahTemaWarna();
+            perbaruiTampilanUndo();
+            
+            panggilCustomModal('Undo Sukses! 🔄', 'Aksi sebelumnya berhasil dibatalkan.', null, 'success');
         }
 
         function dapatkanTanggalLokalHariIni(objekTanggal = new Date()) {
@@ -3396,17 +3787,32 @@
         window.simpanLimitKategori = simpanLimitKategori;
         window.gantiProfilKeuangan = gantiProfilKeuangan;
         window.dapatkanTanggalLokalHariIni = dapatkanTanggalLokalHariIni;
+        window.triggerUndo = triggerUndo;
 
         window.addEventListener('DOMContentLoaded', () => {
             statusUserPremium = true;
 
             // Set active class on profile switcher buttons based on loaded profile
             profilAktif = localStorage.getItem('way_finance_active_profile') || 'pribadi';
+            if (profilAktif === 'bisnis') {
+                profilAktif = 'simulasi';
+                localStorage.setItem('way_finance_active_profile', 'simulasi');
+            }
+            if (profilAktif === 'simulasi') {
+                document.body.classList.add('mode-simulasi-aktif');
+                const btnFormat = document.getElementById('btn-format-simulasi');
+                if (btnFormat) btnFormat.style.display = 'flex';
+            } else {
+                document.body.classList.remove('mode-simulasi-aktif');
+                const btnFormat = document.getElementById('btn-format-simulasi');
+                if (btnFormat) btnFormat.style.display = 'none';
+            }
             document.querySelectorAll('.profile-switch-btn').forEach(btn => btn.classList.remove('active'));
             if (profilAktif === 'pribadi') {
                 document.getElementById('profile-btn-pribadi').classList.add('active');
             } else {
-                document.getElementById('profile-btn-bisnis').classList.add('active');
+                const btnSim = document.getElementById('profile-btn-simulasi');
+                if (btnSim) btnSim.classList.add('active');
             }
 
             sembunyikanSaldoMode = localStorage.getItem('way_finance_hide_balance_status') === 'true';
@@ -3459,26 +3865,32 @@
 
         function perbaruiTampilanTombolPremium() {
             const btnEkspor = document.getElementById('btn-premium-ekspor');
-            const btnGrafik = document.getElementById('btn-premium-grafik');
+            const btnGrafik = document.getElementById('btn-premium-grafik') || document.getElementById('btn-premium-restore');
             const btnCsv = document.getElementById('btn-premium-csv');
+            const btnCsvRestore = document.getElementById('btn-premium-csv-restore');
             const icon1 = document.getElementById('lock-icon-1');
             const icon2 = document.getElementById('lock-icon-2');
             const icon3 = document.getElementById('lock-icon-3');
+            const icon4 = document.getElementById('lock-icon-4');
 
             if (statusUserPremium) {
                 if (btnEkspor) btnEkspor.classList.add('unlocked');
                 if (btnGrafik) btnGrafik.classList.add('unlocked');
                 if (btnCsv) btnCsv.classList.add('unlocked');
+                if (btnCsvRestore) btnCsvRestore.classList.add('unlocked');
                 if (icon1) icon1.className = "fa-solid fa-file-arrow-down";
                 if (icon2) icon2.className = "fa-solid fa-file-arrow-up";
                 if (icon3) icon3.className = "fa-solid fa-file-excel";
+                if (icon4) icon4.className = "fa-solid fa-file-import";
             } else {
                 if (btnEkspor) btnEkspor.classList.remove('unlocked');
                 if (btnGrafik) btnGrafik.classList.remove('unlocked');
                 if (btnCsv) btnCsv.classList.remove('unlocked');
+                if (btnCsvRestore) btnCsvRestore.classList.remove('unlocked');
                 if (icon1) icon1.className = "fa-solid fa-lock";
                 if (icon2) icon2.className = "fa-solid fa-lock";
                 if (icon3) icon3.className = "fa-solid fa-lock";
+                if (icon4) icon4.className = "fa-solid fa-lock";
             }
         }
 
@@ -3763,20 +4175,101 @@
             profilAktif = profil;
             localStorage.setItem('way_finance_active_profile', profil);
 
+            const notesHelperTitle = document.getElementById('notes-helper-title');
+            const notesHelperContent = document.getElementById('notes-helper-content');
+            const notesHelperIcon = document.getElementById('notes-helper-icon');
+            const notesHelperBox = document.getElementById('notes-helper-box');
+            const notesInputLabel = document.getElementById('notes-input-label');
+            const btnSaveNotes = document.getElementById('btn-save-notes');
+            const notesHistoryLabel = document.getElementById('notes-history-label');
+
+            const btnFormat = document.getElementById('btn-format-simulasi');
+            if (profil === 'simulasi') {
+                document.body.classList.add('mode-simulasi-aktif');
+                setModeInput('simpel');
+                if (btnFormat) btnFormat.style.display = 'flex';
+
+                // Ganti teks & skema warna ke Mode Simulasi (Sandbox Ungu Lavender)
+                if (notesHelperBox) {
+                    notesHelperBox.style.background = "rgba(142, 68, 173, 0.08)";
+                    notesHelperBox.style.borderColor = "rgba(142, 68, 173, 0.3)";
+                    notesHelperBox.style.color = "#8e44ad";
+                }
+                if (notesHelperIcon) notesHelperIcon.className = "fa-solid fa-circle-info";
+                if (notesHelperTitle) {
+                    notesHelperTitle.style.color = "#8e44ad";
+                }
+                if (notesHelperContent) {
+                    notesHelperContent.innerHTML = `<span id="notes-helper-title" style="font-weight: 600; display: block; margin-bottom: 4px; color: #8e44ad;">💡 Info Sandbox Simulasi:</span>
+                    Mode ini digunakan untuk mensimulasikan / merencanakan pengeluaran atau pemasukan Anda di bulan depan atau masa mendatang agar Anda mengetahui estimasi hasil akhir saldo Anda, tanpa merusak data asli di profil Pribadi!<br>
+                    • Pola catat: <strong>[kegiatan] [nominal] [saku]</strong>.<br>
+                    • Contoh: <em>Sewa kost bulan depan 1.5jt bca</em>`;
+                }
+                if (notesInputLabel) {
+                    notesInputLabel.style.color = "#2c3e50";
+                    notesInputLabel.innerText = "Tulis Coretan Rencana Simulasi Lo di Sini, Cuy:";
+                }
+                if (btnSaveNotes) {
+                    btnSaveNotes.style.background = "linear-gradient(135deg, #2c3e50, #8e44ad)";
+                    btnSaveNotes.innerHTML = '<i class="fa-solid fa-calculator"></i> Proses & Masukkan Rencana Simulasi ⚡';
+                }
+                if (notesHistoryLabel) {
+                    notesHistoryLabel.style.color = "#2c3e50";
+                    notesHistoryLabel.innerText = "Daftar Rencana Catatan Simulasi 🧮";
+                }
+            } else {
+                document.body.classList.remove('mode-simulasi-aktif');
+                const savedMode = localStorage.getItem('way_finance_input_mode') || 'manual';
+                setModeInput(savedMode);
+                if (btnFormat) btnFormat.style.display = 'none';
+
+                // Kembalikan ke Mode Pribadi (Teks Oranye Original)
+                if (notesHelperBox) {
+                    notesHelperBox.style.background = "rgba(243, 156, 18, 0.05)";
+                    notesHelperBox.style.borderColor = "rgba(243, 156, 18, 0.25)";
+                    notesHelperBox.style.color = "#f39c12";
+                }
+                if (notesHelperIcon) notesHelperIcon.className = "fa-solid fa-lightbulb";
+                if (notesHelperTitle) {
+                    notesHelperTitle.style.color = "#ffffff";
+                }
+                if (notesHelperContent) {
+                    notesHelperContent.innerHTML = `<span id="notes-helper-title" style="font-weight: 600; display: block; margin-bottom: 2px; color: #ffffff;">Tips Menulis Catatan:</span>
+                    Gunakan pola sederhana: <strong>[kegiatan] [nominal] [saku]</strong>.<br />
+                    • Contoh: <em>Makan mie 20k cash</em><br />
+                    • Contoh: <em>Gaji freelance 2jt bca</em><br />
+                    • Contoh: <em>Pindah 50k bca ke gopay</em>`;
+                }
+                if (notesInputLabel) {
+                    notesInputLabel.style.color = "var(--text-muted)";
+                    notesInputLabel.innerText = "Tulis Catatan Harian Lo di Sini, Cuy:";
+                }
+                if (btnSaveNotes) {
+                    btnSaveNotes.style.background = "linear-gradient(135deg, #1f252e, #f39c12)";
+                    btnSaveNotes.innerHTML = '<i class="fa-solid fa-circle-plus"></i> Simpan & Sinkronkan Catatan ⚡';
+                }
+                if (notesHistoryLabel) {
+                    notesHistoryLabel.style.color = "#ffffff";
+                    notesHistoryLabel.innerText = "Riwayat Catatan Harian 📝";
+                }
+            }
+
             // Perbarui class active tombol
             document.querySelectorAll('.profile-switch-btn').forEach(btn => btn.classList.remove('active'));
             if (profil === 'pribadi') {
                 document.getElementById('profile-btn-pribadi').classList.add('active');
             } else {
-                document.getElementById('profile-btn-bisnis').classList.add('active');
+                const btnSim = document.getElementById('profile-btn-simulasi');
+                if (btnSim) btnSim.classList.add('active');
             }
 
             // Muat data profil baru & tampilkan
             muatDataLokalLego();
             tampilkanData();
+            ubahTemaWarna();
 
             // Tampilkan konfirmasi modal sukses ganti profil
-            panggilCustomModal('Profil Diganti! 👥', `Berhasil beralih ke profil <strong>${profil === 'pribadi' ? 'Pribadi 🏠' : 'Bisnis 💼'}</strong>.`, null, 'success');
+            panggilCustomModal('Profil Diganti! 👥', `Berhasil beralih ke profil <strong>${profil === 'pribadi' ? 'Pribadi 🏠' : 'Simulasi 🧮'}</strong>.`, null, 'success');
         }
 
         function muatDataLokalLego() {
@@ -3801,9 +4294,26 @@
                 belanja: 0,
                 kustom: 0
             };
+
+            // Reset undo stack saat memuat profil baru
+            riwayatUndo = [];
+            dataTerakhir = dapatkanSnapshotSekarang();
+            perbaruiTampilanUndo();
         }
 
-        function simpanDataKeLokal() {
+        function simpanDataKeLokal(lewatiUndo = false) {
+            if (!lewatiUndo) {
+                const snapshotBaru = dapatkanSnapshotSekarang();
+                if (dataTerakhir && dataTerakhir !== snapshotBaru) {
+                    if (riwayatUndo.length >= 20) {
+                        riwayatUndo.shift();
+                    }
+                    riwayatUndo.push(dataTerakhir);
+                    perbaruiTampilanUndo();
+                }
+                dataTerakhir = snapshotBaru;
+            }
+
             localStorage.setItem(dapatkanKunciProfil('transaksiKeuangan'), JSON.stringify(daftarTransaksi));
             localStorage.setItem(dapatkanKunciProfil('wishlistBarangAnakMuda'), JSON.stringify(daftarWishlist));
             localStorage.setItem(dapatkanKunciProfil('way_finance_tagihan_reminders'), JSON.stringify(daftarTagihan));
@@ -3851,20 +4361,57 @@
         }
 
         function eksekusiExportCSV() {
-            if (daftarTransaksi.length === 0) {
-                panggilCustomModal('Data Kosong ❌', 'Belum ada data transaksi!', null, 'exclamation');
+            if (daftarTransaksi.length === 0 && daftarWishlist.length === 0 && daftarTagihan.length === 0 && daftarPiutang.length === 0 && daftarCatatan.length === 0) {
+                panggilCustomModal('Data Kosong ❌', 'Belum ada data untuk diekspor!', null, 'exclamation');
                 return;
             }
-            let barisCsv = ["ID,Nama Transaksi,Aliran Dana,Asal Saku,Target Saku,Kategori,Nominal,Tanggal"];
+            let barisCsv = [];
+
+            // Seksi Transaksi
+            barisCsv.push("=== WAYFINANCE TRANSAKSI ===");
+            barisCsv.push("ID,Nama Transaksi,Aliran Dana,Asal Saku,Target Saku,Kategori,Nominal,Tanggal");
             daftarTransaksi.forEach(item => {
                 barisCsv.push(`"${item.id}","${item.nama.replace(/"/g, '""')}","${item.jenis}","${item.wallet}","${item.walletTujuan || '-'}","${item.kategori}",${item.nominal},"${item.tanggalCetak}"`);
             });
+            barisCsv.push("");
+
+            // Seksi Wishlist (Financial Goals)
+            barisCsv.push("=== WAYFINANCE WISHLIST ===");
+            barisCsv.push("ID,Nama Barang,Harga Target,Terkumpul");
+            daftarWishlist.forEach(item => {
+                barisCsv.push(`"${item.id}","${item.nama.replace(/"/g, '""')}",${item.hargaTarget},${item.terkumpul}`);
+            });
+            barisCsv.push("");
+
+            // Seksi Tagihan (Kalender Pengingat)
+            barisCsv.push("=== WAYFINANCE TAGIHAN ===");
+            barisCsv.push("ID,Nama Tagihan,Nominal,Tanggal Jatuh Tempo");
+            daftarTagihan.forEach(item => {
+                barisCsv.push(`"${item.id}","${item.nama.replace(/"/g, '""')}",${item.nominal},"${item.tanggal}"`);
+            });
+            barisCsv.push("");
+
+            // Seksi Piutang (Buku Hitam)
+            barisCsv.push("=== WAYFINANCE PIUTANG ===");
+            barisCsv.push("ID,Nama Teman,Nominal,Catatan");
+            daftarPiutang.forEach(item => {
+                barisCsv.push(`"${item.id}","${item.nama.replace(/"/g, '""')}",${item.nominal},"${item.catatan.replace(/"/g, '""')}"`);
+            });
+            barisCsv.push("");
+
+            // Seksi Catatan Harian
+            barisCsv.push("=== WAYFINANCE CATATAN ===");
+            barisCsv.push("ID,Isi Catatan,Tanggal");
+            daftarCatatan.forEach(item => {
+                barisCsv.push(`"${item.id}","${item.teks.replace(/"/g, '""')}","${item.tanggal}"`);
+            });
+
             const kontenCsv = "\uFEFF" + barisCsv.join("\n");
             const blobData = new Blob([kontenCsv], { type: 'text/csv;charset=utf-8;' });
             const linkDownload = document.createElement("a");
             const urlBlob = URL.createObjectURL(blobData);
             linkDownload.setAttribute("href", urlBlob);
-            linkDownload.setAttribute("download", `WAYFinance_Report_${new Date().toISOString().split('T')[0]}.csv`);
+            linkDownload.setAttribute("download", `WAYFinance_Backup_${new Date().toISOString().split('T')[0]}.csv`);
             linkDownload.style.visibility = 'hidden';
             document.body.appendChild(linkDownload);
             linkDownload.click();
@@ -4124,28 +4671,31 @@
 
             perbaruiOpsiKategori();
 
+            let baseClass = "tema-pemasukan";
             if (jenisInput === "transfer") {
-                document.body.className = "tema-transfer";
+                baseClass = "tema-transfer";
                 document.getElementById('label-nama-transaksi').innerText = "Catatan Mutasi / Keterangan Transfer:";
                 document.getElementById('label-wallet-pilihan').innerText = "Kirim Uang Dari Saku Mana?";
                 groupTujuan.style.display = "block";
                 tombolAksi.innerHTML = '<i class="fa-solid fa-arrows-rotate"></i> Luncurkan Pindah Saldo 🚀';
                 tombolAksi.className = "btn-hitung btn-transfer-mode";
             } else if (jenisInput === "pengeluaran") {
-                document.body.className = "tema-pengeluaran";
+                baseClass = "tema-pengeluaran";
                 document.getElementById('label-nama-transaksi').innerText = "Beli apaan lagi lo?";
                 document.getElementById('label-wallet-pilihan').innerText = "Duit Keluar Dari Mana?";
                 groupTujuan.style.display = "none";
                 tombolAksi.innerHTML = '<i class="fa-solid fa-minus-circle"></i> Ikhlaskan Duit Ini 💸';
                 tombolAksi.className = "btn-hitung btn-pengeluaran";
             } else {
-                document.body.className = "tema-pemasukan";
+                baseClass = "tema-pemasukan";
                 document.getElementById('label-nama-transaksi').innerText = "Dapet rezeki dari mana lo?";
                 document.getElementById('label-wallet-pilihan').innerText = "Masuk Duit Via Apa, Cuy?";
                 groupTujuan.style.display = "none";
                 tombolAksi.innerHTML = '<i class="fa-solid fa-plus-circle"></i> Asik Tambah Kekayaan 🤑';
                 tombolAksi.className = "btn-hitung btn-pemasukan";
             }
+
+            document.body.className = profilAktif === 'simulasi' ? (baseClass + " mode-simulasi-aktif") : baseClass;
 
             if (typeof syncSemuaCustomSelect === 'function') {
                 syncSemuaCustomSelect();
@@ -4234,7 +4784,7 @@
             inputNominal.value = targetData.nominal;
             formatInputRupiah(inputNominal);
 
-            document.body.className = "tema-edit";
+            document.body.className = profilAktif === 'simulasi' ? "tema-edit mode-simulasi-aktif" : "tema-edit";
             document.getElementById('label-nama-transaksi').innerText = "Plin plan lo! Mau benerin data apaan?";
             document.getElementById('group-wallet-tujuan').style.display = (targetData.jenis === "transfer") ? "block" : "none";
             document.getElementById('btn-aksi').className = "btn-hitung btn-edit-mode";
@@ -4254,7 +4804,12 @@
         }
 
         function eksekusiResetSemuaData() {
-            panggilCustomModal('Format Ulang Seluruh Data', 'Yakin banget mau hapus seluruh riwayat & wishlist dari awal, Cuy? Data di memori lokal lo bakal terhapus bersih! 💥', () => {
+            const judul = profilAktif === 'simulasi' ? 'Reset Rencana Simulasi 🧹' : 'Format Ulang Seluruh Data 🧹';
+            const pesan = profilAktif === 'simulasi' 
+                ? 'Yakin mau menghapus semua rencana transaksi di Mode Simulasi ini, Cuy? Catatan simulasi lo bakal dikosongkan bersih tanpa mempengaruhi data Pribadi asli! 💥' 
+                : 'Yakin banget mau hapus seluruh riwayat & wishlist dari awal, Cuy? Seluruh data utama di memori lokal lo bakal terhapus bersih total! 💥';
+
+            panggilCustomModal(judul, pesan, () => {
                 daftarTransaksi = [];
                 daftarWishlist = [];
                 daftarTagihan = [];
@@ -4266,7 +4821,12 @@
                 if (objekChartLineGlobal) { objekChartLineGlobal.destroy(); objekChartLineGlobal = null; }
 
                 tampilkanData();
-                panggilCustomModal('Sukses Format!', 'Aplikasi WAYFinance lo sekarang bersih total dari nol kembali!', null, 'success');
+                panggilCustomModal(
+                    profilAktif === 'simulasi' ? 'Simulasi Direset! 🧹' : 'Sukses Format!', 
+                    profilAktif === 'simulasi' ? 'Semua rencana transaksi simulasi berhasil dihapus bersih.' : 'Aplikasi WAYFinance lo sekarang bersih total dari nol kembali!', 
+                    null, 
+                    'success'
+                );
             });
         }
 
@@ -4329,40 +4889,77 @@
 
         function kalkulasiStatusBacot(saldo) {
             const wadahTeks = document.getElementById('status-bacot');
-            if (daftarTransaksi.length === 0) { wadahTeks.innerText = "Belum ada duit dicatat nih..."; return; }
+            if (daftarTransaksi.length === 0) {
+                wadahTeks.innerText = profilAktif === 'simulasi' ? "Yuk coba masukkan rencana gaji & pengeluaran lo di sini!" : "Belum ada duit dicatat nih...";
+                return;
+            }
             if (idTransaksiDiedit !== null) return;
 
             let arrayKalimat = [];
-            if (saldo > 5000000) {
-                arrayKalimat = [
-                    "Asik orang kaya baru, gaya elit ekonomi elit! 😎",
-                    "Gaya lo sultan bener, inget besok siklus bayar tagihan! 💸",
-                    "Wah tabungan tebel, aman lah ya buat gacha tipis-tipis? 🎮"
-                ];
-            } else if (saldo > 1000000) {
-                arrayKalimat = [
-                    "Aman, tapi jangan sok ngide beli boba tiap hari ya. ☕",
-                    "Duit segini masih bisa makan enak, tapi batasi nongkrong lo! 🛍️",
-                    "Cukup buat hidup tegak, awas khilaf belanja online! 🛒"
-                ];
-            } else if (saldo > 100000) {
-                arrayKalimat = [
-                    "Mode bertahan hidup aktif, tgl tua menangis lirih... 💸",
-                    "Dompet mulai menipis, mending masak mie instan di kosan. 🍜",
-                    "Dompet lo mangap tuh, tobat khilaf sebelum terlambat! 🛑"
-                ];
-            } else if (saldo >= 0) {
-                arrayKalimat = [
-                    "DOMPET LO SEKARAT WOY! Makan promag aja sana! 😭",
-                    "Sisa uang segini cuma cukup buat bayar parkir seminggu! 🚗",
-                    "Kritis! Status keuangan lo masuk zona merah bahaya kelaparan! ⚠️"
-                ];
+            if (profilAktif === 'simulasi') {
+                if (saldo > 5000000) {
+                    arrayKalimat = [
+                        "Hasil simulasi mantap! Sisa tabungan lo tebal banget. 🚀",
+                        "Kalau beneran gini, akhir bulan bisa liburan ke Bali nih! 🏖️",
+                        "Rencana keuangan super aman. Pertahankan disiplin ini! 📈"
+                    ];
+                } else if (saldo > 1000000) {
+                    arrayKalimat = [
+                        "Simulasi aman, tapi jangan nambah pengeluaran impulsif ya! ☕",
+                        "Sisa uang hasil simulasi cukup oke buat tabungan cadangan. 💼",
+                        "Rencana yang realistis. Masih ada ruang buat jajan dikit. 🛒"
+                    ];
+                } else if (saldo > 100000) {
+                    arrayKalimat = [
+                        "Hasil simulasi ngepas banget. Awas goyah kalau ada darurat! ⚠️",
+                        "Sisa uang mepet di akhir simulasi. Coba pangkas beberapa pengeluaran. 🍜",
+                        "Hampir kritis. Pikirkan lagi sebelum beli barang non-primer! 🛑"
+                    ];
+                } else if (saldo >= 0) {
+                    arrayKalimat = [
+                        "Simulasi boncos hampir Rp 0! Ubah rencana sebelum terlambat! 😭",
+                        "Hasil akhir simulasi kritis banget, sisa uang gak aman! ⚠️",
+                        "Rencana keuangan ini bikin lo gak punya tabungan sama sekali. 💸"
+                    ];
+                } else {
+                    arrayKalimat = [
+                        "SIMULASI MINUS!! Fix rencana lo ini bikin bangkrut total! 💀💥",
+                        "Rencana pengeluaran melebihi pemasukan. Wajib pangkas belanjaan! 📉",
+                        "Wah boncos parah di simulasi. Kurangi gaya hidup lo biar gak utang! 🛑"
+                    ];
+                }
             } else {
-                arrayKalimat = [
-                    "MINUS!! Fix gali lubang tutup lubang, beban bumi! 💀💥",
-                    "Utang di mana-mana, lo pelihara jin apa gimana? 👻",
-                    "Nangis di pojokan, saldo minus tandanya lo gagal hemat! 📉"
-                ];
+                if (saldo > 5000000) {
+                    arrayKalimat = [
+                        "Asik orang kaya baru, gaya elit ekonomi elit! 😎",
+                        "Gaya lo sultan bener, inget besok siklus bayar tagihan! 💸",
+                        "Wah tabungan tebel, aman lah ya buat gacha tipis-tipis? 🎮"
+                    ];
+                } else if (saldo > 1000000) {
+                    arrayKalimat = [
+                        "Aman, tapi jangan sok ngide beli boba tiap hari ya. ☕",
+                        "Duit segini masih bisa makan enak, tapi batasi nongkrong lo! 🛍️",
+                        "Cukup buat hidup tegak, awas khilaf belanja online! 🛒"
+                    ];
+                } else if (saldo > 100000) {
+                    arrayKalimat = [
+                        "Mode bertahan hidup aktif, tgl tua menangis lirih... 💸",
+                        "Dompet mulai menipis, mending masak mie instan di kosan. 🍜",
+                        "Dompet lo mangap tuh, tobat khilaf sebelum terlambat! 🛑"
+                    ];
+                } else if (saldo >= 0) {
+                    arrayKalimat = [
+                        "DOMPET LO SEKARAT WOY! Makan promag aja sana! 😭",
+                        "Sisa uang segini cuma cukup buat bayar parkir seminggu! 🚗",
+                        "Kritis! Status keuangan lo masuk zona merah bahaya kelaparan! ⚠️"
+                    ];
+                } else {
+                    arrayKalimat = [
+                        "MINUS!! Fix gali lubang tutup lubang, beban bumi! 💀💥",
+                        "Utang di mana-mana, lo pelihara jin apa gimana? 👻",
+                        "Nangis di pojokan, saldo minus tandanya lo gagal hemat! 📉"
+                    ];
+                }
             }
 
             const teksAcak = arrayKalimat[Math.floor(Math.random() * arrayKalimat.length)];
@@ -4756,6 +5353,24 @@
             document.getElementById('wb-bri').innerText = randerSaldo(saldoBri);
             document.getElementById('wb-lain').innerText = randerSaldo(saldoLain);
 
+            const labelSaldo = document.getElementById('label-total-saldo');
+            if (labelSaldo) {
+                if (profilAktif === 'simulasi') {
+                    labelSaldo.innerHTML = 'Estimasi Saldo Akhir Hasil Simulasi 🧮';
+                } else {
+                    labelSaldo.innerHTML = 'Total Sisa Uang Hidup (Awas Kritis)';
+                }
+            }
+
+            const labelHistori = document.querySelector('.riwayat-header h3');
+            if (labelHistori) {
+                if (profilAktif === 'simulasi') {
+                    labelHistori.innerHTML = 'Rencana Simulasi Keuangan';
+                } else {
+                    labelHistori.innerHTML = 'Dosa Finansial';
+                }
+            }
+
             document.getElementById('total-saldo').innerText = randerSaldo(saldoGlobal);
             document.getElementById('bulan-masuk').innerText = 'Rp ' + pemasukanBulanIni.toLocaleString('id-ID');
             document.getElementById('bulan-keluar').innerText = 'Rp ' + pengeluaranBulanIni.toLocaleString('id-ID');
@@ -4770,6 +5385,17 @@
             regenerasiVisualChart(pemasukanBulanIni, pengeluaranBulanIni, transferBulanIni);
             regenerasiLineChartTren(petaDataTren);
             renderBudgetLimits(totalPengeluaranKategori);
+
+            const panelDailyExpenses = document.getElementById('panel-daily-expenses');
+            const hariIniBox = document.getElementById('hari-ini-box');
+            if (profilAktif === 'pribadi') {
+                if (panelDailyExpenses) panelDailyExpenses.style.display = 'block';
+                if (hariIniBox) hariIniBox.style.display = 'inline-flex';
+                renderDailyExpenses();
+            } else {
+                if (panelDailyExpenses) panelDailyExpenses.style.display = 'none';
+                if (hariIniBox) hariIniBox.style.display = 'none';
+            }
         }
 
         function renderBillVisual() {
@@ -5453,6 +6079,10 @@
         }
 
         function periksaWelcomeModeInput() {
+            if (profilAktif === 'simulasi') {
+                setModeInput('simpel');
+                return;
+            }
             const savedMode = localStorage.getItem('way_finance_input_mode');
             if (!savedMode) {
                 panggilCustomModal(
@@ -5504,6 +6134,521 @@
             );
         }
         window.keluarDariPremium = keluarDariPremium;
+
+        // --- LOGIKA PENGELUARAN HARIAN & RIWAYAT ---
+        function renderDailyExpenses() {
+            const container = document.getElementById('daily-expenses-container');
+            const totalHariIniEl = document.getElementById('hari-ini-keluar');
+            if (!container) return;
+
+            const tanggalHariIni = dapatkanTanggalLokalHariIni();
+            let totalHariIni = 0;
+            const petaPengeluaranHarian = {};
+            
+            daftarTransaksi.forEach(item => {
+                if (item.jenis === 'pengeluaran') {
+                    const tgl = item.tanggalMentah || dapatkanTanggalLokalHariIni();
+                    if (tgl === tanggalHariIni) {
+                        totalHariIni += item.nominal;
+                    }
+                    if (!petaPengeluaranHarian[tgl]) {
+                        petaPengeluaranHarian[tgl] = {
+                            total: 0,
+                            items: []
+                        };
+                    }
+                    petaPengeluaranHarian[tgl].total += item.nominal;
+                    petaPengeluaranHarian[tgl].items.push(item);
+                }
+            });
+
+            if (totalHariIniEl) {
+                totalHariIniEl.innerText = (statusUserPremium && sembunyikanSaldoMode) ? "🙈 *******" : 'Rp ' + totalHariIni.toLocaleString('id-ID');
+            }
+
+            container.innerHTML = "";
+            const daftarTanggal = Object.keys(petaPengeluaranHarian).sort((a, b) => new Date(b) - new Date(a));
+
+            if (daftarTanggal.length === 0) {
+                container.innerHTML = `<small style="color: var(--text-muted); text-align: center; font-style: italic; display: block; padding: 10px;">Belum ada riwayat pengeluaran harian, Cuy...</small>`;
+                return;
+            }
+
+            daftarTanggal.forEach(tgl => {
+                const dataHariIni = petaPengeluaranHarian[tgl];
+                let namaHariTanggal = tgl;
+                try {
+                    const objekTgl = new Date(tgl);
+                    if (!isNaN(objekTgl.getTime())) {
+                        namaHariTanggal = objekTgl.toLocaleDateString('id-ID', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+                        const kemaren = new Date();
+                        kemaren.setDate(kemaren.getDate() - 1);
+                        const tglKemarenStr = dapatkanTanggalLokalHariIni(kemaren);
+                        if (tgl === tanggalHariIni) {
+                            namaHariTanggal = `Hari Ini (${namaHariTanggal})`;
+                        } else if (tgl === tglKemarenStr) {
+                            namaHariTanggal = `Kemarin (${namaHariTanggal})`;
+                        }
+                    }
+                } catch(e) {}
+
+                let htmlItems = "";
+                dataHariIni.items.forEach(item => {
+                    htmlItems += `
+                        <div class="daily-expense-item">
+                            <span>☕ ${html_escape_tag(item.nama)} (${item.wallet.toUpperCase()})</span>
+                            <strong>Rp ${item.nominal.toLocaleString('id-ID')}</strong>
+                        </div>
+                    `;
+                });
+
+                container.insertAdjacentHTML('beforeend', `
+                    <div class="daily-expense-card">
+                        <div class="daily-expense-header">
+                            <span class="daily-expense-date">${namaHariTanggal}</span>
+                            <span class="daily-expense-total">Rp ${dataHariIni.total.toLocaleString('id-ID')}</span>
+                        </div>
+                        <div class="daily-expense-items-list">
+                            ${htmlItems}
+                        </div>
+                        <div class="daily-expense-actions">
+                            <button onclick="window.tambahTransaksiDiTanggal('${tgl}')">
+                                <i class="fa-solid fa-plus"></i> Tambah Transaksi di Tanggal Ini
+                            </button>
+                            <button onclick="window.duplikatTransaksiHariIni('${tgl}')">
+                                <i class="fa-solid fa-copy"></i> Salin ke Hari Ini
+                            </button>
+                        </div>
+                    </div>
+                `);
+            });
+        }
+
+        function tambahTransaksiDiTanggal(tgl) {
+            document.getElementById('tanggal-transaksi').value = tgl;
+            document.getElementById('jenis-transaksi').value = 'pengeluaran';
+            if (typeof ubahTemaWarna === 'function') ubahTemaWarna();
+            
+            const panelInput = document.getElementById('panel-input');
+            if (panelInput) {
+                panelInput.scrollIntoView({ behavior: 'smooth' });
+            }
+            
+            panggilCustomModal('Tanggal Input Disetel 📅', `Tanggal pencatatan disetel ke <strong>${tgl}</strong> dengan tipe <strong>Pengeluaran</strong>. Silakan isi form di sebelah kiri untuk menambah transaksi!`, null, 'success');
+        }
+
+        function duplikatTransaksiHariIni(tgl) {
+            const transaksiDicopas = daftarTransaksi.filter(item => item.jenis === 'pengeluaran' && item.tanggalMentah === tgl);
+            if (transaksiDicopas.length === 0) {
+                panggilCustomModal('Tidak Ada Pengeluaran ❌', 'Tidak ada transaksi pengeluaran di tanggal tersebut untuk disalin.', null, 'exclamation');
+                return;
+            }
+
+            panggilCustomModal(
+                'Salin Pengeluaran 📋', 
+                `Apakah kamu mau menduplikasi <strong>${transaksiDicopas.length} transaksi pengeluaran</strong> dari tanggal <strong>${tgl}</strong> ke <strong>Hari Ini</strong>?`, 
+                () => {
+                    const hariIniMentah = dapatkanTanggalLokalHariIni();
+                    const objekWaktu = new Date();
+                    const tanggalTeks = objekWaktu.toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
+                    const kodeBulan = String(objekWaktu.getMonth() + 1).padStart(2, '0');
+
+                    transaksiDicopas.forEach((item, index) => {
+                        daftarTransaksi.unshift({
+                            id: +new Date() + index,
+                            nama: item.nama,
+                            jenis: item.jenis,
+                            wallet: item.wallet,
+                            walletTujuan: item.walletTujuan,
+                            kategori: item.kategori,
+                            nominal: item.nominal,
+                            tanggalCetak: tanggalTeks,
+                            bulan: kodeBulan,
+                            tanggalMentah: hariIniMentah
+                        });
+                    });
+
+                    simpanDataKeLokal();
+                    tampilkanData();
+                    panggilCustomModal('Penyalinan Berhasil! 📋', `Berhasil menyalin ${transaksiDicopas.length} pengeluaran ke Hari Ini.`, null, 'success');
+                }
+            );
+        }
+
+        // Bind methods ke window
+        window.renderDailyExpenses = renderDailyExpenses;
+        window.tambahTransaksiDiTanggal = tambahTransaksiDiTanggal;
+        window.duplikatTransaksiHariIni = duplikatTransaksiHariIni;
+
+        function pemicuRestoreCSV() {
+            if (!statusUserPremium) { bukaPaywallPremium('Restore Data (.csv)'); return; }
+            const fileInput = document.getElementById('csv-restore-file');
+            if (fileInput) fileInput.click();
+        }
+
+        function parseCSV(text) {
+            const lines = [];
+            let row = [""];
+            let inQuotes = false;
+
+            for (let i = 0; i < text.length; i++) {
+                const c = text[i];
+                const next = text[i+1];
+
+                if (c === '"') {
+                    if (inQuotes && next === '"') {
+                        row[row.length - 1] += '"';
+                        i++;
+                    } else {
+                        inQuotes = !inQuotes;
+                    }
+                } else if (c === ',' && !inQuotes) {
+                    row.push('');
+                } else if ((c === '\r' || c === '\n') && !inQuotes) {
+                    if (c === '\r' && next === '\n') {
+                        i++;
+                    }
+                    lines.push(row);
+                    row = [''];
+                } else {
+                    row[row.length - 1] += c;
+                }
+            }
+            if (row.length > 1 || row[0] !== '') {
+                lines.push(row);
+            }
+            return lines;
+        }
+
+        function parseTanggalIndo(tanggalCetakStr) {
+            const bulanMap = {
+                "januari": "01", "februari": "02", "maret": "03", "april": "04",
+                "mei": "05", "juni": "06", "juli": "07", "agustus": "08",
+                "september": "09", "oktober": "10", "november": "11", "desember": "12"
+            };
+            try {
+                const parts = tanggalCetakStr.trim().split(/\s+/);
+                if (parts.length === 3) {
+                    const hari = parts[0].padStart(2, '0');
+                    const namaBulan = parts[1].toLowerCase();
+                    const tahun = parts[2];
+                    const kodeBulan = bulanMap[namaBulan] || "01";
+                    const tanggalMentah = `${tahun}-${kodeBulan}-${hari}`;
+                    return { tanggalMentah, kodeBulan };
+                }
+            } catch (e) {
+                console.error("Error parsing date: ", e);
+            }
+            const hariIni = dapatkanTanggalLokalHariIni();
+            return {
+                tanggalMentah: hariIni,
+                kodeBulan: String(new Date().getMonth() + 1).padStart(2, '0')
+            };
+        }
+
+        function eksekusiRestoreCSV(inputElemen) {
+            const file = inputElemen.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                try {
+                    const rawText = e.target.result;
+                    const lines = parseCSV(rawText);
+                    if (lines.length === 0) {
+                        panggilCustomModal('File Kosong ❌', 'File CSV tidak berisi data!', null, 'exclamation');
+                        return;
+                    }
+
+                    const parsedTransaksi = [];
+                    const parsedWishlist = [];
+                    const parsedTagihan = [];
+                    const parsedPiutang = [];
+                    const parsedCatatan = [];
+
+                    let activeSection = null;
+                    let header = null;
+
+                    for (let i = 0; i < lines.length; i++) {
+                        const row = lines[i];
+                        if (row.length === 0 || (row.length === 1 && row[0] === "")) continue;
+
+                        const firstVal = row[0].trim();
+                        
+                        if (firstVal.startsWith("===")) {
+                            if (firstVal.includes("TRANSAKSI")) {
+                                activeSection = "transaksi";
+                            } else if (firstVal.includes("WISHLIST")) {
+                                activeSection = "wishlist";
+                            } else if (firstVal.includes("TAGIHAN")) {
+                                activeSection = "tagihan";
+                            } else if (firstVal.includes("PIUTANG")) {
+                                activeSection = "piutang";
+                            } else if (firstVal.includes("CATATAN")) {
+                                activeSection = "catatan";
+                            } else {
+                                activeSection = null;
+                            }
+                            header = null;
+                            continue;
+                        }
+
+                        if (activeSection && !header) {
+                            header = row.map(h => h.trim().toLowerCase());
+                            continue;
+                        }
+
+                        if (activeSection === "transaksi") {
+                            const colId = header.indexOf('id');
+                            const colNama = header.indexOf('nama transaksi');
+                            const colAliran = header.indexOf('aliran dana');
+                            const colAsal = header.indexOf('asal saku');
+                            const colTarget = header.indexOf('target saku');
+                            const colKategori = header.indexOf('kategori');
+                            const colNominal = header.indexOf('nominal');
+                            const colTanggal = header.indexOf('tanggal');
+
+                            if (colNama !== -1 && colAliran !== -1 && colNominal !== -1) {
+                                const idStr = colId !== -1 ? row[colId] : "";
+                                const nama = row[colNama] || "";
+                                const jenis = colAliran !== -1 ? (row[colAliran] || "pengeluaran").toLowerCase().trim() : "pengeluaran";
+                                const wallet = colAsal !== -1 ? (row[colAsal] || "dana").toLowerCase().trim() : "dana";
+                                const walletTujuanRaw = colTarget !== -1 ? (row[colTarget] || "").trim() : "";
+                                const walletTujuan = (jenis === "transfer" && walletTujuanRaw !== "-") ? walletTujuanRaw.toLowerCase() : undefined;
+                                const kategori = colKategori !== -1 ? (row[colKategori] || "kustom").trim() : "kustom";
+                                const nominalVal = colNominal !== -1 ? parseFloat(row[colNominal]) : 0;
+                                const tanggalCetak = colTanggal !== -1 ? (row[colTanggal] || "").trim() : "";
+
+                                if (nama && !isNaN(nominalVal) && nominalVal > 0) {
+                                    const parsedDate = parseTanggalIndo(tanggalCetak);
+                                    parsedTransaksi.push({
+                                        id: idStr ? parseFloat(idStr) : (+new Date() + i),
+                                        nama: nama.trim(),
+                                        jenis: jenis,
+                                        wallet: wallet,
+                                        walletTujuan: walletTujuan,
+                                        kategori: kategori,
+                                        nominal: nominalVal,
+                                        tanggalCetak: tanggalCetak,
+                                        bulan: parsedDate.kodeBulan,
+                                        tanggalMentah: parsedDate.tanggalMentah
+                                    });
+                                }
+                            }
+                        } else if (activeSection === "wishlist") {
+                            const colId = header.indexOf('id');
+                            const colNama = header.indexOf('nama barang');
+                            const colHarga = header.indexOf('harga target');
+                            const colTerkumpul = header.indexOf('terkumpul');
+
+                            if (colNama !== -1 && colHarga !== -1) {
+                                const idStr = colId !== -1 ? row[colId] : "";
+                                const nama = row[colNama] || "";
+                                const hargaTarget = parseFloat(row[colHarga]) || 0;
+                                const terkumpul = colTerkumpul !== -1 ? (parseFloat(row[colTerkumpul]) || 0) : 0;
+
+                                if (nama && hargaTarget > 0) {
+                                    parsedWishlist.push({
+                                        id: idStr ? parseFloat(idStr) : (+new Date() + i),
+                                        nama: nama.trim(),
+                                        hargaTarget: hargaTarget,
+                                        terkumpul: terkumpul
+                                    });
+                                }
+                            }
+                        } else if (activeSection === "tagihan") {
+                            const colId = header.indexOf('id');
+                            const colNama = header.indexOf('nama tagihan');
+                            const colNominal = header.indexOf('nominal');
+                            const colTanggal = header.indexOf('tanggal jatuh tempo');
+
+                            if (colNama !== -1 && colNominal !== -1) {
+                                const idStr = colId !== -1 ? row[colId] : "";
+                                const nama = row[colNama] || "";
+                                const nominal = parseFloat(row[colNominal]) || 0;
+                                const tanggal = colTanggal !== -1 ? (row[colTanggal] || "").trim() : "";
+
+                                if (nama && nominal > 0) {
+                                    parsedTagihan.push({
+                                        id: idStr ? parseFloat(idStr) : (+new Date() + i),
+                                        nama: nama.trim(),
+                                        nominal: nominal,
+                                        tanggal: tanggal
+                                    });
+                                }
+                            }
+                        } else if (activeSection === "piutang") {
+                            const colId = header.indexOf('id');
+                            const colNama = header.indexOf('nama teman');
+                            const colNominal = header.indexOf('nominal');
+                            const colCatatan = header.indexOf('catatan');
+
+                            if (colNama !== -1 && colNominal !== -1) {
+                                const idStr = colId !== -1 ? row[colId] : "";
+                                const nama = row[colNama] || "";
+                                const nominal = parseFloat(row[colNominal]) || 0;
+                                const catatan = colCatatan !== -1 ? (row[colCatatan] || "").trim() : "Khilaf Gak Jelas";
+
+                                if (nama && nominal > 0) {
+                                    parsedPiutang.push({
+                                        id: idStr ? parseFloat(idStr) : (+new Date() + i),
+                                        nama: nama.trim(),
+                                        nominal: nominal,
+                                        catatan: catatan
+                                    });
+                                }
+                            }
+                        } else if (activeSection === "catatan") {
+                            const colId = header.indexOf('id');
+                            const colIsi = header.indexOf('isi catatan');
+                            const colTanggal = header.indexOf('tanggal');
+
+                            if (colIsi !== -1) {
+                                const idStr = colId !== -1 ? row[colId] : "";
+                                const teks = row[colIsi] || "";
+                                const tanggal = colTanggal !== -1 ? (row[colTanggal] || "").trim() : "";
+
+                                if (teks) {
+                                    parsedCatatan.push({
+                                        id: idStr ? parseFloat(idStr) : (+new Date() + i),
+                                        teks: teks.trim(),
+                                        tanggal: tanggal,
+                                        createdTxIds: [],
+                                        parsedTransactions: []
+                                    });
+                                }
+                            }
+                        }
+                    }
+
+                    if (parsedTransaksi.length === 0 && parsedWishlist.length === 0 && parsedTagihan.length === 0 && parsedPiutang.length === 0 && parsedCatatan.length === 0) {
+                        const header = lines[0].map(h => h.trim().toLowerCase());
+                        const colId = header.indexOf('id');
+                        const colNama = header.indexOf('nama transaksi');
+                        const colAliran = header.indexOf('aliran dana');
+                        const colAsal = header.indexOf('asal saku');
+                        const colTarget = header.indexOf('target saku');
+                        const colKategori = header.indexOf('kategori');
+                        const colNominal = header.indexOf('nominal');
+                        const colTanggal = header.indexOf('tanggal');
+
+                        if (colNama !== -1 && colAliran !== -1 && colNominal !== -1) {
+                            for (let i = 1; i < lines.length; i++) {
+                                const row = lines[i];
+                                if (row.length < 4 || (row.length === 1 && row[0] === "")) continue;
+
+                                const idStr = colId !== -1 ? row[colId] : "";
+                                const nama = row[colNama] || "";
+                                const jenis = colAliran !== -1 ? (row[colAliran] || "pengeluaran").toLowerCase().trim() : "pengeluaran";
+                                const wallet = colAsal !== -1 ? (row[colAsal] || "dana").toLowerCase().trim() : "dana";
+                                const walletTujuanRaw = colTarget !== -1 ? (row[colTarget] || "").trim() : "";
+                                const walletTujuan = (jenis === "transfer" && walletTujuanRaw !== "-") ? walletTujuanRaw.toLowerCase() : undefined;
+                                const kategori = colKategori !== -1 ? (row[colKategori] || "kustom").trim() : "kustom";
+                                const nominalVal = colNominal !== -1 ? parseFloat(row[colNominal]) : 0;
+                                const tanggalCetak = colTanggal !== -1 ? (row[colTanggal] || "").trim() : "";
+
+                                if (nama && !isNaN(nominalVal) && nominalVal > 0) {
+                                    const parsedDate = parseTanggalIndo(tanggalCetak);
+                                    parsedTransaksi.push({
+                                        id: idStr ? parseFloat(idStr) : (+new Date() + i),
+                                        nama: nama.trim(),
+                                        jenis: jenis,
+                                        wallet: wallet,
+                                        walletTujuan: walletTujuan,
+                                        kategori: kategori,
+                                        nominal: nominalVal,
+                                        tanggalCetak: tanggalCetak,
+                                        bulan: parsedDate.kodeBulan,
+                                        tanggalMentah: parsedDate.tanggalMentah
+                                    });
+                                }
+                            }
+                        }
+                    }
+
+                    const totalItemRead = parsedTransaksi.length + parsedWishlist.length + parsedTagihan.length + parsedPiutang.length + parsedCatatan.length;
+
+                    if (totalItemRead > 0) {
+                        panggilCustomModal(
+                            'Pilih Aksi Impor CSV 📊',
+                            `Berhasil membaca data dari CSV:<br>
+                             • ${parsedTransaksi.length} Transaksi<br>
+                             • ${parsedWishlist.length} Wishlist/Goals<br>
+                             • ${parsedTagihan.length} Tagihan<br>
+                             • ${parsedPiutang.length} Piutang/Buku Hitam<br>
+                             • ${parsedCatatan.length} Catatan Harian<br><br>
+                             Mau menimpa data saat ini atau menggabungkannya?`,
+                            function () {
+                                const txIdSet = new Set(daftarTransaksi.map(t => t.id));
+                                parsedTransaksi.forEach(item => { if (!txIdSet.has(item.id)) daftarTransaksi.push(item); });
+                                daftarTransaksi.sort((a, b) => b.id - a.id);
+
+                                const wlIdSet = new Set(daftarWishlist.map(w => w.id));
+                                parsedWishlist.forEach(item => { if (!wlIdSet.has(item.id)) daftarWishlist.push(item); });
+
+                                const tgIdSet = new Set(daftarTagihan.map(t => t.id));
+                                parsedTagihan.forEach(item => { if (!tgIdSet.has(item.id)) daftarTagihan.push(item); });
+
+                                const ptIdSet = new Set(daftarPiutang.map(p => p.id));
+                                parsedPiutang.forEach(item => { if (!ptIdSet.has(item.id)) daftarPiutang.push(item); });
+
+                                const ctIdSet = new Set(daftarCatatan.map(c => c.id));
+                                parsedCatatan.forEach(item => { if (!ctIdSet.has(item.id)) daftarCatatan.push(item); });
+
+                                simpanDataKeLokal();
+                                tampilkanData();
+                                panggilCustomModal('Impor Berhasil! 🎉', 'Data CSV berhasil digabungkan dengan data saat ini!', null, 'success');
+                            },
+                            'confirm'
+                        );
+
+                        document.getElementById('modal-confirm-btn').innerText = "Gabungkan (Merge) ➕";
+                        document.getElementById('modal-cancel-btn').style.display = "inline-block";
+                        document.getElementById('modal-cancel-btn').innerText = "Batal ❌";
+
+                        const dataRestorasi = {
+                            transaksi: parsedTransaksi,
+                            wishlist: parsedWishlist,
+                            tagihan: parsedTagihan,
+                            piutang: parsedPiutang,
+                            catatan: parsedCatatan
+                        };
+
+                        const areaTombol = document.getElementById('modal-custom-field-area');
+                        if (areaTombol) {
+                            areaTombol.innerHTML = `
+                                <button class="modal-btn" style="background: linear-gradient(135deg, #e74c3c, #c0392b); color: white; width: 100%; border: none; padding: 12px; border-radius: 12px; font-weight: 600; cursor: pointer; margin-top: 10px; font-size: 0.85rem;" onclick="window.eksekusiOverwriteCSV(${JSON.stringify(dataRestorasi).replace(/"/g, '&quot;')})">
+                                    <i class="fa-solid fa-trash-can"></i> Timpa Data Saat Ini (Overwrite) ⚠️
+                                </button>
+                            `;
+                        }
+                    } else {
+                        panggilCustomModal('Impor Gagal ❌', 'Tidak ada data valid yang berhasil dibaca dari berkas CSV!', null, 'exclamation');
+                    }
+                } catch (err) {
+                    console.error(err);
+                    panggilCustomModal('Eror File ❌', 'File CSV rusak atau format salah!', null, 'exclamation');
+                }
+            };
+            reader.readAsText(file);
+            inputElemen.value = "";
+        }
+
+        function eksekusiOverwriteCSV(dataRestorasi) {
+            daftarTransaksi = dataRestorasi.transaksi || [];
+            daftarWishlist = dataRestorasi.wishlist || [];
+            daftarTagihan = dataRestorasi.tagihan || [];
+            daftarPiutang = dataRestorasi.piutang || [];
+            daftarCatatan = dataRestorasi.catatan || [];
+
+            simpanDataKeLokal();
+            tampilkanData();
+            tutupCustomModal();
+            panggilCustomModal('Impor Berhasil! 🎉', 'Semua data lama berhasil ditimpa dengan data CSV!', null, 'success');
+        }
+
+        window.pemicuRestoreCSV = pemicuRestoreCSV;
+        window.eksekusiRestoreCSV = eksekusiRestoreCSV;
+        window.eksekusiOverwriteCSV = eksekusiOverwriteCSV;
     </script>
 
     <!-- SUPPORT MODE FLOAT WIDGET -->
