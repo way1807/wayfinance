@@ -3315,12 +3315,17 @@ h3 {
 
 @media (max-width: 480px) {
     .wallet-section {
-        grid-template-columns: 1fr !important;
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 8px !important;
     }
 
-    .wallet-card-mini,
-    .wallet-card-bank-detail {
+    .wallet-card-mini {
         grid-column: span 1 !important;
+    }
+
+    .wallet-card-mini[style*="grid-column: span 2"],
+    .wallet-card-bank-detail {
+        grid-column: span 2 !important;
     }
 
     .custom-modal-buttons {
@@ -3333,8 +3338,13 @@ h3 {
     }
 
     .ringkasan-bulan {
-        flex-direction: column;
-        gap: 10px;
+        display: grid !important;
+        grid-template-columns: 1fr 1fr !important;
+        gap: 10px !important;
+    }
+
+    .box-mini.box-transfer {
+        grid-column: span 2 !important;
     }
 
     .box-mini {
