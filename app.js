@@ -59,7 +59,8 @@ const kamusTeksKategori = {
     "gaji": "💰 Gaji Keringat Sendiri",
     "investasi": "📈 Pos Investasi Seksi",
     "transfer": "🔄 Mutasi Antar Saku",
-    "kustom": "🔮 Kategori Bebas Lo"
+    "kustom": "🔮 Kategori Bebas Lo",
+    "piutang": "🧾 Piutang (Temen Ngutang)"
 };
 
 const kamusIkon = {
@@ -71,7 +72,8 @@ const kamusIkon = {
     "gaji": "fa-solid fa-money-check-dollar",
     "investasi": "fa-solid fa-chart-line",
     "transfer": "fa-solid fa-arrows-rotate",
-    "kustom": "fa-solid fa-wand-magic-sparkles"
+    "kustom": "fa-solid fa-wand-magic-sparkles",
+    "piutang": "fa-solid fa-book-skull"
 };
 
 /* --- LIVE RUPIAH SPELLER helper ("TERBILANG" LOGIC) --- */
@@ -2191,17 +2193,40 @@ function tampilkanData() {
 function renderBillVisual() {
     const container = document.getElementById('bill-container');
     container.innerHTML = daftarTagihan.length === 0 ? `<small style="color: var(--text-muted); text-align: center; font-style: italic; display: block; padding: 10px;">Bersih, belum ada tagihan rutin terpasang...</small>` : "";
+    
+    // Hitung total tagihan rutin
+    const totalTagihan = daftarTagihan.reduce((acc, item) => acc + item.nominal, 0);
+    const totalAmountEl = document.getElementById('bill-total-amount');
+    if (totalAmountEl) {
+        totalAmountEl.innerText = 'Rp ' + totalTagihan.toLocaleString('id-ID');
+    }
+    const summaryEl = document.getElementById('bill-total-summary');
+    if (summaryEl) {
+        summaryEl.style.display = daftarTagihan.length === 0 ? 'none' : 'flex';
+    }
+
     daftarTagihan.forEach(item => {
         container.insertAdjacentHTML('beforeend', `
             <div class="bill-card">
-                <div class="bill-info">
+                <div class="bill-header">
                     <h5>📌 ${html_escape_tag(item.nama)}</h5>
-                    <p>Nominal: Rp ${item.nominal.toLocaleString('id-ID')} | Jatuh Tempo: ${item.tanggal}</p>
-                </div>
-                <div class="bill-actions">
-                    <select id="select-wallet-bill-${item.id}" style="padding: 6px; border-radius: 8px; background: #1a202c; color: white; border: 1px solid #3b4758; font-size: 0.75rem; outline:none;"><option value="cash">CASH</option><option value="dana">DANA</option><option value="ovo">OVO</option><option value="gopay">GOPAY</option><option value="bca">BCA</option></select>
-                    <button class="btn-celengan-mini" onclick="window.bayarTagihanOtomatis(${item.id}, document.getElementById('select-wallet-bill-${item.id}').value)">Bayar ✔</button>
                     <button class="btn-hapus-wishlist" onclick="window.hapusTagihan(${item.id})"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+                
+                <div class="bill-body">
+                    <p>Nominal: <strong>Rp ${item.nominal.toLocaleString('id-ID')}</strong></p>
+                    <p>Jatuh Tempo: <span style="color:#fff; font-weight:600;">${item.tanggal}</span></p>
+                </div>
+                
+                <div class="bill-footer-actions">
+                    <select id="select-wallet-bill-${item.id}">
+                        <option value="cash">CASH</option>
+                        <option value="dana">DANA</option>
+                        <option value="ovo">OVO</option>
+                        <option value="gopay">GOPAY</option>
+                        <option value="bca">BCA</option>
+                    </select>
+                    <button class="btn-celengan-mini" onclick="window.bayarTagihanOtomatis(${item.id}, document.getElementById('select-wallet-bill-${item.id}').value)">Bayar ✔</button>
                 </div>
             </div>
         `);
@@ -2232,7 +2257,20 @@ function renderWishlistVisual() {
 function renderDebtVisual() {
     const container = document.getElementById('debt-container');
     container.innerHTML = daftarPiutang.length === 0 ? `<small style="color: var(--text-muted); text-align: center; font-style: italic; display: block; padding: 10px;">Buku Hitam bersih, gak ada temen yang ngutang... (Aman/Tobat)</small>` : "";
+    
+    // Hitung total piutang
+    const totalPiutang = daftarPiutang.reduce((acc, item) => acc + item.nominal, 0);
+    const totalAmountEl = document.getElementById('debt-total-amount');
+    if (totalAmountEl) {
+        totalAmountEl.innerText = 'Rp ' + totalPiutang.toLocaleString('id-ID');
+    }
+    const summaryEl = document.getElementById('debt-total-summary');
+    if (summaryEl) {
+        summaryEl.style.display = daftarPiutang.length === 0 ? 'none' : 'flex';
+    }
+
     daftarPiutang.forEach(item => {
+        const w = item.wallet || 'cash';
         // Calculate due status dynamically (NEW FEATURE)
         let dueHtml = "";
         if (item.tempo) {
@@ -2254,17 +2292,32 @@ function renderDebtVisual() {
 
         container.insertAdjacentHTML('beforeend', `
             <div class="debt-card">
-                <div class="debt-info">
+                <div class="debt-header">
                     <h5>💀 ${html_escape_tag(item.nama)}</h5>
-                    <p>Nominal: <strong>Rp ${item.nominal.toLocaleString('id-ID')}</strong></p>
-                    <p style="font-size:0.65rem; color:#f39c12; margin-top:2px;">Catatan: "${html_escape_tag(item.catatan)}"</p>
-                    ${dueHtml}
+                    <button class="btn-hapus-wishlist" onclick="window.hapusPiutang(${item.id})"><i class="fa-solid fa-xmark"></i></button>
                 </div>
-                <div class="debt-actions">
-                    <select id="select-wallet-debt-${item.id}" style="padding: 6px; border-radius: 8px; background: #1a202c; color: white; border: 1px solid #3b4758; font-size: 0.72rem; outline:none; max-width:85px;"><option value="cash">CASH</option><option value="dana">DANA</option><option value="ovo">OVO</option><option value="gopay">GOPAY</option><option value="bca">BCA</option><option value="mandiri">MANDIRI</option></select>
+                
+                <div class="debt-body">
+                    <p>Nominal: <strong>Rp ${item.nominal.toLocaleString('id-ID')}</strong></p>
+                    <p style="color:#f39c12; font-style: italic;">Catatan: "${html_escape_tag(item.catatan)}"</p>
+                    <p><i class="fa-solid fa-credit-card"></i> Saku Asal: <span style="color:#fff; font-weight:600;">${w.toUpperCase()}</span></p>
+                    ${dueHtml ? `<div style="margin-top: 4px;">${dueHtml}</div>` : ''}
+                </div>
+                
+                <div class="debt-footer-actions">
+                    <select id="select-wallet-debt-${item.id}">
+                        <option value="cash" ${w === 'cash' ? 'selected' : ''}>CASH</option>
+                        <option value="dana" ${w === 'dana' ? 'selected' : ''}>DANA</option>
+                        <option value="ovo" ${w === 'ovo' ? 'selected' : ''}>OVO</option>
+                        <option value="gopay" ${w === 'gopay' ? 'selected' : ''}>GOPAY</option>
+                        <option value="bca" ${w === 'bca' ? 'selected' : ''}>BCA</option>
+                        <option value="mandiri" ${w === 'mandiri' ? 'selected' : ''}>MANDIRI</option>
+                        <option value="bni" ${w === 'bni' ? 'selected' : ''}>BNI</option>
+                        <option value="bri" ${w === 'bri' ? 'selected' : ''}>BRI</option>
+                        <option value="bank_lain" ${w === 'bank_lain' ? 'selected' : ''}>LAINNYA</option>
+                    </select>
                     <button class="btn-lunas-piutang" onclick="window.tandaiPiutangLunas(${item.id}, document.getElementById('select-wallet-debt-${item.id}').value)">Lunas ✔</button>
                     <button class="btn-wa-tagih" onclick="window.kirimReminderWA(${item.id})"><i class="fa-brands fa-whatsapp"></i> Tagih</button>
-                    <button class="btn-hapus-wishlist" onclick="window.hapusPiutang(${item.id})"><i class="fa-solid fa-xmark"></i></button>
                 </div>
             </div>
         `);
@@ -2276,6 +2329,7 @@ function tambahPiutangBaru() {
     const nominal = document.getElementById('debt-nominal-input').value;
     const catatan = document.getElementById('debt-catatan-input').value;
     const tempo = document.getElementById('debt-due-input') ? document.getElementById('debt-due-input').value : '';
+    const walletTerpilih = document.getElementById('debt-wallet-select').value;
 
     if (!nama || nama.trim() === "" || !nominal) return;
     const nominalMurni = parseFloat(nominal.replace(/\./g, ''));
@@ -2286,7 +2340,21 @@ function tambahPiutangBaru() {
         nama: nama.trim(),
         nominal: nominalMurni,
         catatan: (catatan && catatan.trim() !== "") ? catatan.trim() : "Jajan Temen",
-        tempo: tempo
+        tempo: tempo,
+        wallet: walletTerpilih
+    });
+
+    // Kurangi saldo saku dengan menambahkan transaksi pengeluaran
+    daftarTransaksi.unshift({
+        id: +new Date() + 1,
+        nama: `Pinjamkan ke: ${nama.trim()}`,
+        jenis: "pengeluaran",
+        wallet: walletTerpilih,
+        kategori: "piutang",
+        nominal: nominalMurni,
+        tanggalCetak: new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' }),
+        bulan: String(new Date().getMonth() + 1).padStart(2, '0'),
+        tanggalMentah: dapatkanTanggalLokalHariIni()
     });
 
     document.getElementById('debt-nama-input').value = "";

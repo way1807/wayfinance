@@ -554,7 +554,8 @@ h3 {
 .form-group textarea,
 .bill-box-creator input,
 .wishlist-box-creator input,
-.debt-box-creator input {
+.debt-box-creator input,
+.debt-box-creator select {
     width: 100%;
     padding: 12px 14px 12px 46px;
     border: 2px solid rgba(255, 255, 255, 0.08);
@@ -1513,10 +1514,10 @@ h3 {
 }
 
 .bill-container {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
     gap: 12px;
-    max-height: 200px;
+    max-height: 280px;
     overflow-y: auto;
     padding-right: 4px;
     margin-bottom: 15px;
@@ -1525,42 +1526,91 @@ h3 {
 
 .bill-card {
     background-color: var(--dark-card);
-    border: 1px solid rgba(255, 255, 255, 0.03);
-    padding: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 16px;
     border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    width: 100%;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    transition: transform 0.2s, border-color 0.2s;
+}
+
+.bill-card:hover {
+    transform: translateY(-2px);
+    border-color: rgba(231, 76, 60, 0.25);
+}
+
+.bill-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    transition: transform 0.2s;
 }
 
-.bill-card:hover {
-    transform: translateY(-1px);
-}
-
-.bill-info {
-    max-width: 65%;
-}
-
-.bill-info h5 {
-    font-size: 0.85rem;
+.bill-header h5 {
+    font-size: 0.95rem;
     color: white;
     font-weight: 600;
-    word-break: normal;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 6px;
 }
 
-.bill-info p {
-    font-size: 0.7rem;
+.bill-body {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    width: 100%;
+}
+
+.bill-body p {
+    font-size: 0.75rem;
     color: var(--text-muted);
-    margin-top: 3px;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 6px;
 }
 
-.bill-actions {
+.bill-body strong {
+    color: #e74c3c;
+    font-size: 1.05rem;
+    font-weight: 700;
+}
+
+.bill-footer-actions {
     display: flex;
     align-items: center;
     gap: 8px;
-    flex-shrink: 0;
+    width: 100%;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    padding-top: 12px;
+    margin-top: 4px;
+    flex-wrap: wrap;
+}
+
+.bill-footer-actions select {
+    padding: 6px 10px;
+    border-radius: 8px;
+    background: #1a202c;
+    color: white;
+    border: 1px solid #3b4758;
+    font-size: 0.72rem;
+    outline: none;
+    flex: 1;
+    min-width: 80px;
+    height: 32px;
+}
+
+.bill-footer-actions .btn-celengan-mini {
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 /* --- FINANCIAL GOALS / WISHLIST --- */
@@ -1607,10 +1657,10 @@ h3 {
 }
 
 .wishlist-container {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
     gap: 14px;
-    max-height: 220px;
+    max-height: 280px;
     overflow-y: auto;
     padding-right: 4px;
     margin-bottom: 10px;
@@ -1809,11 +1859,13 @@ h3 {
     width: 100%;
 }
 
-.debt-box-creator input {
+.debt-box-creator input,
+.debt-box-creator select {
     padding-left: 16px !important;
 }
 
-.debt-box-creator input:focus {
+.debt-box-creator input:focus,
+.debt-box-creator select:focus {
     border-color: #e74c3c !important;
     box-shadow: 0 0 0 4px rgba(231, 76, 60, 0.2) !important;
 }
@@ -1849,10 +1901,10 @@ h3 {
 }
 
 .debt-container {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
     gap: 12px;
-    max-height: 220px;
+    max-height: 280px;
     overflow-y: auto;
     padding-right: 4px;
     margin-bottom: 15px;
@@ -1861,51 +1913,100 @@ h3 {
 
 .debt-card {
     background-color: var(--dark-card);
-    border: 1px solid rgba(255, 255, 255, 0.03);
-    padding: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 16px;
     border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    width: 100%;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    transition: transform 0.2s, border-color 0.2s;
+}
+
+.debt-card:hover {
+    transform: translateY(-2px);
+    border-color: rgba(243, 156, 18, 0.25);
+}
+
+.debt-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     width: 100%;
 }
 
-.debt-info {
-    max-width: 60%;
-}
-
-.debt-info h5 {
-    font-size: 0.85rem;
+.debt-header h5 {
+    font-size: 0.95rem;
     color: white;
     font-weight: 600;
-    word-break: normal;
-}
-
-.debt-info p {
-    font-size: 0.7rem;
-    color: var(--text-muted);
-    margin-top: 2px;
-}
-
-.debt-actions {
+    margin: 0;
     display: flex;
     align-items: center;
     gap: 6px;
-    flex-shrink: 0;
+}
+
+.debt-body {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    width: 100%;
+}
+
+.debt-body p {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.debt-body strong {
+    color: #e74c3c;
+    font-size: 1.05rem;
+    font-weight: 700;
+}
+
+.debt-footer-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    padding-top: 12px;
+    margin-top: 4px;
+    flex-wrap: wrap;
+}
+
+.debt-footer-actions select {
+    padding: 6px 10px;
+    border-radius: 8px;
+    background: #1a202c;
+    color: white;
+    border: 1px solid #3b4758;
+    font-size: 0.72rem;
+    outline: none;
+    flex: 1;
+    min-width: 80px;
+    height: 32px;
 }
 
 .btn-wa-tagih {
     background: linear-gradient(135deg, #25d366, #128c7e);
     color: white;
     border: none;
-    padding: 6px 10px;
-    font-size: 0.7rem;
+    padding: 0 12px;
+    font-size: 0.72rem;
     font-weight: 600;
     border-radius: 8px;
     cursor: pointer;
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 4px;
+    height: 32px;
     transition: transform 0.2s, box-shadow 0.2s;
     text-decoration: none;
 }
@@ -1919,14 +2020,16 @@ h3 {
     background: linear-gradient(135deg, #3498db, #2980b9);
     color: white;
     border: none;
-    padding: 6px 10px;
-    font-size: 0.7rem;
+    padding: 0 12px;
+    font-size: 0.72rem;
     font-weight: 600;
     border-radius: 8px;
     cursor: pointer;
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 4px;
+    height: 32px;
     transition: transform 0.2s, box-shadow 0.2s;
 }
 

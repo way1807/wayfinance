@@ -401,7 +401,8 @@
         .form-group textarea,
         .bill-box-creator input,
         .wishlist-box-creator input,
-        .debt-box-creator input {
+        .debt-box-creator input,
+        .debt-box-creator select {
             width: 100%;
             padding: 12px 12px 12px 42px;
             border: 2px solid rgba(255, 255, 255, 0.08);
@@ -415,7 +416,9 @@
 
         /* Khusus box creator yg gak punya ikon kiri biar teks gak terlalu ke kanan */
         .bill-box-creator input,
-        .wishlist-box-creator input {
+        .wishlist-box-creator input,
+        .debt-box-creator input,
+        .debt-box-creator select {
             padding-left: 16px !important;
         }
 
@@ -425,7 +428,8 @@
             min-height: 80px;
         }
 
-        .form-group select option {
+        .form-group select option,
+        .debt-box-creator select option {
             background-color: var(--dark-body);
             color: white;
         }
@@ -1182,10 +1186,10 @@
         }
 
         .bill-container {
-            display: flex;
-            flex-direction: column;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
             gap: 12px;
-            max-height: 180px;
+            max-height: 280px;
             overflow-y: auto;
             padding-right: 4px;
             margin-bottom: 15px;
@@ -1194,37 +1198,91 @@
 
         .bill-card {
             background-color: var(--dark-card);
-            border: 1px solid rgba(255, 255, 255, 0.03);
-            padding: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 16px;
             border-radius: 16px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 12px;
+            width: 100%;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            transition: transform 0.2s, border-color 0.2s;
+        }
+
+        .bill-card:hover {
+            transform: translateY(-2px);
+            border-color: rgba(231, 76, 60, 0.25);
+        }
+
+        .bill-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             width: 100%;
         }
 
-        .bill-info {
-            max-width: 65%;
-        }
-
-        .bill-info h5 {
-            font-size: 0.85rem;
+        .bill-header h5 {
+            font-size: 0.95rem;
             color: white;
             font-weight: 600;
-            word-break: normal;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
 
-        .bill-info p {
-            font-size: 0.7rem;
+        .bill-body {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            width: 100%;
+        }
+
+        .bill-body p {
+            font-size: 0.75rem;
             color: var(--text-muted);
-            margin-top: 2px;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
 
-        .bill-actions {
+        .bill-body strong {
+            color: #e74c3c;
+            font-size: 1.05rem;
+            font-weight: 700;
+        }
+
+        .bill-footer-actions {
             display: flex;
             align-items: center;
             gap: 8px;
-            flex-shrink: 0;
+            width: 100%;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            padding-top: 12px;
+            margin-top: 4px;
+            flex-wrap: wrap;
+        }
+
+        .bill-footer-actions select {
+            padding: 6px 10px;
+            border-radius: 8px;
+            background: #1a202c;
+            color: white;
+            border: 1px solid #3b4758;
+            font-size: 0.72rem;
+            outline: none;
+            flex: 1;
+            min-width: 80px;
+            height: 32px;
+        }
+
+        .bill-footer-actions .btn-celengan-mini {
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .section-wishlist-title {
@@ -1262,10 +1320,10 @@
         }
 
         .wishlist-container {
-            display: flex;
-            flex-direction: column;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
             gap: 14px;
-            max-height: 180px;
+            max-height: 280px;
             overflow-y: auto;
             padding-right: 4px;
             margin-bottom: 10px;
@@ -1559,10 +1617,10 @@
         }
 
         .debt-container {
-            display: flex;
-            flex-direction: column;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
             gap: 12px;
-            max-height: 220px;
+            max-height: 280px;
             overflow-y: auto;
             padding-right: 4px;
             margin-bottom: 15px;
@@ -1571,76 +1629,129 @@
 
         .debt-card {
             background-color: var(--dark-card);
-            border: 1px solid rgba(255, 255, 255, 0.03);
-            padding: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 16px;
             border-radius: 16px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 12px;
+            width: 100%;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            transition: transform 0.2s, border-color 0.2s;
+        }
+
+        .debt-card:hover {
+            transform: translateY(-2px);
+            border-color: rgba(243, 156, 18, 0.25);
+        }
+
+        .debt-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             width: 100%;
         }
 
-        .debt-info {
-            max-width: 60%;
-        }
-
-        .debt-info h5 {
-            font-size: 0.85rem;
+        .debt-header h5 {
+            font-size: 0.95rem;
             color: white;
             font-weight: 600;
-            word-break: normal;
-        }
-
-        .debt-info p {
-            font-size: 0.7rem;
-            color: var(--text-muted);
-            margin-top: 2px;
-        }
-
-        .debt-actions {
+            margin: 0;
             display: flex;
             align-items: center;
             gap: 6px;
-            flex-shrink: 0;
+        }
+
+        .debt-body {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            width: 100%;
+        }
+
+        .debt-body p {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .debt-body strong {
+            color: #e74c3c;
+            font-size: 1.05rem;
+            font-weight: 700;
+        }
+
+        .debt-footer-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            width: 100%;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            padding-top: 12px;
+            margin-top: 4px;
+            flex-wrap: wrap;
+        }
+
+        .debt-footer-actions select {
+            padding: 6px 10px;
+            border-radius: 8px;
+            background: #1a202c;
+            color: white;
+            border: 1px solid #3b4758;
+            font-size: 0.72rem;
+            outline: none;
+            flex: 1;
+            min-width: 80px;
+            height: 32px;
         }
 
         .btn-wa-tagih {
             background: linear-gradient(135deg, #25d366, #128c7e);
             color: white;
             border: none;
-            padding: 6px 10px;
-            font-size: 0.7rem;
+            padding: 0 12px;
+            font-size: 0.72rem;
             font-weight: 600;
             border-radius: 8px;
             cursor: pointer;
             display: flex;
             align-items: center;
+            justify-content: center;
             gap: 4px;
-            transition: transform 0.2s;
+            height: 32px;
+            transition: transform 0.2s, box-shadow 0.2s;
             text-decoration: none;
         }
 
         .btn-wa-tagih:hover {
-            transform: scale(1.05);
+            transform: scale(1.04);
+            box-shadow: 0 4px 10px rgba(37, 211, 102, 0.3);
         }
 
         .btn-lunas-piutang {
             background: linear-gradient(135deg, #3498db, #2980b9);
             color: white;
             border: none;
-            padding: 6px 10px;
-            font-size: 0.7rem;
+            padding: 0 12px;
+            font-size: 0.72rem;
             font-weight: 600;
             border-radius: 8px;
             cursor: pointer;
             display: flex;
             align-items: center;
+            justify-content: center;
             gap: 4px;
-            transition: transform 0.2s;
+            height: 32px;
+            transition: transform 0.2s, box-shadow 0.2s;
         }
 
         .btn-lunas-piutang:hover {
-            transform: scale(1.05);
+            transform: scale(1.04);
+            box-shadow: 0 4px 10px rgba(52, 152, 219, 0.3);
         }
 
         /* --- STYLING TOGGLE MODE INPUT --- */
@@ -2663,7 +2774,7 @@
         body.mode-simulasi-aktif .saldo-box {
             background: #f7f4ff !important;
             border: 1px dashed #c0b3f0 !important;
-            box-shadow: 5px 5px 15px rgba(0,0,0,0.05) !important;
+            box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.05) !important;
         }
 
         body.mode-simulasi-aktif .saldo-box h1 {
@@ -2735,7 +2846,7 @@
             background: #2c3e50 !important;
             color: #ffffff !important;
         }
-        
+
         body.mode-simulasi-aktif #support-badge {
             display: none !important;
         }
@@ -2886,6 +2997,103 @@
             display: flex;
             justify-content: space-between;
         }
+
+        /* Styling Kalender Transaksi */
+        .calendar-day-cell {
+            background: rgba(255, 255, 255, 0.015);
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            border-radius: 10px;
+            padding: 6px 4px;
+            text-align: center;
+            cursor: pointer;
+            min-height: 48px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+
+        .calendar-day-cell:hover {
+            background: rgba(255, 255, 255, 0.07);
+            border-color: rgba(255, 255, 255, 0.1);
+            transform: translateY(-1px);
+        }
+
+        .calendar-day-cell.empty-cell {
+            background: none !important;
+            border: none !important;
+            cursor: default;
+            pointer-events: none;
+        }
+
+        .calendar-day-cell.today-cell {
+            border: 1.5px solid var(--accent-blue);
+            background: rgba(0, 129, 180, 0.08);
+        }
+
+        .calendar-day-cell.selected-cell {
+            background: var(--primary-gradient) !important;
+            border-color: rgba(255, 255, 255, 0.15) !important;
+        }
+
+        .calendar-day-cell.selected-cell .day-number {
+            color: #fff !important;
+            font-weight: 700;
+        }
+
+        .calendar-day-cell .day-number {
+            font-size: 0.78rem;
+            font-weight: 500;
+            color: #cbd5e1;
+        }
+
+        .calendar-day-cell .dots-container {
+            display: flex;
+            justify-content: center;
+            gap: 3px;
+            margin-top: 4px;
+            height: 6px;
+            align-items: center;
+        }
+
+        .calendar-dot {
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+        }
+
+        .calendar-dot.dot-masuk {
+            background-color: #2ecc71;
+            box-shadow: 0 0 5px rgba(46, 204, 113, 0.5);
+        }
+
+        .calendar-dot.dot-keluar {
+            background-color: #e74c3c;
+            box-shadow: 0 0 5px rgba(231, 76, 60, 0.5);
+        }
+
+        .calendar-dot.dot-transfer {
+            background-color: #0081b4;
+            box-shadow: 0 0 5px rgba(0, 129, 180, 0.5);
+        }
+
+        /* Detail transaction items inside calendar */
+        .calendar-detail-item {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            padding: 8px 12px;
+            border-radius: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.75rem;
+        }
+
+        .calendar-detail-item:hover {
+            background: rgba(255, 255, 255, 0.04);
+        }
     </style>
 </head>
 
@@ -2894,7 +3102,8 @@
     <!-- HIDDEN INPUT UNTUK RESTORE FILE JSON -->
     <input type="file" id="json-restore-file" style="display:none;" onchange="window.eksekusiRestoreJSON(this)">
     <!-- HIDDEN INPUT UNTUK RESTORE FILE CSV -->
-    <input type="file" id="csv-restore-file" style="display:none;" accept=".csv" onchange="window.eksekusiRestoreCSV(this)">
+    <input type="file" id="csv-restore-file" style="display:none;" accept=".csv"
+        onchange="window.eksekusiRestoreCSV(this)">
 
     <div id="custom-confirm-modal" class="custom-modal-overlay">
         <div class="custom-modal-box">
@@ -2942,12 +3151,12 @@
                     onclick="window.gantiProfilKeuangan('simulasi')" style="flex: 1; justify-content: center;">
                     <i class="fa-solid fa-wand-magic-sparkles"></i> Simulasi 🧮
                 </button>
-                <button class="btn-undo-action" id="btn-undo-global"
-                    onclick="window.triggerUndo()" style="display: none; justify-content: center; align-items: center;">
+                <button class="btn-undo-action" id="btn-undo-global" onclick="window.triggerUndo()"
+                    style="display: none; justify-content: center; align-items: center;">
                     <i class="fa-solid fa-rotate-left"></i> Undo 🔄
                 </button>
-                <button class="btn-format-action" id="btn-format-simulasi"
-                    onclick="window.eksekusiResetSemuaData()" style="display: none; justify-content: center; align-items: center;">
+                <button class="btn-format-action" id="btn-format-simulasi" onclick="window.eksekusiResetSemuaData()"
+                    style="display: none; justify-content: center; align-items: center;">
                     <i class="fa-solid fa-trash-can"></i> Format 🧹
                 </button>
             </div>
@@ -3213,7 +3422,8 @@
                     style="background: rgba(243, 156, 18, 0.05); border: 1px dashed rgba(243, 156, 18, 0.25); padding: 10px 12px; border-radius: 12px; margin-bottom: 15px; font-size: 0.72rem; color: #f39c12; display: flex; align-items: flex-start; gap: 8px; line-height: 1.4;">
                     <i id="notes-helper-icon" class="fa-solid fa-lightbulb" style="margin-top: 2px;"></i>
                     <div id="notes-helper-content">
-                        <span id="notes-helper-title" style="font-weight: 600; display: block; margin-bottom: 2px; color: #ffffff;">Tips Menulis
+                        <span id="notes-helper-title"
+                            style="font-weight: 600; display: block; margin-bottom: 2px; color: #ffffff;">Tips Menulis
                             Catatan:</span>
                         Gunakan pola sederhana: <strong>[kegiatan] [nominal] [saku]</strong>.<br />
                         • Contoh: <em>Makan mie 20k cash</em><br />
@@ -3237,7 +3447,7 @@
                     </button>
                 </div>
 
-                <div style="margin-top: 20px;">
+                <div style="display: none;">
                     <label id="notes-history-label"
                         style="display: block; margin-bottom: 10px; font-weight: 600; font-size: 0.85rem; color: #ffffff;">
                         Riwayat Catatan Harian 📝
@@ -3393,15 +3603,26 @@
                     <i class="fa-solid fa-chevron-down toggle-chevron"></i>
                 </div>
                 <div class="collapsible-content">
-                    <div class="bill-box-creator">
+                    <div class="bill-box-creator" style="display: flex; flex-direction: column; gap: 10px;">
                         <input type="text" id="bill-nama-input"
                             placeholder="Nama Tagihan Rutin (Contoh: Kost / Netflix)">
-                        <input type="text" id="bill-nominal-input" placeholder="Nominal Tagihan (Rp)..."
-                            onkeyup="window.formatInputRupiah(this)">
-                        <input type="date" id="bill-tanggal-input">
+                        <div style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 10px; width: 100%;">
+                            <input type="text" id="bill-nominal-input" placeholder="Nominal Tagihan (Rp)..."
+                                onkeyup="window.formatInputRupiah(this)">
+                            <input type="date" id="bill-tanggal-input" style="padding-left: 14px !important;">
+                        </div>
                         <button class="btn-add-wishlist" onclick="window.tambahTagihanBaru()">
                             <i class="fa-solid fa-circle-plus"></i> Pasang Jadwal Pengingat
                         </button>
+                    </div>
+                    <div id="bill-total-summary" style="margin: 15px 0; padding: 16px 20px; background: linear-gradient(135deg, rgba(231, 76, 60, 0.12), rgba(40, 48, 61, 0.6)); border-radius: 16px; border-left: 5px solid #e74c3c; border-top: 1px solid rgba(255,255,255,0.05); border-right: 1px solid rgba(255,255,255,0.03); border-bottom: 1px solid rgba(255,255,255,0.03); display: none; align-items: center; gap: 15px; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2); transition: all 0.3s ease;">
+                        <div style="width: 42px; height: 42px; background: rgba(231, 76, 60, 0.2); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #e74c3c; font-size: 1.25rem;">
+                            <i class="fa-solid fa-file-invoice-dollar"></i>
+                        </div>
+                        <div style="display: flex; flex-direction: column; gap: 2px;">
+                            <span style="font-size: 0.78rem; color: var(--text-muted); font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px;">Total Tagihan Aktif</span>
+                            <strong id="bill-total-amount" style="color: #ffffff; font-size: 1.2rem; font-weight: 700; letter-spacing: -0.5px;">Rp 0</strong>
+                        </div>
                     </div>
                     <div id="bill-container" class="bill-container"></div>
                 </div>
@@ -3414,10 +3635,12 @@
                     <i class="fa-solid fa-chevron-down toggle-chevron"></i>
                 </div>
                 <div class="collapsible-content">
-                    <div class="wishlist-box-creator">
-                        <input type="text" id="wishlist-nama-input" placeholder="Target barang impian (Contoh: PS5)">
-                        <input type="text" id="wishlist-harga-input" placeholder="Harga Target Barang (Rp)..."
-                            onkeyup="window.formatInputRupiah(this)">
+                    <div class="wishlist-box-creator" style="display: flex; flex-direction: column; gap: 10px;">
+                        <div style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 10px; width: 100%;">
+                            <input type="text" id="wishlist-nama-input" placeholder="Target barang impian (Contoh: PS5)">
+                            <input type="text" id="wishlist-harga-input" placeholder="Harga Target Barang (Rp)..."
+                                onkeyup="window.formatInputRupiah(this)">
+                        </div>
                         <button class="btn-add-wishlist" onclick="window.tambahWishlistBaru()">
                             <i class="fa-solid fa-circle-plus"></i> Pasang Target Khilaf Baru
                         </button>
@@ -3435,30 +3658,113 @@
                     <i class="fa-solid fa-chevron-down toggle-chevron"></i>
                 </div>
                 <div class="collapsible-content">
-                    <div class="debt-box-creator">
+                    <div class="debt-box-creator" style="display: flex; flex-direction: column; gap: 10px;">
                         <input type="text" id="debt-nama-input" placeholder="Nama temen lo yang ngutang...">
-                        <input type="text" id="debt-nominal-input" placeholder="Nominal utang (Rp)..."
-                            onkeyup="window.formatInputRupiah(this)">
+                        <div style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 10px; width: 100%;">
+                            <input type="text" id="debt-nominal-input" placeholder="Nominal utang (Rp)..."
+                                onkeyup="window.formatInputRupiah(this)">
+                            <select id="debt-wallet-select">
+                                <option value="cash">Pilih Saku: Uang Cash</option>
+                                <option value="dana">Pilih Saku: DANA</option>
+                                <option value="ovo">Pilih Saku: OVO</option>
+                                <option value="gopay">Pilih Saku: GoPay</option>
+                                <option value="bca">Pilih Saku: Bank BCA</option>
+                                <option value="mandiri">Pilih Saku: Bank Mandiri</option>
+                                <option value="bni">Pilih Saku: Bank BNI</option>
+                                <option value="bri">Pilih Saku: Bank BRI</option>
+                                <option value="bank_lain">Pilih Saku: Bank Lainnya...</option>
+                            </select>
+                        </div>
                         <input type="text" id="debt-catatan-input"
                             placeholder="Catatan utang (Contoh: Uang Bensin / Pecel Lele)">
                         <button class="btn-catat-piutang" onclick="window.tambahPiutangBaru()">
                             <i class="fa-solid fa-plus-circle"></i> Catat Piutang di Buku Hitam 💀
                         </button>
                     </div>
+                    <div id="debt-total-summary" style="margin: 15px 0; padding: 16px 20px; background: linear-gradient(135deg, rgba(243, 156, 18, 0.12), rgba(40, 48, 61, 0.6)); border-radius: 16px; border-left: 5px solid #f39c12; border-top: 1px solid rgba(255,255,255,0.05); border-right: 1px solid rgba(255,255,255,0.03); border-bottom: 1px solid rgba(255,255,255,0.03); display: none; align-items: center; gap: 15px; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2); transition: all 0.3s ease;">
+                        <div style="width: 42px; height: 42px; background: rgba(243, 156, 18, 0.2); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #f39c12; font-size: 1.25rem;">
+                            <i class="fa-solid fa-hand-holding-dollar"></i>
+                        </div>
+                        <div style="display: flex; flex-direction: column; gap: 2px;">
+                            <span style="font-size: 0.78rem; color: var(--text-muted); font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px;">Total Piutang (Duit di Temen)</span>
+                            <strong id="debt-total-amount" style="color: #ffffff; font-size: 1.2rem; font-weight: 700; letter-spacing: -0.5px;">Rp 0</strong>
+                        </div>
+                    </div>
                     <div id="debt-container" class="debt-container"></div>
                 </div>
             </div>
 
+            <!-- KALENDER TRANSAKSI INTERAKTIF -->
+            <div id="panel-kalender-transaksi" class="collapsible-section" style="width: 100%;">
+                <div class="section-collapsible-header"
+                    onclick="window.toggleSectionCollapse('panel-kalender-transaksi')">
+                    <span><i class="fa-solid fa-calendar-days" style="color: #2ecc71;"></i> Kalender Transaksi
+                        Interaktif 📅</span>
+                    <i class="fa-solid fa-chevron-down toggle-chevron"></i>
+                </div>
+                <div class="collapsible-content">
+                    <!-- Header Navigasi Kalender -->
+                    <div class="calendar-nav-header"
+                        style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                        <button onclick="window.navigasiBulanKalender(-1)" class="btn-shortcut-nom"
+                            style="padding: 6px 12px; font-weight: bold;"><i
+                                class="fa-solid fa-chevron-left"></i></button>
+                        <h4 id="calendar-month-year-title"
+                            style="margin: 0; font-size: 0.95rem; font-weight: 600; color: #fff;">Juli 2026</h4>
+                        <button onclick="window.navigasiBulanKalender(1)" class="btn-shortcut-nom"
+                            style="padding: 6px 12px; font-weight: bold;"><i
+                                class="fa-solid fa-chevron-right"></i></button>
+                    </div>
+
+                    <!-- Grid Kalender -->
+                    <div class="calendar-grid-wrapper" style="width: 100%;">
+                        <div class="calendar-weekdays-grid"
+                            style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; text-align: center; font-size: 0.72rem; color: var(--text-muted); font-weight: 600; margin-bottom: 8px;">
+                            <div>Min</div>
+                            <div>Sen</div>
+                            <div>Sel</div>
+                            <div>Rab</div>
+                            <div>Kam</div>
+                            <div>Jum</div>
+                            <div>Sab</div>
+                        </div>
+                        <div id="calendar-days-grid"
+                            style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px;">
+                            <!-- Diisi via JS -->
+                        </div>
+                    </div>
+
+                    <!-- Detail Transaksi Hari yang Dipilih -->
+                    <div id="calendar-day-details-box"
+                        style="margin-top: 15px; padding-top: 15px; border-top: 1px dashed rgba(255, 255, 255, 0.08); display: none;">
+                        <h5 id="calendar-selected-date-title"
+                            style="font-size: 0.82rem; color: #fff; margin-bottom: 8px; font-weight: 600;">Detail
+                            Transaksi</h5>
+                        <div id="calendar-selected-date-summary"
+                            style="display: flex; gap: 10px; margin-bottom: 10px; font-size: 0.72rem;">
+                            <!-- Summary Pemasukan / Pengeluaran harian -->
+                        </div>
+                        <div id="calendar-selected-date-list"
+                            style="display: flex; flex-direction: column; gap: 8px; max-height: 150px; overflow-y: auto;">
+                            <!-- List transaksi harian -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!-- KALENDER PENGELUARAN HARIAN & RIWAYAT (DAILY EXPENSES) -->
-            <div id="panel-daily-expenses" class="daily-expenses-section-target collapsible-section" style="width: 100%; display: none;">
+            <div id="panel-daily-expenses" class="daily-expenses-section-target collapsible-section"
+                style="width: 100%; display: none;">
                 <div class="section-daily-expenses-title section-collapsible-header"
                     onclick="window.toggleSectionCollapse('panel-daily-expenses')">
-                    <span><i class="fa-solid fa-calendar-day" style="color: #3498db;"></i> Pengeluaran Harian & Riwayat 📅</span>
+                    <span><i class="fa-solid fa-calendar-day" style="color: #3498db;"></i> Pengeluaran Harian & Riwayat
+                        📅</span>
                     <i class="fa-solid fa-chevron-down toggle-chevron"></i>
                 </div>
                 <div class="collapsible-content">
                     <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 15px;">
-                        Pantau total pengeluaran harian lo di sini, Cuy. Lo juga bisa nyalin pengeluaran kemarin ke hari ini biar gampang.
+                        Pantau total pengeluaran harian lo di sini, Cuy. Lo juga bisa nyalin pengeluaran kemarin ke hari
+                        ini biar gampang.
                     </p>
                     <div id="daily-expenses-container" class="daily-expenses-container">
                         <!-- List dinamis dari JS -->
@@ -3530,6 +3836,11 @@
         let riwayatUndo = [];
         let dataTerakhir = null;
 
+        // --- INTERACTIVE CALENDAR STATE ---
+        let kalenderBulanAktif = new Date().getMonth();
+        let kalenderTahunAktif = new Date().getFullYear();
+        let tanggalTerpilihKalender = "";
+
         function dapatkanKunciProfil(kunciDasar) {
             if (profilAktif === 'pribadi') {
                 return kunciDasar;
@@ -3563,22 +3874,22 @@
             if (riwayatUndo.length === 0) return;
             const stateSebelumnyaTeks = riwayatUndo.pop();
             const stateSebelumnya = JSON.parse(stateSebelumnyaTeks);
-            
+
             daftarTransaksi = stateSebelumnya.daftarTransaksi || [];
             daftarWishlist = stateSebelumnya.daftarWishlist || [];
             daftarTagihan = stateSebelumnya.daftarTagihan || [];
             daftarPiutang = stateSebelumnya.daftarPiutang || [];
             daftarCatatan = stateSebelumnya.daftarCatatan || [];
-            
+
             // Simpan ke local storage dengan lewatiUndo = true agar tidak mencatat state pemulihan sebagai undo baru
-            simpanDataKeLokal(true); 
-            
+            simpanDataKeLokal(true);
+
             dataTerakhir = stateSebelumnyaTeks;
-            
+
             tampilkanData();
             ubahTemaWarna();
             perbaruiTampilanUndo();
-            
+
             panggilCustomModal('Undo Sukses! 🔄', 'Aksi sebelumnya berhasil dibatalkan.', null, 'success');
         }
 
@@ -3610,7 +3921,8 @@
             "gaji": "💰 Gaji Keringat Sendiri",
             "investasi": "📈 Pos Investasi Seksi",
             "transfer": "🔄 Mutasi Antar Saku",
-            "kustom": "🔮 Kategori Bebas Lo"
+            "kustom": "🔮 Kategori Bebas Lo",
+            "piutang": "🧾 Piutang (Temen Ngutang)"
         };
 
         const kamusIkon = {
@@ -3622,7 +3934,8 @@
             "gaji": "fa-solid fa-money-check-dollar",
             "investasi": "fa-solid fa-chart-line",
             "transfer": "fa-solid fa-arrows-rotate",
-            "kustom": "fa-solid fa-wand-magic-sparkles"
+            "kustom": "fa-solid fa-wand-magic-sparkles",
+            "piutang": "fa-solid fa-book-skull"
         };
 
         // --- LOGIKA DROPDOWN KUSTOM ---
@@ -3788,6 +4101,230 @@
         window.gantiProfilKeuangan = gantiProfilKeuangan;
         window.dapatkanTanggalLokalHariIni = dapatkanTanggalLokalHariIni;
         window.triggerUndo = triggerUndo;
+
+        // --- DEKLARASI FUNGSI KALENDER TRANSAKSI INTERAKTIF ---
+        function initKalenderTransaksi() {
+            const titleEl = document.getElementById('calendar-month-year-title');
+            const gridEl = document.getElementById('calendar-days-grid');
+            if (!titleEl || !gridEl) return;
+
+            const namaBulanIndo = [
+                "Januari", "Februari", "Maret", "April", "Mei", "Juni",
+                "Juli", "Agustus", "September", "Oktober", "November", "Desember"
+            ];
+            titleEl.innerText = `${namaBulanIndo[kalenderBulanAktif]} ${kalenderTahunAktif}`;
+
+            gridEl.innerHTML = "";
+
+            const firstDayObj = new Date(kalenderTahunAktif, kalenderBulanAktif, 1);
+            let startDayIndex = firstDayObj.getDay();
+
+            const totalDays = new Date(kalenderTahunAktif, kalenderBulanAktif + 1, 0).getDate();
+
+            for (let i = 0; i < startDayIndex; i++) {
+                const emptyCell = document.createElement('div');
+                emptyCell.className = "calendar-day-cell empty-cell";
+                gridEl.appendChild(emptyCell);
+            }
+
+            const mapTransaksiHarian = {};
+            daftarTransaksi.forEach(tx => {
+                if (tx.tanggalMentah) {
+                    const parts = tx.tanggalMentah.split('-');
+                    if (parts.length === 3) {
+                        const y = parseInt(parts[0], 10);
+                        const m = parseInt(parts[1], 10) - 1;
+                        const d = parseInt(parts[2], 10);
+                        if (y === kalenderTahunAktif && m === kalenderBulanAktif) {
+                            if (!mapTransaksiHarian[d]) {
+                                mapTransaksiHarian[d] = {
+                                    pemasukan: false,
+                                    pengeluaran: false,
+                                    transfer: false,
+                                    list: []
+                                };
+                            }
+                            if (tx.jenis === 'pemasukan') mapTransaksiHarian[d].pemasukan = true;
+                            else if (tx.jenis === 'pengeluaran') mapTransaksiHarian[d].pengeluaran = true;
+                            else if (tx.jenis === 'transfer') mapTransaksiHarian[d].transfer = true;
+                            mapTransaksiHarian[d].list.push(tx);
+                        }
+                    }
+                }
+            });
+
+            const today = new Date();
+            const todayD = today.getDate();
+            const todayM = today.getMonth();
+            const todayY = today.getFullYear();
+
+            // Set default selected date to today if empty
+            if (!tanggalTerpilihKalender) {
+                tanggalTerpilihKalender = dapatkanTanggalLokalHariIni();
+            }
+
+            for (let day = 1; day <= totalDays; day++) {
+                const cell = document.createElement('div');
+                cell.className = "calendar-day-cell";
+
+                if (day === todayD && kalenderBulanAktif === todayM && kalenderTahunAktif === todayY) {
+                    cell.classList.add('today-cell');
+                }
+
+                const tglMentahStr = `${kalenderTahunAktif}-${String(kalenderBulanAktif + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+                if (tglMentahStr === tanggalTerpilihKalender) {
+                    cell.classList.add('selected-cell');
+                }
+
+                cell.onclick = () => pilihTanggalKalender(tglMentahStr);
+
+                const numEl = document.createElement('span');
+                numEl.className = "day-number";
+                numEl.innerText = day;
+                cell.appendChild(numEl);
+
+                const dotsEl = document.createElement('div');
+                dotsEl.className = "dots-container";
+
+                if (mapTransaksiHarian[day]) {
+                    const dayInfo = mapTransaksiHarian[day];
+                    if (dayInfo.pemasukan) {
+                        const dot = document.createElement('span');
+                        dot.className = "calendar-dot dot-masuk";
+                        dotsEl.appendChild(dot);
+                    }
+                    if (dayInfo.pengeluaran) {
+                        const dot = document.createElement('span');
+                        dot.className = "calendar-dot dot-keluar";
+                        dotsEl.appendChild(dot);
+                    }
+                    if (dayInfo.transfer) {
+                        const dot = document.createElement('span');
+                        dot.className = "calendar-dot dot-transfer";
+                        dotsEl.appendChild(dot);
+                    }
+                }
+
+                cell.appendChild(dotsEl);
+                gridEl.appendChild(cell);
+            }
+
+            updateDetailKalender();
+        }
+
+        function navigasiBulanKalender(offset) {
+            kalenderBulanAktif += offset;
+            if (kalenderBulanAktif < 0) {
+                kalenderBulanAktif = 11;
+                kalenderTahunAktif--;
+            } else if (kalenderBulanAktif > 11) {
+                kalenderBulanAktif = 0;
+                kalenderTahunAktif++;
+            }
+            initKalenderTransaksi();
+        }
+
+        function pilihTanggalKalender(tglStr) {
+            tanggalTerpilihKalender = tglStr;
+            initKalenderTransaksi();
+        }
+
+        function updateDetailKalender() {
+            const detailsBox = document.getElementById('calendar-day-details-box');
+            const titleEl = document.getElementById('calendar-selected-date-title');
+            const summaryEl = document.getElementById('calendar-selected-date-summary');
+            const listEl = document.getElementById('calendar-selected-date-list');
+            if (!detailsBox || !titleEl || !summaryEl || !listEl) return;
+
+            if (!tanggalTerpilihKalender) {
+                detailsBox.style.display = 'none';
+                return;
+            }
+
+            const parts = tanggalTerpilihKalender.split('-');
+            const tglObj = new Date(parts[0], parts[1] - 1, parts[2]);
+            const formatIndo = tglObj.toLocaleDateString('id-ID', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+
+            titleEl.innerHTML = `<i class="fa-regular fa-calendar-check"></i> Transaksi: <strong>${formatIndo}</strong>`;
+
+            const txHariIni = daftarTransaksi.filter(tx => tx.tanggalMentah === tanggalTerpilihKalender);
+
+            if (txHariIni.length === 0) {
+                summaryEl.innerHTML = "";
+                listEl.innerHTML = `<small style="color: var(--text-muted); text-align: center; font-style: italic; display: block; padding: 10px; width: 100%;">Tidak ada riwayat transaksi pada tanggal ini...</small>`;
+                listEl.insertAdjacentHTML('beforeend', `
+                    <button onclick="window.tambahTransaksiDiTanggal('${tanggalTerpilihKalender}')" class="btn-shortcut-nom" style="width: 100%; padding: 8px; margin-top: 10px; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 6px;">
+                        <i class="fa-solid fa-plus-circle"></i> Tambah Transaksi di Hari Ini
+                    </button>
+                `);
+                detailsBox.style.display = 'block';
+                return;
+            }
+
+            let masuk = 0, keluar = 0;
+            txHariIni.forEach(tx => {
+                if (tx.jenis === 'pemasukan') masuk += tx.nominal;
+                else if (tx.jenis === 'pengeluaran') keluar += tx.nominal;
+            });
+
+            const isHidden = statusUserPremium && sembunyikanSaldoMode;
+            const formatRp = (val) => isHidden ? "🙈 *******" : `Rp ${val.toLocaleString('id-ID')}`;
+
+            summaryEl.innerHTML = `
+                <span style="color: #2ecc71; font-weight: 600;"><i class="fa-solid fa-arrow-up"></i> Masuk: ${formatRp(masuk)}</span>
+                <span style="color: #e74c3c; font-weight: 600; margin-left: 15px;"><i class="fa-solid fa-arrow-down"></i> Keluar: ${formatRp(keluar)}</span>
+            `;
+
+            listEl.innerHTML = "";
+            txHariIni.forEach(tx => {
+                let flowClass = "nominal-pemasukan";
+                let symbol = "+";
+                let iconClass = kamusIkon[tx.kategori] || "fa-solid fa-wand-magic-sparkles";
+
+                if (tx.jenis === 'pengeluaran') {
+                    flowClass = "nominal-pengeluaran";
+                    symbol = "-";
+                } else if (tx.jenis === 'transfer') {
+                    flowClass = "nominal-transfer";
+                    symbol = "🔄";
+                }
+
+                let labelSaku = (tx.jenis === "transfer")
+                    ? `${tx.wallet.toUpperCase()} ➔ ${tx.walletTujuan.toUpperCase()}`
+                    : tx.wallet.toUpperCase();
+
+                listEl.insertAdjacentHTML('beforeend', `
+                    <div class="calendar-detail-item">
+                        <div style="display: flex; align-items: center; gap: 10px; max-width: 65%;">
+                            <div style="background: rgba(255,255,255,0.04); width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.72rem; color: #cbd5e1; flex-shrink: 0;">
+                                <i class="${iconClass}"></i>
+                            </div>
+                            <div style="display: flex; flex-direction: column; overflow: hidden;">
+                                <span style="color: #fff; font-weight: 500; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${html_escape_tag(tx.nama)}</span>
+                                <span style="font-size: 0.62rem; color: var(--text-muted);">${kamusTeksKategori[tx.kategori] || tx.kategori} | saku: ${labelSaku}</span>
+                            </div>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 8px;">
+                            <span class="${flowClass}" style="font-weight: 600;">${symbol} ${formatRp(tx.nominal)}</span>
+                            <button class="btn-aksi-item btn-edit-item" style="font-size: 0.78rem;" onclick="window.aktifkanModeEdit(${tx.id})"><i class="fa-solid fa-pen-to-square"></i></button>
+                        </div>
+                    </div>
+                `);
+            });
+
+            listEl.insertAdjacentHTML('beforeend', `
+                <button onclick="window.tambahTransaksiDiTanggal('${tanggalTerpilihKalender}')" class="btn-shortcut-nom" style="width: 100%; padding: 8px; margin-top: 10px; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 6px;">
+                    <i class="fa-solid fa-plus-circle"></i> Tambah Transaksi di Hari Ini
+                </button>
+            `);
+
+            detailsBox.style.display = 'block';
+        }
+
+        window.initKalenderTransaksi = initKalenderTransaksi;
+        window.navigasiBulanKalender = navigasiBulanKalender;
+        window.pilihTanggalKalender = pilihTanggalKalender;
+        window.updateDetailKalender = updateDetailKalender;
 
         window.addEventListener('DOMContentLoaded', () => {
             statusUserPremium = true;
@@ -4805,8 +5342,8 @@
 
         function eksekusiResetSemuaData() {
             const judul = profilAktif === 'simulasi' ? 'Reset Rencana Simulasi 🧹' : 'Format Ulang Seluruh Data 🧹';
-            const pesan = profilAktif === 'simulasi' 
-                ? 'Yakin mau menghapus semua rencana transaksi di Mode Simulasi ini, Cuy? Catatan simulasi lo bakal dikosongkan bersih tanpa mempengaruhi data Pribadi asli! 💥' 
+            const pesan = profilAktif === 'simulasi'
+                ? 'Yakin mau menghapus semua rencana transaksi di Mode Simulasi ini, Cuy? Catatan simulasi lo bakal dikosongkan bersih tanpa mempengaruhi data Pribadi asli! 💥'
                 : 'Yakin banget mau hapus seluruh riwayat & wishlist dari awal, Cuy? Seluruh data utama di memori lokal lo bakal terhapus bersih total! 💥';
 
             panggilCustomModal(judul, pesan, () => {
@@ -4822,9 +5359,9 @@
 
                 tampilkanData();
                 panggilCustomModal(
-                    profilAktif === 'simulasi' ? 'Simulasi Direset! 🧹' : 'Sukses Format!', 
-                    profilAktif === 'simulasi' ? 'Semua rencana transaksi simulasi berhasil dihapus bersih.' : 'Aplikasi WAYFinance lo sekarang bersih total dari nol kembali!', 
-                    null, 
+                    profilAktif === 'simulasi' ? 'Simulasi Direset! 🧹' : 'Sukses Format!',
+                    profilAktif === 'simulasi' ? 'Semua rencana transaksi simulasi berhasil dihapus bersih.' : 'Aplikasi WAYFinance lo sekarang bersih total dari nol kembali!',
+                    null,
                     'success'
                 );
             });
@@ -5396,22 +5933,50 @@
                 if (panelDailyExpenses) panelDailyExpenses.style.display = 'none';
                 if (hariIniBox) hariIniBox.style.display = 'none';
             }
+
+            // Update Kalender Transaksi
+            if (typeof initKalenderTransaksi === 'function') {
+                initKalenderTransaksi();
+            }
         }
 
         function renderBillVisual() {
             const container = document.getElementById('bill-container');
             container.innerHTML = daftarTagihan.length === 0 ? `<small style="color: var(--text-muted); text-align: center; font-style: italic; display: block; padding: 10px;">Bersih, belum ada tagihan rutin terpasang...</small>` : "";
+            
+            // Hitung total tagihan rutin
+            const totalTagihan = daftarTagihan.reduce((acc, item) => acc + item.nominal, 0);
+            const totalAmountEl = document.getElementById('bill-total-amount');
+            if (totalAmountEl) {
+                totalAmountEl.innerText = 'Rp ' + totalTagihan.toLocaleString('id-ID');
+            }
+            const summaryEl = document.getElementById('bill-total-summary');
+            if (summaryEl) {
+                summaryEl.style.display = daftarTagihan.length === 0 ? 'none' : 'flex';
+            }
+
             daftarTagihan.forEach(item => {
                 container.insertAdjacentHTML('beforeend', `
                     <div class="bill-card">
-                        <div class="bill-info">
+                        <div class="bill-header">
                             <h5>📌 ${html_escape_tag(item.nama)}</h5>
-                            <p>Nominal: Rp ${item.nominal.toLocaleString('id-ID')} | Jatuh Tempo: ${item.tanggal}</p>
-                        </div>
-                        <div class="bill-actions">
-                            <select id="select-wallet-bill-${item.id}" style="padding: 6px; border-radius: 8px; background: #1a202c; color: white; border: 1px solid #3b4758; font-size: 0.75rem; outline:none;"><option value="cash">CASH</option><option value="dana">DANA</option><option value="ovo">OVO</option><option value="gopay">GOPAY</option><option value="bca">BCA</option></select>
-                            <button class="btn-celengan-mini" onclick="window.bayarTagihanOtomatis(${item.id}, document.getElementById('select-wallet-bill-${item.id}').value)">Bayar ✔</button>
                             <button class="btn-hapus-wishlist" onclick="window.hapusTagihan(${item.id})"><i class="fa-solid fa-xmark"></i></button>
+                        </div>
+                        
+                        <div class="bill-body">
+                            <p>Nominal: <strong>Rp ${item.nominal.toLocaleString('id-ID')}</strong></p>
+                            <p>Jatuh Tempo: <span style="color:#fff; font-weight:600;">${item.tanggal}</span></p>
+                        </div>
+                        
+                        <div class="bill-footer-actions">
+                            <select id="select-wallet-bill-${item.id}">
+                                <option value="cash">CASH</option>
+                                <option value="dana">DANA</option>
+                                <option value="ovo">OVO</option>
+                                <option value="gopay">GOPAY</option>
+                                <option value="bca">BCA</option>
+                            </select>
+                            <button class="btn-celengan-mini" onclick="window.bayarTagihanOtomatis(${item.id}, document.getElementById('select-wallet-bill-${item.id}').value)">Bayar ✔</button>
                         </div>
                     </div>
                 `);
@@ -5442,19 +6007,68 @@
         function renderDebtVisual() {
             const container = document.getElementById('debt-container');
             container.innerHTML = daftarPiutang.length === 0 ? `<small style="color: var(--text-muted); text-align: center; font-style: italic; display: block; padding: 10px;">Buku Hitam bersih, gak ada temen yang ngutang... (Aman/Tobat)</small>` : "";
+            
+            // Hitung total piutang
+            const totalPiutang = daftarPiutang.reduce((acc, item) => acc + item.nominal, 0);
+            const totalAmountEl = document.getElementById('debt-total-amount');
+            if (totalAmountEl) {
+                totalAmountEl.innerText = 'Rp ' + totalPiutang.toLocaleString('id-ID');
+            }
+            const summaryEl = document.getElementById('debt-total-summary');
+            if (summaryEl) {
+                summaryEl.style.display = daftarPiutang.length === 0 ? 'none' : 'flex';
+            }
+
             daftarPiutang.forEach(item => {
+                const w = item.wallet || 'cash';
+                
+                // Calculate due status dynamically
+                let dueHtml = "";
+                if (item.tempo) {
+                    const today = new Date();
+                    today.setHours(0,0,0,0);
+                    const due = new Date(item.tempo);
+                    due.setHours(0,0,0,0);
+                    const diffTime = due.getTime() - today.getTime();
+                    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                    
+                    if (diffDays < 0) {
+                        dueHtml = `<span class="debt-due-badge overdue"><i class="fa-solid fa-clock"></i> Telat ${Math.abs(diffDays)} Hari!</span>`;
+                    } else if (diffDays === 0) {
+                        dueHtml = `<span class="debt-due-badge overdue"><i class="fa-solid fa-triangle-exclamation"></i> Jatuh Tempo Hari Ini!</span>`;
+                    } else {
+                        dueHtml = `<span class="debt-due-badge pending"><i class="fa-regular fa-clock"></i> Sisa ${diffDays} Hari</span>`;
+                    }
+                }
+
                 container.insertAdjacentHTML('beforeend', `
                     <div class="debt-card">
-                        <div class="debt-info">
+                        <div class="debt-header">
                             <h5>💀 ${html_escape_tag(item.nama)}</h5>
-                            <p>Nominal: <strong>Rp ${item.nominal.toLocaleString('id-ID')}</strong></p>
-                            <p style="font-size:0.65rem; color:#f39c12; margin-top:2px;">Catatan: "${html_escape_tag(item.catatan)}"</p>
+                            <button class="btn-hapus-wishlist" onclick="window.hapusPiutang(${item.id})"><i class="fa-solid fa-xmark"></i></button>
                         </div>
-                        <div class="debt-actions">
-                            <select id="select-wallet-debt-${item.id}" style="padding: 6px; border-radius: 8px; background: #1a202c; color: white; border: 1px solid #3b4758; font-size: 0.72rem; outline:none; max-width:85px;"><option value="cash">CASH</option><option value="dana">DANA</option><option value="ovo">OVO</option><option value="gopay">GOPAY</option><option value="bca">BCA</option><option value="mandiri">MANDIRI</option></select>
+                        
+                        <div class="debt-body">
+                            <p>Nominal: <strong>Rp ${item.nominal.toLocaleString('id-ID')}</strong></p>
+                            <p style="color:#f39c12; font-style: italic;">Catatan: "${html_escape_tag(item.catatan)}"</p>
+                            <p><i class="fa-solid fa-credit-card"></i> Saku Asal: <span style="color:#fff; font-weight:600;">${w.toUpperCase()}</span></p>
+                            ${dueHtml ? `<div style="margin-top: 4px;">${dueHtml}</div>` : ''}
+                        </div>
+                        
+                        <div class="debt-footer-actions">
+                            <select id="select-wallet-debt-${item.id}">
+                                <option value="cash" ${w === 'cash' ? 'selected' : ''}>CASH</option>
+                                <option value="dana" ${w === 'dana' ? 'selected' : ''}>DANA</option>
+                                <option value="ovo" ${w === 'ovo' ? 'selected' : ''}>OVO</option>
+                                <option value="gopay" ${w === 'gopay' ? 'selected' : ''}>GOPAY</option>
+                                <option value="bca" ${w === 'bca' ? 'selected' : ''}>BCA</option>
+                                <option value="mandiri" ${w === 'mandiri' ? 'selected' : ''}>MANDIRI</option>
+                                <option value="bni" ${w === 'bni' ? 'selected' : ''}>BNI</option>
+                                <option value="bri" ${w === 'bri' ? 'selected' : ''}>BRI</option>
+                                <option value="bank_lain" ${w === 'bank_lain' ? 'selected' : ''}>LAINNYA</option>
+                            </select>
                             <button class="btn-lunas-piutang" onclick="window.tandaiPiutangLunas(${item.id}, document.getElementById('select-wallet-debt-${item.id}').value)">Lunas ✔</button>
                             <button class="btn-wa-tagih" onclick="window.kirimReminderWA(${item.id})"><i class="fa-brands fa-whatsapp"></i> Tagih</button>
-                            <button class="btn-hapus-wishlist" onclick="window.hapusPiutang(${item.id})"><i class="fa-solid fa-xmark"></i></button>
                         </div>
                     </div>
                 `);
@@ -5465,6 +6079,7 @@
             const nama = document.getElementById('debt-nama-input').value;
             const nominal = document.getElementById('debt-nominal-input').value;
             const catatan = document.getElementById('debt-catatan-input').value;
+            const walletTerpilih = document.getElementById('debt-wallet-select').value;
 
             if (!nama || nama.trim() === "" || !nominal) return;
             const nominalMurni = parseFloat(nominal.replace(/\./g, ''));
@@ -5474,7 +6089,21 @@
                 id: +new Date(),
                 nama: nama.trim(),
                 nominal: nominalMurni,
-                catatan: catatan && catatan.trim() !== "" ? catatan.trim() : "Khilaf Gak Jelas"
+                catatan: catatan && catatan.trim() !== "" ? catatan.trim() : "Khilaf Gak Jelas",
+                wallet: walletTerpilih
+            });
+
+            // Kurangi saldo saku dengan menambahkan transaksi pengeluaran
+            daftarTransaksi.unshift({
+                id: +new Date() + 1,
+                nama: `Pinjamkan ke: ${nama.trim()}`,
+                jenis: "pengeluaran",
+                wallet: walletTerpilih,
+                kategori: "piutang",
+                nominal: nominalMurni,
+                tanggalCetak: new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' }),
+                bulan: String(new Date().getMonth() + 1).padStart(2, '0'),
+                tanggalMentah: dapatkanTanggalLokalHariIni()
             });
 
             document.getElementById('debt-nama-input').value = "";
@@ -6144,7 +6773,7 @@
             const tanggalHariIni = dapatkanTanggalLokalHariIni();
             let totalHariIni = 0;
             const petaPengeluaranHarian = {};
-            
+
             daftarTransaksi.forEach(item => {
                 if (item.jenis === 'pengeluaran') {
                     const tgl = item.tanggalMentah || dapatkanTanggalLokalHariIni();
@@ -6190,7 +6819,7 @@
                             namaHariTanggal = `Kemarin (${namaHariTanggal})`;
                         }
                     }
-                } catch(e) {}
+                } catch (e) { }
 
                 let htmlItems = "";
                 dataHariIni.items.forEach(item => {
@@ -6228,12 +6857,12 @@
             document.getElementById('tanggal-transaksi').value = tgl;
             document.getElementById('jenis-transaksi').value = 'pengeluaran';
             if (typeof ubahTemaWarna === 'function') ubahTemaWarna();
-            
+
             const panelInput = document.getElementById('panel-input');
             if (panelInput) {
                 panelInput.scrollIntoView({ behavior: 'smooth' });
             }
-            
+
             panggilCustomModal('Tanggal Input Disetel 📅', `Tanggal pencatatan disetel ke <strong>${tgl}</strong> dengan tipe <strong>Pengeluaran</strong>. Silakan isi form di sebelah kiri untuk menambah transaksi!`, null, 'success');
         }
 
@@ -6245,8 +6874,8 @@
             }
 
             panggilCustomModal(
-                'Salin Pengeluaran 📋', 
-                `Apakah kamu mau menduplikasi <strong>${transaksiDicopas.length} transaksi pengeluaran</strong> dari tanggal <strong>${tgl}</strong> ke <strong>Hari Ini</strong>?`, 
+                'Salin Pengeluaran 📋',
+                `Apakah kamu mau menduplikasi <strong>${transaksiDicopas.length} transaksi pengeluaran</strong> dari tanggal <strong>${tgl}</strong> ke <strong>Hari Ini</strong>?`,
                 () => {
                     const hariIniMentah = dapatkanTanggalLokalHariIni();
                     const objekWaktu = new Date();
@@ -6293,7 +6922,7 @@
 
             for (let i = 0; i < text.length; i++) {
                 const c = text[i];
-                const next = text[i+1];
+                const next = text[i + 1];
 
                 if (c === '"') {
                     if (inQuotes && next === '"') {
@@ -6373,7 +7002,7 @@
                         if (row.length === 0 || (row.length === 1 && row[0] === "")) continue;
 
                         const firstVal = row[0].trim();
-                        
+
                         if (firstVal.startsWith("===")) {
                             if (firstVal.includes("TRANSAKSI")) {
                                 activeSection = "transaksi";
