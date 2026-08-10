@@ -1461,104 +1461,277 @@
             width: 100%;
         }
 
+        /* --- STYLING MODERN KALENDER PENGINGAT TAGIHAN --- */
+        .bill-box-creator {
+            background: rgba(30, 41, 59, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 18px;
+            padding: 16px;
+            box-sizing: border-box;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 15px;
+            backdrop-filter: blur(10px);
+        }
+
+        .bill-input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .bill-input-wrapper i {
+            position: absolute;
+            left: 14px;
+            color: #e74c3c;
+            font-size: 0.9rem;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .bill-input-wrapper input {
+            width: 100% !important;
+            padding: 10px 14px 10px 38px !important;
+            background: rgba(15, 23, 42, 0.7) !important;
+            border: 1px solid rgba(255, 255, 255, 0.12) !important;
+            border-radius: 12px !important;
+            color: #f8fafc !important;
+            font-size: 0.82rem !important;
+            outline: none !important;
+            transition: all 0.25s ease !important;
+            box-sizing: border-box !important;
+            color-scheme: dark;
+        }
+
+        .bill-input-wrapper input:focus {
+            border-color: rgba(231, 76, 60, 0.6) !important;
+            box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.15) !important;
+            background: rgba(15, 23, 42, 0.9) !important;
+        }
+
+        .btn-add-bill {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #ffffff;
+            padding: 11px 18px;
+            border-radius: 12px;
+            font-size: 0.83rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 16px rgba(231, 76, 60, 0.3);
+            width: 100%;
+        }
+
+        .btn-add-bill:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(231, 76, 60, 0.45);
+            background: linear-gradient(135deg, #ff5e4d, #d63031);
+        }
+
+        .btn-add-bill:active {
+            transform: translateY(0) scale(0.98);
+        }
+
         .bill-container {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
             gap: 12px;
-            max-height: 280px;
+            max-height: 380px;
             overflow-y: auto;
             padding-right: 4px;
             margin-bottom: 15px;
             width: 100%;
+            box-sizing: border-box;
         }
 
         .bill-card {
-            background-color: var(--dark-card);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            padding: 16px;
+            background: rgba(30, 41, 59, 0.45);
+            background-image: radial-gradient(at 0% 0%, rgba(231, 76, 60, 0.08) 0px, transparent 50%);
+            border: 1px solid rgba(231, 76, 60, 0.2);
+            padding: 15px 16px;
             border-radius: 16px;
             display: flex;
             flex-direction: column;
-            align-items: flex-start;
-            gap: 12px;
+            gap: 10px;
             width: 100%;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-            transition: transform 0.2s, border-color 0.2s;
+            box-sizing: border-box;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(12px);
+            transition: all 0.25s ease;
+            position: relative;
         }
 
         .bill-card:hover {
-            transform: translateY(-2px);
-            border-color: rgba(231, 76, 60, 0.25);
+            transform: translateY(-3px);
+            border-color: rgba(231, 76, 60, 0.45);
+            box-shadow: 0 10px 28px rgba(231, 76, 60, 0.18);
         }
 
-        .bill-header {
+        .bill-card-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             width: 100%;
         }
 
-        .bill-header h5 {
-            font-size: 0.95rem;
-            color: white;
-            font-weight: 600;
-            margin: 0;
+        .bill-card-title {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: #f8fafc;
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 8px;
+            letter-spacing: 0.2px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
         }
 
-        .bill-body {
+        .bill-card-icon {
+            width: 28px;
+            height: 28px;
+            background: rgba(231, 76, 60, 0.2);
+            border: 1px solid rgba(231, 76, 60, 0.35);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #e74c3c;
+            font-size: 0.82rem;
+            flex-shrink: 0;
+        }
+
+        .btn-hapus-bill {
+            background: rgba(231, 76, 60, 0.12);
+            border: 1px solid rgba(231, 76, 60, 0.25);
+            color: #ef4444;
+            width: 26px;
+            height: 26px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            flex-shrink: 0;
+        }
+
+        .btn-hapus-bill:hover {
+            background: rgba(231, 76, 60, 0.3);
+            color: #ffffff;
+            transform: scale(1.1);
+        }
+
+        .bill-card-body {
             display: flex;
             flex-direction: column;
-            gap: 5px;
+            gap: 6px;
             width: 100%;
         }
 
-        .bill-body p {
-            font-size: 0.75rem;
-            color: var(--text-muted);
-            margin: 0;
-            display: flex;
+        .bill-amount {
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: #ff6b6b;
+            letter-spacing: -0.3px;
+        }
+
+        .bill-due-badge {
+            display: inline-flex;
             align-items: center;
             gap: 6px;
+            font-size: 0.73rem;
+            font-weight: 600;
+            color: #cbd5e1;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 3px 8px;
+            border-radius: 6px;
+            width: fit-content;
         }
 
-        .bill-body strong {
-            color: #e74c3c;
-            font-size: 1.05rem;
-            font-weight: 700;
+        .bill-due-badge i {
+            color: #f39c12;
         }
 
-        .bill-footer-actions {
+        .bill-card-footer {
             display: flex;
             align-items: center;
             gap: 8px;
             width: 100%;
-            border-top: 1px solid rgba(255, 255, 255, 0.06);
-            padding-top: 12px;
-            margin-top: 4px;
-            flex-wrap: wrap;
+            padding-top: 10px;
+            border-top: 1px dashed rgba(255, 255, 255, 0.08);
+            margin-top: 2px;
         }
 
-        .bill-footer-actions select {
-            padding: 6px 10px;
+        .bill-wallet-select {
+            background: rgba(15, 23, 42, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #f8fafc;
             border-radius: 8px;
-            background: #1a202c;
-            color: white;
-            border: 1px solid #3b4758;
-            font-size: 0.72rem;
+            padding: 6px 10px;
+            font-size: 0.73rem;
+            font-weight: 600;
             outline: none;
+            cursor: pointer;
             flex: 1;
             min-width: 80px;
             height: 32px;
+            transition: border-color 0.2s ease;
         }
 
-        .bill-footer-actions .btn-celengan-mini {
+        .bill-wallet-select:focus,
+        .bill-wallet-select:hover {
+            border-color: rgba(231, 76, 60, 0.5);
+        }
+
+        .btn-bayar-bill {
+            background: linear-gradient(135deg, #2ecc71, #27ae60);
+            border: 1px solid rgba(46, 204, 113, 0.3);
+            color: #ffffff;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            cursor: pointer;
             height: 32px;
             display: flex;
             align-items: center;
             justify-content: center;
+            gap: 5px;
+            transition: all 0.2s ease;
+            box-shadow: 0 3px 10px rgba(46, 204, 113, 0.25);
+            white-space: nowrap;
+        }
+
+        .btn-bayar-bill:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 16px rgba(46, 204, 113, 0.4);
+            background: linear-gradient(135deg, #34d07b, #219653);
+        }
+
+        .bill-empty-state {
+            grid-column: 1 / -1;
+            padding: 16px;
+            text-align: center;
+            color: var(--text-muted, #94a3b8);
+            font-size: 0.8rem;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px dashed rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
         }
 
         .section-wishlist-title {
@@ -3939,16 +4112,25 @@
                     <i class="fa-solid fa-chevron-down toggle-chevron"></i>
                 </div>
                 <div class="collapsible-content">
-                    <div class="bill-box-creator" style="display: flex; flex-direction: column; gap: 10px;">
-                        <input type="text" id="bill-nama-input"
-                            placeholder="Nama Tagihan Rutin (Contoh: Kost / Netflix)">
-                        <div class="form-row-grid">
-                            <input type="text" id="bill-nominal-input" placeholder="Nominal Tagihan (Rp)..."
-                                onkeyup="window.formatInputRupiah(this)">
-                            <input type="date" id="bill-tanggal-input">
+                    <div class="bill-box-creator">
+                        <div class="bill-input-wrapper">
+                            <i class="fa-solid fa-receipt"></i>
+                            <input type="text" id="bill-nama-input"
+                                placeholder="Nama Tagihan Rutin (Contoh: Kost / Netflix / WiFi)">
                         </div>
-                        <button class="btn-add-wishlist" onclick="window.tambahTagihanBaru()">
-                            <i class="fa-solid fa-circle-plus"></i> Pasang Jadwal Pengingat
+                        <div class="form-row-grid">
+                            <div class="bill-input-wrapper">
+                                <i class="fa-solid fa-coins"></i>
+                                <input type="text" id="bill-nominal-input" placeholder="Nominal Tagihan (Rp)..."
+                                    onkeyup="window.formatInputRupiah(this)">
+                            </div>
+                            <div class="bill-input-wrapper">
+                                <i class="fa-solid fa-calendar-day"></i>
+                                <input type="date" id="bill-tanggal-input">
+                            </div>
+                        </div>
+                        <button class="btn-add-bill" onclick="window.tambahTagihanBaru()">
+                            <i class="fa-solid fa-plus-circle"></i> Pasang Pengingat Tagihan
                         </button>
                     </div>
                     <div id="bill-total-summary"
@@ -6545,7 +6727,14 @@
 
         function renderBillVisual() {
             const container = document.getElementById('bill-container');
-            container.innerHTML = daftarTagihan.length === 0 ? `<small style="color: var(--text-muted); text-align: center; font-style: italic; display: block; padding: 10px;">Bersih, belum ada tagihan rutin terpasang...</small>` : "";
+            if (!container) return;
+
+            container.innerHTML = daftarTagihan.length === 0 ? `
+                <div class="bill-empty-state">
+                    <i class="fa-solid fa-circle-check" style="color: #2ecc71;"></i>
+                    <span>Bersih! Belum ada tagihan rutin terpasang.</span>
+                </div>
+            ` : "";
 
             // Hitung total tagihan rutin
             const totalTagihan = daftarTagihan.reduce((acc, item) => acc + item.nominal, 0);
@@ -6559,27 +6748,40 @@
             }
 
             daftarTagihan.forEach(item => {
+                const tglFormatted = item.tanggal || '-';
                 container.insertAdjacentHTML('beforeend', `
                     <div class="bill-card">
-                        <div class="bill-header">
-                            <h5>📌 ${html_escape_tag(item.nama)}</h5>
-                            <button class="btn-hapus-wishlist" onclick="window.hapusTagihan(${item.id})"><i class="fa-solid fa-xmark"></i></button>
+                        <div class="bill-card-header">
+                            <div class="bill-card-title">
+                                <span class="bill-card-icon"><i class="fa-solid fa-calendar-check"></i></span>
+                                <span>${html_escape_tag(item.nama)}</span>
+                            </div>
+                            <button class="btn-hapus-bill" title="Hapus Tagihan" onclick="window.hapusTagihan(${item.id})">
+                                <i class="fa-solid fa-xmark"></i>
+                            </button>
                         </div>
                         
-                        <div class="bill-body">
-                            <p>Nominal: <strong>Rp ${item.nominal.toLocaleString('id-ID')}</strong></p>
-                            <p>Jatuh Tempo: <span style="color:#fff; font-weight:600;">${item.tanggal}</span></p>
+                        <div class="bill-card-body">
+                            <div class="bill-amount">Rp ${item.nominal.toLocaleString('id-ID')}</div>
+                            <div class="bill-due-badge">
+                                <i class="fa-regular fa-clock"></i> Jatuh Tempo: ${tglFormatted}
+                            </div>
                         </div>
                         
-                        <div class="bill-footer-actions">
-                            <select id="select-wallet-bill-${item.id}">
-                                <option value="cash">CASH</option>
-                                <option value="dana">DANA</option>
-                                <option value="ovo">OVO</option>
-                                <option value="gopay">GOPAY</option>
-                                <option value="bca">BCA</option>
+                        <div class="bill-card-footer">
+                            <select id="select-wallet-bill-${item.id}" class="bill-wallet-select">
+                                <option value="cash">💵 Uang Cash</option>
+                                <option value="dana">📱 DANA</option>
+                                <option value="gopay">🟢 GoPay</option>
+                                <option value="ovo">🟣 OVO</option>
+                                <option value="bca">🏦 Bank BCA</option>
+                                <option value="mandiri">🏢 Bank Mandiri</option>
+                                <option value="bni">🏦 Bank BNI</option>
+                                <option value="bri">🏦 Bank BRI</option>
                             </select>
-                            <button class="btn-celengan-mini" onclick="window.bayarTagihanOtomatis(${item.id}, document.getElementById('select-wallet-bill-${item.id}').value)">Bayar ✔</button>
+                            <button class="btn-bayar-bill" onclick="window.bayarTagihanOtomatis(${item.id}, document.getElementById('select-wallet-bill-${item.id}').value)">
+                                Bayar ✔
+                            </button>
                         </div>
                     </div>
                 `);

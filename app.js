@@ -2442,7 +2442,14 @@ function tampilkanData() {
 
 function renderBillVisual() {
     const container = document.getElementById('bill-container');
-    container.innerHTML = daftarTagihan.length === 0 ? `<small style="color: var(--text-muted); text-align: center; font-style: italic; display: block; padding: 10px;">Bersih, belum ada tagihan rutin terpasang...</small>` : "";
+    if (!container) return;
+
+    container.innerHTML = daftarTagihan.length === 0 ? `
+        <div class="bill-empty-state">
+            <i class="fa-solid fa-circle-check" style="color: #2ecc71;"></i>
+            <span>Bersih! Belum ada tagihan rutin terpasang.</span>
+        </div>
+    ` : "";
     
     // Hitung total tagihan rutin
     const totalTagihan = daftarTagihan.reduce((acc, item) => acc + item.nominal, 0);
@@ -2456,27 +2463,40 @@ function renderBillVisual() {
     }
 
     daftarTagihan.forEach(item => {
+        const tglFormatted = item.tanggal || '-';
         container.insertAdjacentHTML('beforeend', `
             <div class="bill-card">
-                <div class="bill-header">
-                    <h5>📌 ${html_escape_tag(item.nama)}</h5>
-                    <button class="btn-hapus-wishlist" onclick="window.hapusTagihan(${item.id})"><i class="fa-solid fa-xmark"></i></button>
+                <div class="bill-card-header">
+                    <div class="bill-card-title">
+                        <span class="bill-card-icon"><i class="fa-solid fa-calendar-check"></i></span>
+                        <span>${html_escape_tag(item.nama)}</span>
+                    </div>
+                    <button class="btn-hapus-bill" title="Hapus Tagihan" onclick="window.hapusTagihan(${item.id})">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
                 </div>
                 
-                <div class="bill-body">
-                    <p>Nominal: <strong>Rp ${item.nominal.toLocaleString('id-ID')}</strong></p>
-                    <p>Jatuh Tempo: <span style="color:#fff; font-weight:600;">${item.tanggal}</span></p>
+                <div class="bill-card-body">
+                    <div class="bill-amount">Rp ${item.nominal.toLocaleString('id-ID')}</div>
+                    <div class="bill-due-badge">
+                        <i class="fa-regular fa-clock"></i> Jatuh Tempo: ${tglFormatted}
+                    </div>
                 </div>
                 
-                <div class="bill-footer-actions">
-                    <select id="select-wallet-bill-${item.id}">
-                        <option value="cash">CASH</option>
-                        <option value="dana">DANA</option>
-                        <option value="ovo">OVO</option>
-                        <option value="gopay">GOPAY</option>
-                        <option value="bca">BCA</option>
+                <div class="bill-card-footer">
+                    <select id="select-wallet-bill-${item.id}" class="bill-wallet-select">
+                        <option value="cash">💵 Uang Cash</option>
+                        <option value="dana">📱 DANA</option>
+                        <option value="gopay">🟢 GoPay</option>
+                        <option value="ovo">🟣 OVO</option>
+                        <option value="bca">🏦 Bank BCA</option>
+                        <option value="mandiri">🏢 Bank Mandiri</option>
+                        <option value="bni">🏦 Bank BNI</option>
+                        <option value="bri">🏦 Bank BRI</option>
                     </select>
-                    <button class="btn-celengan-mini" onclick="window.bayarTagihanOtomatis(${item.id}, document.getElementById('select-wallet-bill-${item.id}').value)">Bayar ✔</button>
+                    <button class="btn-bayar-bill" onclick="window.bayarTagihanOtomatis(${item.id}, document.getElementById('select-wallet-bill-${item.id}').value)">
+                        Bayar ✔
+                    </button>
                 </div>
             </div>
         `);
