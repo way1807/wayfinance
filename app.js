@@ -1723,22 +1723,19 @@ function renderSmartQuickLog() {
         });
     }
 
-    const defaultPresets = [
-        { nama: 'Beli Rokok', nominal: 35000, kategori: 'rokok' },
-        { nama: 'Kopi Nongkrong', nominal: 20000, kategori: 'makanan' },
-        { nama: 'Isi Bensin', nominal: 30000, kategori: 'transportasi' },
-        { nama: 'Makan Harian', nominal: 25000, kategori: 'makanan' }
-    ];
-
-    let finalItems = [...topItems];
-    defaultPresets.forEach(dp => {
-        if (finalItems.length < 4 && !finalItems.some(fi => normalisasiNama(fi.nama) === normalisasiNama(dp.nama))) {
-            finalItems.push(dp);
-        }
-    });
-
     container.innerHTML = "";
-    finalItems.forEach(item => {
+
+    if (topItems.length === 0) {
+        container.innerHTML = `
+            <div class="quick-log-empty-state">
+                <i class="fa-solid fa-wand-magic-sparkles"></i>
+                <span>Belum ada riwayat transaksi. Tombol Quick Log akan otomatis muncul sesuai kebiasaanmu!</span>
+            </div>
+        `;
+        return;
+    }
+
+    topItems.forEach(item => {
         const visual = dapatkanIkonKategoriVisual(item.kategori, item.nama);
         const nominalTeks = formatNominalSingkat(item.nominal);
         const namaFormatted = formatNamaJudul(item.nama);
@@ -1747,6 +1744,7 @@ function renderSmartQuickLog() {
         btn.type = 'button';
         btn.className = 'btn-quick-log';
         btn.title = `${namaFormatted} - Rp ${item.nominal.toLocaleString('id-ID')}`;
+        btn.setAttribute('data-tooltip', `${namaFormatted} • Rp ${item.nominal.toLocaleString('id-ID')}`);
         
         btn.onclick = (e) => {
             e.preventDefault();

@@ -462,18 +462,100 @@
         }
 
         /* --- QUICK LOG 1-KLIK MODERN GLASSMORPHIC --- */
+        .quick-log-section {
+            margin-bottom: 20px;
+            background: rgba(30, 41, 59, 0.35);
+            background-image: radial-gradient(at 0% 0%, rgba(243, 156, 18, 0.05) 0px, transparent 50%),
+                              radial-gradient(at 100% 100%, rgba(59, 130, 246, 0.05) 0px, transparent 50%);
+            border: 1px dashed rgba(255, 255, 255, 0.15);
+            padding: 16px;
+            border-radius: 18px;
+            box-sizing: border-box;
+            width: 100%;
+            overflow: hidden;
+            backdrop-filter: blur(12px);
+            transition: border-color 0.3s ease;
+        }
+
+        .quick-log-section:hover {
+            border-color: rgba(243, 156, 18, 0.35);
+        }
+
+        .quick-log-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+            gap: 8px 12px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .quick-log-header-title {
+            font-size: 0.82rem;
+            font-weight: 700;
+            color: #f8fafc;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            letter-spacing: 0.2px;
+        }
+
+        .quick-log-header-title i {
+            color: #f39c12;
+            filter: drop-shadow(0 0 6px rgba(243, 156, 18, 0.5));
+        }
+
+        .quick-log-wallet-picker {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            min-width: 0;
+        }
+
+        .quick-log-wallet-picker label {
+            font-size: 0.72rem;
+            color: var(--text-muted, #94a3b8);
+            white-space: nowrap;
+            font-weight: 500;
+        }
+
+        .quick-log-wallet-picker select {
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #f8fafc;
+            border-radius: 10px;
+            padding: 4px 10px;
+            font-size: 0.75rem;
+            outline: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            max-width: 170px;
+            text-overflow: ellipsis;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .quick-log-wallet-picker select:focus,
+        .quick-log-wallet-picker select:hover {
+            border-color: rgba(243, 156, 18, 0.5);
+            background: rgba(15, 23, 42, 0.95);
+            box-shadow: 0 0 0 3px rgba(243, 156, 18, 0.15);
+        }
+
         .quick-log-buttons-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
+            grid-template-columns: repeat(2, minmax(0, 1fr));
             gap: 10px;
             width: 100%;
+            box-sizing: border-box;
         }
 
         .btn-quick-log {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.12);
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             color: #f8fafc;
-            padding: 10px 12px;
+            padding: 9px 11px;
             border-radius: 14px;
             cursor: pointer;
             display: flex;
@@ -483,23 +565,78 @@
             transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
             backdrop-filter: blur(10px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
             width: 100%;
+            min-width: 0;
+            box-sizing: border-box;
+            overflow: visible;
         }
 
         .btn-quick-log * {
             pointer-events: none;
         }
 
+        /* --- TOOLTIP BAYANGAN / GLOW POPUP SAAT DITAHAN ATAL HOVER --- */
+        .btn-quick-log[data-tooltip]::before {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: calc(100% + 9px);
+            left: 50%;
+            transform: translateX(-50%) translateY(4px) scale(0.95);
+            background: rgba(15, 23, 42, 0.95);
+            border: 1px solid rgba(243, 156, 18, 0.5);
+            color: #f8fafc;
+            padding: 6px 12px;
+            border-radius: 10px;
+            font-size: 0.74rem;
+            font-weight: 600;
+            white-space: nowrap;
+            pointer-events: none;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.7), 0 0 14px rgba(243, 156, 18, 0.3);
+            z-index: 999;
+            backdrop-filter: blur(12px);
+            letter-spacing: 0.2px;
+        }
+
+        .btn-quick-log[data-tooltip]::after {
+            content: '';
+            position: absolute;
+            bottom: calc(100% + 3px);
+            left: 50%;
+            transform: translateX(-50%) translateY(4px);
+            border-width: 6px 6px 0 6px;
+            border-style: solid;
+            border-color: rgba(243, 156, 18, 0.6) transparent transparent transparent;
+            pointer-events: none;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 999;
+        }
+
+        .btn-quick-log[data-tooltip]:hover::before,
+        .btn-quick-log[data-tooltip]:hover::after,
+        .btn-quick-log[data-tooltip]:active::before,
+        .btn-quick-log[data-tooltip]:active::after,
+        .btn-quick-log[data-tooltip]:focus::before,
+        .btn-quick-log[data-tooltip]:focus::after {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(0) scale(1);
+        }
+
         .btn-quick-log:hover {
-            transform: translateY(-3px) scale(1.02);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
-            border-color: rgba(255, 255, 255, 0.25);
-            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            border-color: rgba(255, 255, 255, 0.22);
+            background: rgba(255, 255, 255, 0.08);
         }
 
         .btn-quick-log:active {
-            transform: translateY(-1px) scale(0.99);
+            transform: translateY(0) scale(0.98);
         }
 
         .quick-log-left {
@@ -508,41 +645,96 @@
             gap: 8px;
             min-width: 0;
             flex: 1;
+            overflow: hidden;
             pointer-events: none;
         }
 
         .quick-log-icon-avatar {
-            width: 28px;
-            height: 28px;
+            width: 30px;
+            height: 30px;
             border-radius: 9px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             flex-shrink: 0;
             pointer-events: none;
         }
 
         .quick-log-title {
-            font-size: 0.82rem;
+            font-size: 0.8rem;
             font-weight: 600;
             color: #f1f5f9;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-            letter-spacing: 0.2px;
+            letter-spacing: 0.1px;
             pointer-events: none;
+            min-width: 0;
+            transition: color 0.2s ease;
         }
 
         .quick-log-badge {
-            padding: 3px 9px;
+            padding: 3px 8px;
             border-radius: 20px;
-            font-size: 0.75rem;
+            font-size: 0.72rem;
             font-weight: 700;
             flex-shrink: 0;
-            letter-spacing: 0.3px;
+            letter-spacing: 0.2px;
             box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
             pointer-events: none;
+            white-space: nowrap;
+        }
+
+        .quick-log-empty-state {
+            grid-column: 1 / -1;
+            padding: 14px 16px;
+            text-align: center;
+            color: var(--text-muted, #94a3b8);
+            font-size: 0.78rem;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px dashed rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            line-height: 1.4;
+        }
+
+        .quick-log-empty-state i {
+            color: #f39c12;
+            font-size: 0.9rem;
+            flex-shrink: 0;
+        }
+
+        @media (max-width: 480px) {
+            .quick-log-section {
+                padding: 12px;
+            }
+            .quick-log-buttons-grid {
+                gap: 6px;
+            }
+            .btn-quick-log {
+                padding: 7px 8px;
+                gap: 5px;
+            }
+            .quick-log-left {
+                gap: 5px;
+            }
+            .quick-log-icon-avatar {
+                width: 25px;
+                height: 25px;
+                font-size: 0.8rem;
+                border-radius: 7px;
+            }
+            .quick-log-title {
+                font-size: 0.77rem;
+            }
+            .quick-log-badge {
+                font-size: 0.67rem;
+                padding: 2px 5px;
+            }
         }
 
         .tema-pemasukan input:focus,
@@ -3402,19 +3594,14 @@
             </div>
 
             <!-- WIDGET QUICK LOG 1-KLIK -->
-            <div class="quick-log-section"
-                style="margin-bottom: 20px; background: rgba(255, 255, 255, 0.03); border: 1px dashed rgba(255, 255, 255, 0.12); padding: 14px 16px; border-radius: 18px;">
-                <div
-                    style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 8px;">
-                    <span
-                        style="font-size: 0.82rem; font-weight: 600; color: #f8fafc; display: flex; align-items: center; gap: 6px;">
-                        <i class="fa-solid fa-bolt" style="color: #f39c12;"></i> Quick Log 1-Klik ⚡
+            <div class="quick-log-section">
+                <div class="quick-log-header">
+                    <span class="quick-log-header-title">
+                        <i class="fa-solid fa-bolt"></i> Quick Log 1-Klik ⚡
                     </span>
-                    <div style="display: flex; align-items: center; gap: 6px;">
-                        <label for="quick-log-wallet-select" style="font-size: 0.72rem; color: var(--text-muted);">Duit
-                            Dari:</label>
-                        <select id="quick-log-wallet-select"
-                            style="background: rgba(40, 48, 61, 0.9); border: 1px solid rgba(255, 255, 255, 0.15); color: #f8fafc; border-radius: 8px; padding: 4px 8px; font-size: 0.75rem; outline: none; cursor: pointer;">
+                    <div class="quick-log-wallet-picker">
+                        <label for="quick-log-wallet-select">Duit Dari:</label>
+                        <select id="quick-log-wallet-select">
                             <option value="ask">❓ Pilih Saku Tiap Klik</option>
                             <option value="cash">💵 Uang Cash</option>
                             <option value="dana">📱 DANA</option>
@@ -3428,16 +3615,10 @@
                     </div>
                 </div>
                 <div id="quick-log-buttons-container" class="quick-log-buttons-grid">
-                    <button type="button" class="btn-quick-log"
-                        onclick="window.tambahQuickLog('Beli Rokok', 35000, 'rokok', '🚬')">
-                        <div class="quick-log-left">
-                            <span class="quick-log-icon-avatar"
-                                style="background: rgba(231,76,60,0.18); border: 1px solid rgba(231,76,60,0.35);">🚬</span>
-                            <span class="quick-log-title">Beli Rokok</span>
-                        </div>
-                        <span class="quick-log-badge"
-                            style="background: rgba(231,76,60,0.2); border: 1px solid rgba(231,76,60,0.4); color: #e74c3c;">35k</span>
-                    </button>
+                    <div class="quick-log-empty-state">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i>
+                        <span>Belum ada riwayat transaksi. Tombol Quick Log akan otomatis muncul sesuai kebiasaanmu!</span>
+                    </div>
                 </div>
             </div>
 
@@ -5647,22 +5828,19 @@
                 });
             }
 
-            const defaultPresets = [
-                { nama: 'Beli Rokok', nominal: 35000, kategori: 'rokok' },
-                { nama: 'Kopi Nongkrong', nominal: 20000, kategori: 'makanan' },
-                { nama: 'Isi Bensin', nominal: 30000, kategori: 'transportasi' },
-                { nama: 'Makan Harian', nominal: 25000, kategori: 'makanan' }
-            ];
-
-            let finalItems = [...topItems];
-            defaultPresets.forEach(dp => {
-                if (finalItems.length < 4 && !finalItems.some(fi => normalisasiNama(fi.nama) === normalisasiNama(dp.nama))) {
-                    finalItems.push(dp);
-                }
-            });
-
             container.innerHTML = "";
-            finalItems.forEach(item => {
+
+            if (topItems.length === 0) {
+                container.innerHTML = `
+                    <div class="quick-log-empty-state">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i>
+                        <span>Belum ada riwayat transaksi. Tombol Quick Log akan otomatis muncul sesuai kebiasaanmu!</span>
+                    </div>
+                `;
+                return;
+            }
+
+            topItems.forEach(item => {
                 const visual = dapatkanIkonKategoriVisual(item.kategori, item.nama);
                 const nominalTeks = formatNominalSingkat(item.nominal);
                 const namaFormatted = formatNamaJudul(item.nama);
@@ -5671,6 +5849,7 @@
                 btn.type = 'button';
                 btn.className = 'btn-quick-log';
                 btn.title = `${namaFormatted} - Rp ${item.nominal.toLocaleString('id-ID')}`;
+                btn.setAttribute('data-tooltip', `${namaFormatted} • Rp ${item.nominal.toLocaleString('id-ID')}`);
 
                 btn.onclick = (e) => {
                     e.preventDefault();
