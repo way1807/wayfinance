@@ -425,6 +425,52 @@
             color: white;
         }
 
+        /* FIX STYLING & OVERFLOW UNTUK INPUT DATE (KHUSUS IPHONE / IOS SAFARI) */
+        input[type="date"],
+        input[type="time"],
+        input[type="datetime-local"] {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            box-sizing: border-box !important;
+            min-width: 0 !important;
+            max-width: 100% !important;
+            width: 100% !important;
+            color-scheme: dark;
+        }
+
+        input[type="date"]::-webkit-date-and-time-value {
+            text-align: left;
+            min-height: 1.2em;
+            margin: 0;
+        }
+
+        input[type="date"]::-webkit-calendar-picker-indicator {
+            background-color: transparent;
+            cursor: pointer;
+            filter: invert(0.8);
+            opacity: 0.8;
+        }
+
+        /* GRID ROW CREATOR RESPONSIVE (PREVENT OVERFLOW ON IPHONE) */
+        .creator-grid-row {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 10px;
+            width: 100%;
+        }
+
+        .creator-grid-row > * {
+            min-width: 0;
+            max-width: 100%;
+        }
+
+        @media (max-width: 576px) {
+            .creator-grid-row {
+                grid-template-columns: 1fr !important;
+            }
+        }
+
         /* --- SHORTCUT NOMINAL CEPAT --- */
         .shortcut-nominal-container {
             display: grid;
@@ -1905,7 +1951,7 @@
             <!-- KALENDER JADWAL TAGIHAN RUTIN (BILL) -->
             <div id="panel-bill" class="bill-section-target" style="width: 100%;">
                 <div class="section-bill-title">
-                    <i class="fa-solid fa-calendar-check"></i> Kalender Pengingat Tagihan 🗓️
+                    <i class="fa-solid fa-calendar-check"></i> Kalender Pengingat Tagihan
                 </div>
                 <div class="bill-box-creator">
                     <input type="text" id="bill-nama-input" placeholder="Nama Tagihan Rutin (Contoh: Kost / Netflix)">
@@ -1921,7 +1967,7 @@
 
             <div id="panel-goals" class="wishlist-section-target" style="width: 100%;">
                 <div class="section-wishlist-title">
-                    <i class="fa-solid fa-bullseye"></i> Financial Goals / Wishlist 🎯
+                    <i class="fa-solid fa-bullseye"></i> Financial Goals / Wishlist
                 </div>
 
                 <div class="wishlist-box-creator">

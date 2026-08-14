@@ -434,6 +434,52 @@
             color: white;
         }
 
+        /* FIX STYLING & OVERFLOW UNTUK INPUT DATE (KHUSUS IPHONE / IOS SAFARI) */
+        input[type="date"],
+        input[type="time"],
+        input[type="datetime-local"] {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            box-sizing: border-box !important;
+            min-width: 0 !important;
+            max-width: 100% !important;
+            width: 100% !important;
+            color-scheme: dark;
+        }
+
+        input[type="date"]::-webkit-date-and-time-value {
+            text-align: left;
+            min-height: 1.2em;
+            margin: 0;
+        }
+
+        input[type="date"]::-webkit-calendar-picker-indicator {
+            background-color: transparent;
+            cursor: pointer;
+            filter: invert(0.8);
+            opacity: 0.8;
+        }
+
+        /* GRID ROW CREATOR RESPONSIVE (PREVENT OVERFLOW ON IPHONE) */
+        .creator-grid-row {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 10px;
+            width: 100%;
+        }
+
+        .creator-grid-row > * {
+            min-width: 0;
+            max-width: 100%;
+        }
+
+        @media (max-width: 576px) {
+            .creator-grid-row {
+                grid-template-columns: 1fr !important;
+            }
+        }
+
         /* --- SHORTCUT NOMINAL CEPAT --- */
         .shortcut-nominal-container {
             display: grid;
@@ -2270,15 +2316,25 @@
             border-top: none !important;
             padding-top: 0 !important;
             margin-bottom: 0 !important;
+            gap: 10px;
         }
 
         .section-collapsible-header span {
-            font-size: 1.05rem;
+            font-size: 1.02rem;
             font-weight: 600;
             color: #ffffff;
             display: flex;
             align-items: center;
             gap: 8px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        @media (max-width: 480px) {
+            .section-collapsible-header span {
+                font-size: 0.92rem;
+            }
         }
 
         .toggle-chevron {
@@ -4047,8 +4103,7 @@
             <div id="panel-budget-limit" class="budget-limit-section-target collapsible-section" style="width: 100%;">
                 <div class="section-budget-limit-title section-collapsible-header"
                     onclick="window.toggleSectionCollapse('panel-budget-limit')">
-                    <span><i class="fa-solid fa-triangle-exclamation" style="color: #f39c12;"></i> Limit Budget Kategori
-                        ⚠️</span>
+                    <span><i class="fa-solid fa-triangle-exclamation" style="color: #f39c12;"></i> Limit Budget Kategori</span>
                     <i class="fa-solid fa-chevron-down toggle-chevron"></i>
                 </div>
                 <div class="collapsible-content">
@@ -4108,7 +4163,7 @@
             <div id="panel-bill" class="bill-section-target collapsible-section" style="width: 100%;">
                 <div class="section-bill-title section-collapsible-header"
                     onclick="window.toggleSectionCollapse('panel-bill')">
-                    <span><i class="fa-solid fa-calendar-check"></i> Kalender Pengingat Tagihan 🗓️</span>
+                    <span><i class="fa-solid fa-calendar-check"></i> Kalender Pengingat Tagihan</span>
                     <i class="fa-solid fa-chevron-down toggle-chevron"></i>
                 </div>
                 <div class="collapsible-content">
@@ -4118,7 +4173,7 @@
                             <input type="text" id="bill-nama-input"
                                 placeholder="Nama Tagihan Rutin (Contoh: Kost / Netflix / WiFi)">
                         </div>
-                        <div class="form-row-grid">
+                        <div class="form-row-grid creator-grid-row">
                             <div class="bill-input-wrapper">
                                 <i class="fa-solid fa-coins"></i>
                                 <input type="text" id="bill-nominal-input" placeholder="Nominal Tagihan (Rp)..."
@@ -4155,14 +4210,13 @@
             <div id="panel-goals" class="wishlist-section-target collapsible-section" style="width: 100%;">
                 <div class="section-wishlist-title section-collapsible-header"
                     onclick="window.toggleSectionCollapse('panel-goals')">
-                    <span><i class="fa-solid fa-bullseye"></i> Financial Goals / Wishlist 🎯</span>
+                    <span><i class="fa-solid fa-bullseye"></i> Financial Goals / Wishlist</span>
                     <i class="fa-solid fa-chevron-down toggle-chevron"></i>
                 </div>
                 <div class="collapsible-content">
                     <div class="wishlist-box-creator" style="display: flex; flex-direction: column; gap: 10px;">
-                        <div class="form-row-grid">
-                            <input type="text" id="wishlist-nama-input"
-                                placeholder="Target barang impian (Contoh: PS5)">
+                        <div class="form-row-grid creator-grid-row">
+                            <input type="text" id="wishlist-nama-input" placeholder="Target barang impian (Contoh: PS5)">
                             <input type="text" id="wishlist-harga-input" placeholder="Harga Target Barang (Rp)..."
                                 onkeyup="window.formatInputRupiah(this)">
                         </div>
@@ -4178,14 +4232,13 @@
             <div id="panel-debts" class="debt-section-target collapsible-section" style="width: 100%;">
                 <div class="section-debt-title section-collapsible-header"
                     onclick="window.toggleSectionCollapse('panel-debts')">
-                    <span><i class="fa-solid fa-book-skull" style="color: #e74c3c;"></i> Buku Hitam Piutang (Tagih
-                        Teman) 🧾</span>
+                    <span><i class="fa-solid fa-book-skull" style="color: #e74c3c;"></i> Buku Hitam Piutang (Tagih Teman)</span>
                     <i class="fa-solid fa-chevron-down toggle-chevron"></i>
                 </div>
                 <div class="collapsible-content">
                     <div class="debt-box-creator" style="display: flex; flex-direction: column; gap: 10px;">
                         <input type="text" id="debt-nama-input" placeholder="Nama temen lo yang ngutang...">
-                        <div class="form-row-grid">
+                        <div class="form-row-grid creator-grid-row">
                             <input type="text" id="debt-nominal-input" placeholder="Nominal utang (Rp)..."
                                 onkeyup="window.formatInputRupiah(this)">
                             <select id="debt-wallet-select">
@@ -4229,8 +4282,7 @@
             <div id="panel-kalender-transaksi" class="collapsible-section" style="width: 100%;">
                 <div class="section-collapsible-header"
                     onclick="window.toggleSectionCollapse('panel-kalender-transaksi')">
-                    <span><i class="fa-solid fa-calendar-days" style="color: #2ecc71;"></i> Kalender Transaksi
-                        Interaktif 📅</span>
+                    <span><i class="fa-solid fa-calendar-days" style="color: #2ecc71;"></i> Kalender Transaksi Interaktif</span>
                     <i class="fa-solid fa-chevron-down toggle-chevron"></i>
                 </div>
                 <div class="collapsible-content">
@@ -4288,8 +4340,7 @@
                 style="width: 100%; display: none;">
                 <div class="section-daily-expenses-title section-collapsible-header"
                     onclick="window.toggleSectionCollapse('panel-daily-expenses')">
-                    <span><i class="fa-solid fa-calendar-day" style="color: #3498db;"></i> Pengeluaran Harian & Riwayat
-                        📅</span>
+                    <span><i class="fa-solid fa-calendar-day" style="color: #3498db;"></i> Pengeluaran Harian & Riwayat</span>
                     <i class="fa-solid fa-chevron-down toggle-chevron"></i>
                 </div>
                 <div class="collapsible-content">
