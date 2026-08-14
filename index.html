@@ -3135,10 +3135,16 @@
             font-size: 0.8rem;
             color: #f8fafc;
             line-height: 1.4;
+            word-break: break-word;
+            overflow-wrap: break-word;
+            white-space: normal;
         }
 
         .info-terboros-box p strong {
             color: #e74c3c;
+            word-break: break-word;
+            overflow-wrap: break-word;
+            white-space: normal;
         }
 
         .info-terboros-box {
@@ -4113,11 +4119,11 @@
 
                     <div class="budget-warning-config"
                         style="display: flex; flex-wrap: wrap; gap: 10px; align-items: flex-end; margin-bottom: 18px;">
-                        <div style="display: flex; flex: 1 1 360px; gap: 10px; flex-wrap: wrap;">
+                        <div class="creator-grid-row">
                             <input type="text" id="global-budget-threshold-input" placeholder="Rp 2.500.000"
                                 onkeyup="window.formatInputRupiah(this)"
-                                style="padding: 10px 14px; border-radius: 12px; background: var(--dark-card); border: 1px solid rgba(255,255,255,0.08); color: white; min-width: 220px; flex: 1; outline: none;">
-                            <button class="btn-add-wishlist" style="min-width: 170px; padding: 10px 14px;"
+                                style="padding: 10px 14px; border-radius: 12px; background: var(--dark-card); border: 1px solid rgba(255,255,255,0.08); color: white; width: 100%; outline: none; box-sizing: border-box;">
+                            <button class="btn-add-wishlist" style="width: 100%; padding: 10px 14px;"
                                 onclick="window.simpanBatasBudgetGlobal()">
                                 <i class="fa-solid fa-sliders"></i> Set Batas Peringatan
                             </button>

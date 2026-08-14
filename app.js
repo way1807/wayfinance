@@ -2839,7 +2839,7 @@ function renderBudgetLimits(totalSpent = {}) {
                     </span>
                 </div>
                 <div style="display: flex; gap: 8px; width: 100%; align-items: center;">
-                    <input type="text" id="input-limit-${kat}" placeholder="Set Limit Rp..." value="${inputVal}" onkeyup="window.formatInputRupiah(this)" style="padding: 8px 12px; border-radius: 10px; font-size: 0.8rem; background: var(--dark-card) !important; border: 1px solid rgba(255,255,255,0.08); color: white !important; flex: 1; outline:none; box-sizing: border-box;">
+                    <input type="text" id="input-limit-${kat}" placeholder="Set Limit Rp..." value="${inputVal}" onkeyup="window.formatInputRupiah(this)" style="padding: 8px 12px; border-radius: 10px; font-size: 0.8rem; background: var(--dark-card) !important; border: 1px solid rgba(255,255,255,0.08); color: white !important; flex: 1; min-width: 0; outline:none; box-sizing: border-box;">
                     <button onclick="window.simpanLimitKategori('${kat}')" style="background: var(--bg-transfer); border:none; color:white; padding: 8px 14px; border-radius: 10px; font-size: 0.78rem; cursor:pointer; font-weight:600; transition: all 0.2s; white-space: nowrap; flex-shrink: 0;">Pasang ✔</button>
                 </div>
                 <!-- Progress bar -->
