@@ -1234,9 +1234,30 @@
             color: #ffffff;
             cursor: pointer;
             transition: all 0.2s;
-            display: flex;
-            align-items: center;
-            gap: 10px;
+            display: flex !important;
+            align-items: center !important;
+            gap: 10px !important;
+        }
+
+        .custom-select-option i,
+        .custom-select-trigger span i,
+        .custom-select-option img,
+        .custom-select-trigger span img {
+            position: static !important;
+            transform: none !important;
+            left: auto !important;
+            top: auto !important;
+            margin: 0 8px 0 0 !important;
+            flex-shrink: 0 !important;
+            display: inline-block !important;
+        }
+
+        .custom-select-trigger .select-chevron {
+            position: absolute !important;
+            right: 14px !important;
+            left: auto !important;
+            top: 50% !important;
+            transform: translateY(-50%) !important;
         }
 
         .custom-select-option:hover {
