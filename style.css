@@ -3904,3 +3904,13 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     transform: translateY(-2px);
     box-shadow: 0 12px 30px rgba(46, 204, 113, 0.4);
 }
+
+@media (max-width: 768px) {
+    #wrapper-input-sync {
+        padding-bottom: 90px !important;
+    }
+    .sync-panel-box {
+        padding: 16px !important;
+        border-radius: 20px !important;
+    }
+}

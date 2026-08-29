@@ -4102,14 +4102,14 @@
 
             <!-- WRAPPER INPUT MODE PENYESUAIAN SALDO -->
             <div id="wrapper-input-sync" style="display: none; width: 100%;">
-                <div class="sync-panel-box" style="background: linear-gradient(145deg, rgba(31, 38, 51, 0.7), rgba(22, 27, 34, 0.9)); border: 1px solid rgba(0, 129, 180, 0.3); padding: 24px; border-radius: 24px; box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3); margin-top: 10px;">
-                    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px dashed rgba(255,255,255,0.1);">
+                <div class="sync-panel-box" style="background: linear-gradient(145deg, rgba(31, 38, 51, 0.7), rgba(22, 27, 34, 0.9)); border: 1px solid rgba(0, 129, 180, 0.3); padding: 20px; border-radius: 22px; box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3); margin-top: 10px;">
+                    <div class="sync-panel-header" style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px dashed rgba(255,255,255,0.1);">
                         <div style="width: 42px; height: 42px; border-radius: 14px; background: linear-gradient(135deg, #0081b4, #2ecc71); display: flex; align-items: center; justify-content: center; color: #fff; font-size: 1.25rem; flex-shrink: 0;">
                             <i class="fa-solid fa-scale-balanced"></i>
                         </div>
-                        <div>
-                            <h4 style="color: #fff; font-size: 1.05rem; font-weight: 700;">Form Penyesuaian Saldo Riil ⚖️</h4>
-                            <p style="font-size: 0.75rem; color: var(--text-muted);">Singkronkan saldo web dengan M-Banking tanpa perlu matematika manual!</p>
+                        <div style="flex: 1; min-width: 0;">
+                            <h4 style="color: #fff; font-size: 1rem; font-weight: 700; margin: 0; line-height: 1.3;">Form Penyesuaian Saldo Riil ⚖️</h4>
+                            <p style="font-size: 0.73rem; color: var(--text-muted); margin: 3px 0 0 0; line-height: 1.3;">Singkronkan saldo web dengan M-Banking tanpa perlu matematika manual!</p>
                         </div>
                     </div>
 
@@ -4131,9 +4131,9 @@
                         </div>
                     </div>
 
-                    <div style="background: rgba(0, 129, 180, 0.1); border: 1px solid rgba(0, 129, 180, 0.25); padding: 12px 16px; border-radius: 14px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                    <div style="background: rgba(0, 129, 180, 0.1); border: 1px solid rgba(0, 129, 180, 0.25); padding: 12px 16px; border-radius: 14px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; flex-wrap: wrap; gap: 6px;">
                         <span style="font-size: 0.82rem; color: #94a3b8;">Saldo Web Saat Ini:</span>
-                        <strong id="sync-mode-web-val" style="color: #0081b4; font-size: 1.05rem;">Rp 0</strong>
+                        <strong id="sync-mode-web-val" style="color: #0081b4; font-size: 1.05rem; margin-left: auto;">Rp 0</strong>
                     </div>
 
                     <div class="form-group">
@@ -4145,22 +4145,22 @@
                     </div>
 
                     <!-- LIVE CALCULATOR PREVIEW BOX -->
-                    <div style="background: rgba(0, 0, 0, 0.35); border: 1px dashed rgba(255, 255, 255, 0.12); border-radius: 18px; padding: 16px; margin-bottom: 20px; display: flex; flex-direction: column; gap: 10px;">
-                        <div style="display: flex; justify-content: space-between; align-items: center; font-size: 0.82rem; color: var(--text-muted);">
+                    <div style="background: rgba(0, 0, 0, 0.35); border: 1px dashed rgba(255, 255, 255, 0.12); border-radius: 18px; padding: 14px 16px; margin-bottom: 20px; display: flex; flex-direction: column; gap: 10px;">
+                        <div class="sync-preview-row" style="display: flex; justify-content: space-between; align-items: center; font-size: 0.82rem; color: var(--text-muted); flex-wrap: wrap; gap: 6px;">
                             <span>Selisih Otomatis:</span>
-                            <span id="sync-mode-selisih" style="font-weight: 600; color: #94a3b8;">Ketik saldo asli bank...</span>
+                            <span id="sync-mode-selisih" style="font-weight: 600; color: #94a3b8; margin-left: auto; text-align: right;">Ketik saldo asli bank...</span>
                         </div>
-                        <div style="display: flex; justify-content: space-between; align-items: center; font-size: 0.82rem; color: var(--text-muted);">
+                        <div class="sync-preview-row" style="display: flex; justify-content: space-between; align-items: center; font-size: 0.82rem; color: var(--text-muted); flex-wrap: wrap; gap: 6px;">
                             <span>Tindakan Sistem:</span>
-                            <span id="sync-mode-tindakan" style="font-weight: 600; color: #94a3b8;">Menunggu input...</span>
+                            <span id="sync-mode-tindakan" style="font-weight: 600; color: #94a3b8; margin-left: auto; text-align: right;">Menunggu input...</span>
                         </div>
-                        <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px dashed rgba(255, 255, 255, 0.1); padding-top: 10px; margin-top: 2px; font-size: 0.9rem; color: #fff;">
+                        <div class="sync-preview-row" style="display: flex; justify-content: space-between; align-items: center; border-top: 1px dashed rgba(255, 255, 255, 0.1); padding-top: 10px; margin-top: 2px; font-size: 0.88rem; color: #fff; flex-wrap: wrap; gap: 6px;">
                             <span>Hasil Akhir Saldo Web:</span>
-                            <strong id="sync-mode-target" style="font-size: 1.15rem; color: #2ecc71;">Rp 0</strong>
+                            <strong id="sync-mode-target" style="font-size: 1.1rem; color: #2ecc71; margin-left: auto; text-align: right;">Rp 0</strong>
                         </div>
                     </div>
 
-                    <button type="button" class="btn-add-wishlist" style="background: linear-gradient(135deg, #0081b4, #2ecc71); width: 100%; border: none; padding: 14px; border-radius: 16px; font-weight: 700; font-size: 0.95rem; cursor: pointer; color: white; display: flex; align-items: center; justify-content: center; gap: 8px; box-shadow: 0 8px 25px rgba(0, 129, 180, 0.35);" onclick="window.eksekusiSinkronModeKhusus()">
+                    <button type="button" class="btn-add-wishlist" style="background: linear-gradient(135deg, #0081b4, #2ecc71); width: 100%; border: none; padding: 14px; border-radius: 16px; font-weight: 700; font-size: 0.92rem; cursor: pointer; color: white; display: flex; align-items: center; justify-content: center; gap: 8px; box-shadow: 0 8px 25px rgba(0, 129, 180, 0.35);" onclick="window.eksekusiSinkronModeKhusus()">
                         <i class="fa-solid fa-bolt"></i> Eksekusi Penyesuaian Saldo Otomatis 🚀
                     </button>
                 </div>
