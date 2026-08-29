@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
+  <rect width="100" height="100" rx="22" fill="#003d79"/>
+  <path d="M 20 30 Q 50 15 80 35 Q 50 40 20 30 Z" fill="#ffb300"/>
+  <path d="M 25 40 Q 55 25 82 45 Q 52 50 25 40 Z" fill="#ffca28" opacity="0.8"/>
+  <text x="50" y="72" font-family="'Poppins', sans-serif" font-size="20" font-weight="900" fill="#ffffff" text-anchor="middle" letter-spacing="0.5">mandırı</text>
+</svg>

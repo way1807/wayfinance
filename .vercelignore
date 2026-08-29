@@ -1,0 +1,6 @@
+# Ignore local temporary/backup files when deploying to Vercel
+uihnhni
+Web1-.html
+.git
+.gitignore
+README.md
