@@ -1219,8 +1219,11 @@
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
             z-index: 10000;
             display: none;
-            max-height: 250px;
-            overflow-y: auto;
+            max-height: 220px;
+            overflow-y: auto !important;
+            -webkit-overflow-scrolling: touch !important;
+            touch-action: pan-y !important;
+            overscroll-behavior-y: contain !important;
             animation: fadeInDropdown 0.2s ease;
         }
 
@@ -3940,6 +3943,7 @@
                             <option value="mandiri">Bank Mandiri</option>
                             <option value="bni">Bank BNI</option>
                             <option value="bri">Bank BRI</option>
+                            <option value="bank_lain">Bank Lainnya</option>
                         </select>
                     </div>
                 </div>
@@ -4765,7 +4769,26 @@
                 optDiv.innerHTML = `${badge} <span>${html_escape_tag(opt.text)}</span>`;
                 optDiv.setAttribute('data-value', opt.value);
 
+                let touchStartY = 0;
+                let isTouchDragging = false;
+
+                optDiv.addEventListener('touchstart', function (e) {
+                    if (e.touches && e.touches[0]) {
+                        touchStartY = e.touches[0].clientY;
+                    }
+                    isTouchDragging = false;
+                }, { passive: true });
+
+                optDiv.addEventListener('touchmove', function (e) {
+                    if (e.touches && e.touches[0]) {
+                        if (Math.abs(e.touches[0].clientY - touchStartY) > 6) {
+                            isTouchDragging = true;
+                        }
+                    }
+                }, { passive: true });
+
                 optDiv.onclick = function (e) {
+                    if (isTouchDragging) return;
                     e.stopPropagation();
                     selectEl.value = opt.value;
                     selectEl.dispatchEvent(new Event('change'));

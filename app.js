@@ -244,7 +244,26 @@ function updateCustomSelectOptions(id) {
         optDiv.innerHTML = `${badge} <span>${opt.text}</span>`;
         optDiv.setAttribute('data-value', opt.value);
 
+        let touchStartY = 0;
+        let isTouchDragging = false;
+
+        optDiv.addEventListener('touchstart', function (e) {
+            if (e.touches && e.touches[0]) {
+                touchStartY = e.touches[0].clientY;
+            }
+            isTouchDragging = false;
+        }, { passive: true });
+
+        optDiv.addEventListener('touchmove', function (e) {
+            if (e.touches && e.touches[0]) {
+                if (Math.abs(e.touches[0].clientY - touchStartY) > 6) {
+                    isTouchDragging = true;
+                }
+            }
+        }, { passive: true });
+
         optDiv.onclick = function (e) {
+            if (isTouchDragging) return;
             e.stopPropagation();
             selectEl.value = opt.value;
             selectEl.dispatchEvent(new Event('change'));

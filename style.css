@@ -1208,8 +1208,11 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
     z-index: 10000;
     display: none;
-    max-height: 250px;
-    overflow-y: auto;
+    max-height: 220px;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    touch-action: pan-y !important;
+    overscroll-behavior-y: contain !important;
     animation: fadeInDropdown 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
