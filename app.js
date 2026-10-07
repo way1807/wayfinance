@@ -207,6 +207,8 @@ function dapatkanHTMLBadgeSaku(key) {
         return `<img src="bni.svg" class="bank-logo-img" alt="BNI" style="width: 20px; height: 20px; vertical-align: middle; margin-right: 8px; border-radius: 4px; display: inline-block;" onerror="this.style.display='none'">`;
     } else if (key === 'bri') {
         return `<img src="bri.svg" class="bank-logo-img" alt="BRI" style="width: 20px; height: 20px; vertical-align: middle; margin-right: 8px; border-radius: 4px; display: inline-block;" onerror="this.style.display='none'">`;
+    } else if (key === 'seabank') {
+        return `<img src="seabank.svg" class="bank-logo-img" alt="SeaBank" style="width: 20px; height: 20px; vertical-align: middle; margin-right: 8px; border-radius: 4px; display: inline-block;" onerror="this.style.display='none'">`;
     } else if (key === 'dana') {
         return `<img src="dana.svg" class="bank-logo-img" alt="DANA" style="width: 20px; height: 20px; vertical-align: middle; margin-right: 8px; border-radius: 4px; display: inline-block;" onerror="this.style.display='none'">`;
     } else if (key === 'gopay') {
@@ -413,7 +415,7 @@ function prosesPesanChatbot(teks) {
 
     // Calculate saku totals dynamically
     let saldoCash = 0, saldoDana = 0, saldoOvo = 0, saldoGopay = 0, saldoGlobal = 0;
-    let saldoBca = 0, saldoMandiri = 0, saldoBni = 0, saldoBri = 0, saldoLain = 0;
+    let saldoBca = 0, saldoMandiri = 0, saldoBni = 0, saldoBri = 0, saldoSeabank = 0, saldoLain = 0;
 
     daftarTransaksi.forEach(item => {
         const src = item.wallet || "dana";
@@ -430,6 +432,7 @@ function prosesPesanChatbot(teks) {
             if (src === "mandiri") saldoMandiri += nom;
             if (src === "bni") saldoBni += nom;
             if (src === "bri") saldoBri += nom;
+            if (src === "seabank") saldoSeabank += nom;
             if (src === "bank_lain") saldoLain += nom;
         }
         else if (item.jenis === "pengeluaran") {
@@ -442,6 +445,7 @@ function prosesPesanChatbot(teks) {
             if (src === "mandiri") saldoMandiri -= nom;
             if (src === "bni") saldoBni -= nom;
             if (src === "bri") saldoBri -= nom;
+            if (src === "seabank") saldoSeabank -= nom;
             if (src === "bank_lain") saldoLain -= nom;
         }
         else if (item.jenis === "transfer") {
@@ -453,6 +457,7 @@ function prosesPesanChatbot(teks) {
             if (src === "mandiri") saldoMandiri -= nom;
             if (src === "bni") saldoBni -= nom;
             if (src === "bri") saldoBri -= nom;
+            if (src === "seabank") saldoSeabank -= nom;
             if (src === "bank_lain") saldoLain -= nom;
 
             if (dest === "cash") saldoCash += nom;
@@ -463,9 +468,15 @@ function prosesPesanChatbot(teks) {
             if (dest === "mandiri") saldoMandiri += nom;
             if (dest === "bni") saldoBni += nom;
             if (dest === "bri") saldoBri += nom;
+            if (dest === "seabank") saldoSeabank += nom;
             if (dest === "bank_lain") saldoLain += nom;
         }
     });
+
+    if (lowText.includes('saldo seabank') || lowText.includes('saldo sea bank')) {
+        return `Saldo <strong>SeaBank</strong> lo saat ini: <strong>Rp ${saldoSeabank.toLocaleString('id-ID')}</strong>. ` +
+            (saldoSeabank > 1000000 ? "Asik, bunga harian SeaBank makin ngalir deras! 🌊💰" : "Saku SeaBank lagi mampet nih, butuh top up! 🌊");
+    }
 
     if (lowText.includes('saldo bca')) {
         return `Saldo <strong>BCA</strong> lo saat ini: <strong>Rp ${saldoBca.toLocaleString('id-ID')}</strong>. ` +
@@ -856,6 +867,7 @@ function eksekusiSmartPaste() {
         const sakuSelect = document.getElementById('wallet-pilihan');
         if (lowerTeks.includes('bca')) sakuSelect.value = 'bca';
         else if (lowerTeks.includes('mandiri')) sakuSelect.value = 'mandiri';
+        else if (lowerTeks.includes('seabank')) sakuSelect.value = 'seabank';
         else if (lowerTeks.includes('dana')) sakuSelect.value = 'dana';
         else if (lowerTeks.includes('gopay')) sakuSelect.value = 'gopay';
         else if (lowerTeks.includes('ovo')) sakuSelect.value = 'ovo';
@@ -2122,7 +2134,7 @@ function tampilkanData() {
     listContainer.innerHTML = "";
 
     let saldoCash = 0, saldoDana = 0, saldoOvo = 0, saldoGopay = 0, saldoGlobal = 0;
-    let saldoBca = 0, saldoMandiri = 0, saldoBni = 0, saldoBri = 0, saldoLain = 0;
+    let saldoBca = 0, saldoMandiri = 0, saldoBni = 0, saldoBri = 0, saldoSeabank = 0, saldoLain = 0;
     let pemasukanBulanIni = 0, pengeluaranBulanIni = 0, transferBulanIni = 0;
 
     const petaDataTren = {
@@ -2146,6 +2158,7 @@ function tampilkanData() {
             if (src === "mandiri") saldoMandiri += nom;
             if (src === "bni") saldoBni += nom;
             if (src === "bri") saldoBri += nom;
+            if (src === "seabank") saldoSeabank += nom;
             if (src === "bank_lain") saldoLain += nom;
 
             if (item.bulan) petaDataTren.masuk[item.bulan] += nom;
@@ -2160,6 +2173,7 @@ function tampilkanData() {
             if (src === "mandiri") saldoMandiri -= nom;
             if (src === "bni") saldoBni -= nom;
             if (src === "bri") saldoBri -= nom;
+            if (src === "seabank") saldoSeabank -= nom;
             if (src === "bank_lain") saldoLain -= nom;
 
             if (item.bulan) petaDataTren.keluar[item.bulan] += nom;
@@ -2173,6 +2187,7 @@ function tampilkanData() {
             if (src === "mandiri") saldoMandiri -= nom;
             if (src === "bni") saldoBni -= nom;
             if (src === "bri") saldoBri -= nom;
+            if (src === "seabank") saldoSeabank -= nom;
             if (src === "bank_lain") saldoLain -= nom;
 
             if (dest === "cash") saldoCash += nom;
@@ -2183,6 +2198,7 @@ function tampilkanData() {
             if (dest === "mandiri") saldoMandiri += nom;
             if (dest === "bni") saldoBni += nom;
             if (dest === "bri") saldoBri += nom;
+            if (dest === "seabank") saldoSeabank += nom;
             if (dest === "bank_lain") saldoLain += nom;
         }
     });
@@ -2408,7 +2424,7 @@ function tampilkanData() {
         }
     }
 
-    let totalSaldoBank = saldoBca + saldoMandiri + saldoBni + saldoBri + saldoLain;
+    let totalSaldoBank = saldoBca + saldoMandiri + saldoBni + saldoBri + saldoSeabank + saldoLain;
     const randerSaldo = (nominal) => (statusUserPremium && sembunyikanSaldoMode) ? "🙈 *******" : 'Rp ' + nominal.toLocaleString('id-ID');
     
     const eyeIcon = document.getElementById('eye-icon');
@@ -2430,6 +2446,7 @@ function tampilkanData() {
             { nama: "Bank Mandiri", kode: "mandiri", saldo: saldoMandiri, visualNo: "9876 5432 1098 7654" },
             { nama: "Bank BNI", kode: "bni", saldo: saldoBni, visualNo: "5555 4444 3333 2222" },
             { nama: "Bank BRI", kode: "bri", saldo: saldoBri, visualNo: "1111 2222 3333 4444" },
+            { nama: "SeaBank", kode: "seabank", saldo: saldoSeabank, visualNo: "7777 8888 9999 5555" },
             { nama: "Bank Lainnya", kode: "bank_lain", saldo: saldoLain, visualNo: "0000 9999 8888 7777" }
         ];
 
@@ -2541,6 +2558,7 @@ function renderBillVisual() {
                         <option value="mandiri">🏢 Bank Mandiri</option>
                         <option value="bni">🏦 Bank BNI</option>
                         <option value="bri">🏦 Bank BRI</option>
+                        <option value="seabank">🌊 SeaBank</option>
                     </select>
                     <button class="btn-bayar-bill" onclick="window.bayarTagihanOtomatis(${item.id}, document.getElementById('select-wallet-bill-${item.id}').value)">
                         Bayar ✔
@@ -2563,7 +2581,7 @@ function renderWishlistVisual() {
                 <div class="wishlist-bar-bg"><div class="wishlist-bar-fill" style="width: ${persen}%"></div></div>
                 <div class="wishlist-footer-actions"><span class="wishlist-status-teks">${teksStatus} (${persen}%)</span>
                 <div class="wishlist-inline-form" style="display: flex; gap: 5px; flex-wrap: wrap; margin-top: 8px; width:100%;">
-                    <select id="select-wallet-goals-${item.id}" style="padding: 6px; border-radius: 8px; background: #1a202c; color: white; border: 1px solid #3b4758; font-size: 0.75rem; flex: 1; min-width: 75px; outline:none;"><option value="cash">CASH</option><option value="dana">DANA</option><option value="ovo">OVO</option><option value="gopay">GOPAY</option><option value="bca">BCA</option><option value="mandiri">MANDIRI</option><option value="bni">BNI</option><option value="bri">BRI</option></select>
+                    <select id="select-wallet-goals-${item.id}" style="padding: 6px; border-radius: 8px; background: #1a202c; color: white; border: 1px solid #3b4758; font-size: 0.75rem; flex: 1; min-width: 75px; outline:none;"><option value="cash">CASH</option><option value="dana">DANA</option><option value="ovo">OVO</option><option value="gopay">GOPAY</option><option value="bca">BCA</option><option value="mandiri">MANDIRI</option><option value="bni">BNI</option><option value="bri">BRI</option><option value="seabank">SEABANK</option></select>
                     <input type="text" id="input-budget-${item.id}" placeholder="Isi Rp..." onkeyup="window.formatInputRupiah(this)" style="padding: 6px; border-radius: 8px; background: #1a202c; color: white; border: 1px solid #3b4758; font-size: 0.75rem; flex: 1; min-width: 75px; outline:none;">
                     <button class="btn-celengan-mini" onclick="window.isiCelenganInline(${item.id})">Gas 💰</button><button class="btn-hapus-wishlist" onclick="window.hapusWishlist(${item.id})"><i class="fa-solid fa-xmark"></i></button>
                 </div></div>
@@ -2632,6 +2650,7 @@ function renderDebtVisual() {
                         <option value="mandiri" ${w === 'mandiri' ? 'selected' : ''}>MANDIRI</option>
                         <option value="bni" ${w === 'bni' ? 'selected' : ''}>BNI</option>
                         <option value="bri" ${w === 'bri' ? 'selected' : ''}>BRI</option>
+                        <option value="seabank" ${w === 'seabank' ? 'selected' : ''}>SEABANK</option>
                         <option value="bank_lain" ${w === 'bank_lain' ? 'selected' : ''}>LAINNYA</option>
                     </select>
                     <button class="btn-lunas-piutang" onclick="window.tandaiPiutangLunas(${item.id}, document.getElementById('select-wallet-debt-${item.id}').value)">Lunas ✔</button>
@@ -2990,6 +3009,7 @@ function parseCatatanKeTransaksi(teksBaris) {
         dana: ["dana"],
         ovo: ["ovo"],
         gopay: ["gopay", "go-pay", "gojek"],
+        seabank: ["seabank", "sea bank", "sea"],
         bca: ["bca"],
         mandiri: ["mandiri"],
         bni: ["bni"],
@@ -3933,6 +3953,7 @@ function pastikanModalSyncKhususAda() {
                             <option value="mandiri">🏢 Bank Mandiri</option>
                             <option value="bni">🏦 Bank BNI</option>
                             <option value="bri">🏦 Bank BRI</option>
+                            <option value="seabank">🌊 SeaBank</option>
                             <option value="bank_lain">💳 Bank Lainnya</option>
                             <option value="cash">💵 Uang Cash (Fisik)</option>
                             <option value="dana">📱 DANA</option>

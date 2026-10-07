@@ -3845,6 +3845,13 @@
                     </div>
                     <div class="bank-sub-item">
                         <span style="display: flex; align-items: center; gap: 8px;">
+                            <img src="seabank.svg" alt="SeaBank" style="width: 20px; height: 20px; border-radius: 4px; object-fit: contain;" onerror="this.style.display='none'" />
+                            SeaBank:
+                        </span>
+                        <strong id="wb-seabank">Rp 0</strong>
+                    </div>
+                    <div class="bank-sub-item">
+                        <span style="display: flex; align-items: center; gap: 8px;">
                             <i class="fa-solid fa-credit-card" style="color: #94a3b8; font-size: 0.9rem;"></i>
                             Bank Lainnya:
                         </span>
@@ -3943,6 +3950,7 @@
                             <option value="mandiri">Bank Mandiri</option>
                             <option value="bni">Bank BNI</option>
                             <option value="bri">Bank BRI</option>
+                            <option value="seabank">SeaBank</option>
                             <option value="bank_lain">Bank Lainnya</option>
                         </select>
                     </div>
@@ -3989,6 +3997,7 @@
                             <option value="mandiri">Bank Mandiri</option>
                             <option value="bni">Bank BNI</option>
                             <option value="bri">Bank BRI</option>
+                            <option value="seabank">SeaBank</option>
                             <option value="bank_lain">Bank Lainnya...</option>
                         </select>
                     </div>
@@ -4008,6 +4017,7 @@
                             <option value="mandiri">Bank Mandiri</option>
                             <option value="bni">Bank BNI</option>
                             <option value="bri">Bank BRI</option>
+                            <option value="seabank">SeaBank</option>
                             <option value="bank_lain">Bank Lainnya...</option>
                         </select>
                     </div>
@@ -4126,6 +4136,7 @@
                                 <option value="mandiri">Bank Mandiri</option>
                                 <option value="bni">Bank BNI</option>
                                 <option value="bri">Bank BRI</option>
+                                <option value="seabank">SeaBank</option>
                                 <option value="bank_lain">Bank Lainnya</option>
                                 <option value="cash">Uang Cash (Fisik)</option>
                                 <option value="dana">DANA</option>
@@ -4399,6 +4410,7 @@
                                 <option value="mandiri">Pilih Saku: Bank Mandiri</option>
                                 <option value="bni">Pilih Saku: Bank BNI</option>
                                 <option value="bri">Pilih Saku: Bank BRI</option>
+                                <option value="seabank">Pilih Saku: SeaBank</option>
                                 <option value="bank_lain">Pilih Saku: Bank Lainnya...</option>
                             </select>
                         </div>
@@ -4684,6 +4696,8 @@
                 return `<img src="bni.svg" class="bank-logo-img" alt="BNI" style="width: 20px; height: 20px; vertical-align: middle; margin-right: 8px; border-radius: 4px; display: inline-block;" onerror="this.style.display='none'">`;
             } else if (key === 'bri') {
                 return `<img src="bri.svg" class="bank-logo-img" alt="BRI" style="width: 20px; height: 20px; vertical-align: middle; margin-right: 8px; border-radius: 4px; display: inline-block;" onerror="this.style.display='none'">`;
+            } else if (key === 'seabank') {
+                return `<img src="seabank.svg" class="bank-logo-img" alt="SeaBank" style="width: 20px; height: 20px; vertical-align: middle; margin-right: 8px; border-radius: 4px; display: inline-block;" onerror="this.style.display='none'">`;
             } else if (key === 'dana') {
                 return `<img src="dana.svg" class="bank-logo-img" alt="DANA" style="width: 20px; height: 20px; vertical-align: middle; margin-right: 8px; border-radius: 4px; display: inline-block;" onerror="this.style.display='none'">`;
             } else if (key === 'gopay') {
@@ -5352,6 +5366,7 @@
                 const sakuSelect = document.getElementById('wallet-pilihan');
                 if (lowerTeks.includes('bca')) sakuSelect.value = 'bca';
                 else if (lowerTeks.includes('mandiri')) sakuSelect.value = 'mandiri';
+                else if (lowerTeks.includes('seabank')) sakuSelect.value = 'seabank';
                 else if (lowerTeks.includes('dana')) sakuSelect.value = 'dana';
                 else if (lowerTeks.includes('gopay')) sakuSelect.value = 'gopay';
                 else if (lowerTeks.includes('ovo')) sakuSelect.value = 'ovo';
@@ -6121,7 +6136,8 @@
                 { key: "bca", label: "🏦 BCA", color: "#3498db" },
                 { key: "mandiri", label: "🏢 Mandiri", color: "#f39c12" },
                 { key: "bni", label: "🏦 BNI", color: "#e67e22" },
-                { key: "bri", label: "🏦 BRI", color: "#2980b9" }
+                { key: "bri", label: "🏦 BRI", color: "#2980b9" },
+                { key: "seabank", label: "🌊 SeaBank", color: "#ff5000" }
             ];
 
             let htmlTombol = `<div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-top: 15px; width: 100%;">`;
@@ -6621,7 +6637,7 @@
             listContainer.innerHTML = "";
 
             let saldoCash = 0, saldoDana = 0, saldoOvo = 0, saldoGopay = 0, saldoGlobal = 0;
-            let saldoBca = 0, saldoMandiri = 0, saldoBni = 0, saldoBri = 0, saldoLain = 0;
+            let saldoBca = 0, saldoMandiri = 0, saldoBni = 0, saldoBri = 0, saldoSeabank = 0, saldoLain = 0;
             let pemasukanBulanIni = 0, pengeluaranBulanIni = 0, transferBulanIni = 0;
 
             const petaDataTren = {
@@ -6645,6 +6661,7 @@
                     if (src === "mandiri") saldoMandiri += nom;
                     if (src === "bni") saldoBni += nom;
                     if (src === "bri") saldoBri += nom;
+                    if (src === "seabank") saldoSeabank += nom;
                     if (src === "bank_lain") saldoLain += nom;
 
                     if (item.bulan) petaDataTren.masuk[item.bulan] += nom;
@@ -6659,6 +6676,7 @@
                     if (src === "mandiri") saldoMandiri -= nom;
                     if (src === "bni") saldoBni -= nom;
                     if (src === "bri") saldoBri -= nom;
+                    if (src === "seabank") saldoSeabank -= nom;
                     if (src === "bank_lain") saldoLain -= nom;
 
                     if (item.bulan) petaDataTren.keluar[item.bulan] += nom;
@@ -6672,6 +6690,7 @@
                     if (src === "mandiri") saldoMandiri -= nom;
                     if (src === "bni") saldoBni -= nom;
                     if (src === "bri") saldoBri -= nom;
+                    if (src === "seabank") saldoSeabank -= nom;
                     if (src === "bank_lain") saldoLain -= nom;
 
                     if (dest === "cash") saldoCash += nom;
@@ -6682,6 +6701,7 @@
                     if (dest === "mandiri") saldoMandiri += nom;
                     if (dest === "bni") saldoBni += nom;
                     if (dest === "bri") saldoBri += nom;
+                    if (dest === "seabank") saldoSeabank += nom;
                     if (dest === "bank_lain") saldoLain += nom;
                 }
             });
@@ -6906,7 +6926,7 @@
                 }
             }
 
-            let totalSaldoBank = saldoBca + saldoMandiri + saldoBni + saldoBri + saldoLain;
+            let totalSaldoBank = saldoBca + saldoMandiri + saldoBni + saldoBri + saldoSeabank + saldoLain;
 
             const randerSaldo = (nominal) => (statusUserPremium && sembunyikanSaldoMode) ? "🙈 *******" : 'Rp ' + nominal.toLocaleString('id-ID');
             document.getElementById('eye-icon').className = (statusUserPremium && sembunyikanSaldoMode) ? "fa-solid fa-eye-slash" : "fa-solid fa-eye";
@@ -6921,6 +6941,7 @@
             document.getElementById('wb-mandiri').innerText = randerSaldo(saldoMandiri);
             document.getElementById('wb-bni').innerText = randerSaldo(saldoBni);
             document.getElementById('wb-bri').innerText = randerSaldo(saldoBri);
+            if (document.getElementById('wb-seabank')) document.getElementById('wb-seabank').innerText = randerSaldo(saldoSeabank);
             document.getElementById('wb-lain').innerText = randerSaldo(saldoLain);
 
             const labelSaldo = document.getElementById('label-total-saldo');
@@ -7027,6 +7048,7 @@
                                 <option value="mandiri">🏢 Bank Mandiri</option>
                                 <option value="bni">🏦 Bank BNI</option>
                                 <option value="bri">🏦 Bank BRI</option>
+                                <option value="seabank">🌊 SeaBank</option>
                             </select>
                             <button class="btn-bayar-bill" onclick="window.bayarTagihanOtomatis(${item.id}, document.getElementById('select-wallet-bill-${item.id}').value)">
                                 Bayar ✔
@@ -7049,7 +7071,7 @@
                         <div class="wishlist-bar-bg"><div class="wishlist-bar-fill" style="width: ${persen}%"></div></div>
                         <div class="wishlist-footer-actions"><span class="wishlist-status-teks">${teksStatus} (${persen}%)</span>
                         <div class="wishlist-inline-form" style="display: flex; gap: 5px; flex-wrap: wrap; margin-top: 8px; width:100%;">
-                            <select id="select-wallet-goals-${item.id}" style="padding: 6px; border-radius: 8px; background: #1a202c; color: white; border: 1px solid #3b4758; font-size: 0.75rem; flex: 1; min-width: 75px; outline:none;"><option value="cash">CASH</option><option value="dana">DANA</option><option value="ovo">OVO</option><option value="gopay">GOPAY</option><option value="bca">BCA</option><option value="mandiri">MANDIRI</option><option value="bni">BNI</option><option value="bri">BRI</option></select>
+                            <select id="select-wallet-goals-${item.id}" style="padding: 6px; border-radius: 8px; background: #1a202c; color: white; border: 1px solid #3b4758; font-size: 0.75rem; flex: 1; min-width: 75px; outline:none;"><option value="cash">CASH</option><option value="dana">DANA</option><option value="ovo">OVO</option><option value="gopay">GOPAY</option><option value="bca">BCA</option><option value="mandiri">MANDIRI</option><option value="bni">BNI</option><option value="bri">BRI</option><option value="seabank">SEABANK</option></select>
                             <input type="text" id="input-budget-${item.id}" placeholder="Isi Rp..." onkeyup="window.formatInputRupiah(this)" style="padding: 6px; border-radius: 8px; background: #1a202c; color: white; border: 1px solid #3b4758; font-size: 0.75rem; flex: 1; min-width: 75px; outline:none;">
                             <button class="btn-celengan-mini" onclick="window.isiCelenganInline(${item.id})">Gas 💰</button><button class="btn-hapus-wishlist" onclick="window.hapusWishlist(${item.id})"><i class="fa-solid fa-xmark"></i></button>
                         </div></div>
@@ -7119,6 +7141,7 @@
                                 <option value="mandiri" ${w === 'mandiri' ? 'selected' : ''}>MANDIRI</option>
                                 <option value="bni" ${w === 'bni' ? 'selected' : ''}>BNI</option>
                                 <option value="bri" ${w === 'bri' ? 'selected' : ''}>BRI</option>
+                                <option value="seabank" ${w === 'seabank' ? 'selected' : ''}>SEABANK</option>
                                 <option value="bank_lain" ${w === 'bank_lain' ? 'selected' : ''}>LAINNYA</option>
                             </select>
                             <button class="btn-lunas-piutang" onclick="window.tandaiPiutangLunas(${item.id}, document.getElementById('select-wallet-debt-${item.id}').value)">Lunas ✔</button>
@@ -7479,6 +7502,7 @@
                 mandiri: ["mandiri"],
                 bni: ["bni"],
                 bri: ["bri"],
+                seabank: ["seabank", "sea bank", "sea"],
                 bank_lain: ["bank", "atm", "rekening", "lainnya", "lain"]
             };
 
@@ -8504,6 +8528,7 @@
                                     <option value="mandiri">Bank Mandiri</option>
                                     <option value="bni">Bank BNI</option>
                                     <option value="bri">Bank BRI</option>
+                                    <option value="seabank">SeaBank</option>
                                     <option value="bank_lain">Bank Lainnya</option>
                                     <option value="cash">Uang Cash (Fisik)</option>
                                     <option value="dana">DANA</option>
